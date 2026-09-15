@@ -2,59 +2,62 @@ import Link from "next/link";
 import {
   Compass,
   Menu,
-  Plus,
+  Search,
   UserRound,
 } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 lg:px-8">
+    <header className="sticky top-0 z-50 border-b border-blue-100 bg-white/95 backdrop-blur">
+      <div className="mx-auto flex h-18 max-w-[1440px] items-center justify-between px-5 lg:px-10">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex size-10 items-center justify-center rounded-xl bg-indigo-600 text-white">
+          <span className="flex size-10 items-center justify-center rounded-xl bg-blue-600 text-white">
             <Compass size={22} />
           </span>
 
           <div>
-            <p className="text-lg font-bold leading-none text-slate-950">
-              InternAtlas
+            <p className="text-xl font-extrabold leading-none text-[#071c46]">
+              Intern<span className="text-blue-600">Atlas.</span>
             </p>
-            <p className="mt-1 text-[10px] font-medium uppercase tracking-widest text-indigo-600">
+            <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.18em] text-blue-600">
               Find your direction
             </p>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-7 text-sm font-medium text-slate-600 lg:flex">
-          <Link href="/internships" className="hover:text-indigo-600">
-            Internships
+        <nav className="hidden items-center gap-7 text-sm font-semibold text-[#263858] lg:flex">
+          <Link href="/internships" className="transition hover:text-blue-600">
+            Opportunities
           </Link>
-          <Link href="#" className="hover:text-indigo-600">
-            Fresher Jobs
-          </Link>
-          <Link href="#" className="hover:text-indigo-600">
-            Competitions
-          </Link>
-          <Link href="#" className="hover:text-indigo-600">
-            Hackathons
-          </Link>
-          <Link href="#" className="hover:text-indigo-600">
+          <Link href="#events" className="transition hover:text-blue-600">
             Events
+          </Link>
+          <Link href="#scholarships" className="transition hover:text-blue-600">
+            Scholarships
+          </Link>
+          <Link href="/employer/internships" className="transition hover:text-blue-600">
+            For Colleges
+          </Link>
+          <Link href="#resources" className="transition hover:text-blue-600">
+            Resources
           </Link>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="/employer/internships/new"
-            className="flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:border-indigo-300 hover:text-indigo-600"
+          <button
+            aria-label="Search"
+            className="flex size-11 items-center justify-center rounded-full border border-slate-300 text-[#071c46] transition hover:border-blue-500 hover:text-blue-600"
           >
-            <Plus size={17} />
-            Post opportunity
-          </Link>
+            <Search size={19} />
+          </button>
 
-          <button className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700">
+          <button className="flex items-center gap-2 rounded-full border border-blue-200 px-6 py-2.5 text-sm font-bold text-[#071c46] transition hover:border-blue-600">
             <UserRound size={17} />
-            Sign in
+            Log in
+          </button>
+
+          <button className="rounded-full bg-[#06275b] px-6 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700">
+            Sign up
           </button>
         </div>
 
