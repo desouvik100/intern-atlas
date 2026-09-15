@@ -63,7 +63,7 @@ export default function InternshipList() {
   const [location, setLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [workModes, setWorkModes] = useState<string[]>([]);
-  const [savedIds, setSavedIds] = useState<string[]>([]);
+  const [savedIds, setSavedIds] = useState<number[]>([]);
 
   const filteredInternships = useMemo(() => {
     const query = search.toLowerCase().trim();
@@ -120,7 +120,7 @@ export default function InternshipList() {
     );
   }
 
-  function toggleSaved(id: string) {
+  function toggleSaved(id: number) {
     setSavedIds((current) =>
       current.includes(id)
         ? current.filter((item) => item !== id)
