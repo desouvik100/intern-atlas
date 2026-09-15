@@ -19,12 +19,5 @@
   },
   "cache": {
     "enabled": false
-  },
-  "services": [
-    {
-      "binding": "RESPONSE_STORE",
-      "service": "intern-atlas-response-store",
-      "entrypoint": "ResponseStoreService"
-    }
-  ]
+  }
 }
