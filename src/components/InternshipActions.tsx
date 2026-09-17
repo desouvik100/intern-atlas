@@ -21,7 +21,11 @@ export default function InternshipActions({
       localStorage.getItem("savedInternships") || "[]",
     );
 
-    setSaved(savedItems.includes(internshipId));
+ const frameId = window.requestAnimationFrame(() => {
+  setSaved(savedItems.includes(internshipId));
+});
+
+return () => window.cancelAnimationFrame(frameId);
   }, [internshipId]);
 
   function handleSave() {

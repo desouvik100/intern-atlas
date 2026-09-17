@@ -12,7 +12,7 @@ export function CTABanner() {
               FOR EMPLOYERS • FOR COLLEGES
             </span>
             <h2 className="text-3xl font-extrabold text-white md:text-4xl">
-              Let's create more opportunities for India.
+          Let&apos;s create more opportunities for India.
             </h2>
             <p className="text-[15px] font-medium text-border">
               Hire talent. Host competitions. Engage with the next generation.

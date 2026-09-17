@@ -13,7 +13,7 @@ export function ExploreCategories({ categories }: ExploreCategoriesProps) {
         
         {/* Categories Row */}
         <div className="relative flex items-center gap-4 lg:gap-8">
-          <div className="flex gap-[12px] xl:gap-[18px] w-full overflow-x-auto lg:overflow-visible -mt-4 py-4 scrollbar-none snap-x lg:snap-none snap-mandatory pr-10 lg:pr-0">
+          <div className="-mt-4 flex min-w-0 flex-1 gap-[12px] overflow-x-auto py-4 pr-10 scrollbar-none snap-x snap-mandatory lg:pr-0 lg:snap-none xl:gap-[18px]">
             {categories.map((cat) => (
               <div key={cat.id} className="snap-start shrink-0">
                 <CategoryCard category={cat} className="h-[150px] w-[138px] xl:w-[150px]" />

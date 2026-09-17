@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { Twitter, Linkedin, Instagram, Youtube } from "lucide-react";
+import {
+  FaXTwitter,
+  FaLinkedinIn,
+  FaInstagram,
+  FaYoutube,
+} from "react-icons/fa6";
 
 const FOOTER_LINKS = {
   opportunities: [
@@ -37,10 +42,10 @@ const FOOTER_LINKS = {
 };
 
 const SOCIALS = [
-  { icon: Linkedin, href: "#" },
-  { icon: Twitter, href: "#" },
-  { icon: Instagram, href: "#" },
-  { icon: Youtube, href: "#" },
+  { icon: FaLinkedinIn, href: "#" },
+  { icon: FaXTwitter, href: "#" },
+  { icon: FaInstagram, href: "#" },
+  { icon: FaYoutube, href: "#" },
 ];
 
 export function Footer() {

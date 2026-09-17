@@ -3,7 +3,11 @@ import { Button } from "@/components/ui/button";
 
 export function HackathonsBanner() {
   return (
-    <section className="pt-0 pb-2 lg:pb-3 bg-transparent" aria-label="Hackathons">
+  <section
+  id="hackathons"
+  className="scroll-mt-24 bg-transparent pt-0 pb-2 lg:pb-3"
+  aria-label="Hackathons"
+>
       <div className="mx-auto max-w-[1400px] px-6">
         
         {/* Banner Container */}

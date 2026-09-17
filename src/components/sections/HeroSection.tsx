@@ -15,7 +15,7 @@ export function HeroSection() {
           {/* ── Left: Text + Actions ──────────────────────────────────── */}
           <div className="flex flex-col z-10">
             <span className="mb-1 text-[12px] sm:text-[13px] font-bold uppercase tracking-widest text-blue">
-              FOR INDIA'S NEXT GENERATION
+       FOR INDIA&apos;S NEXT GENERATION
             </span>
 
             <h1 className="mb-2 text-[clamp(28px,5vw,52px)] font-extrabold leading-[0.95] tracking-[-0.03em] text-primary">
@@ -25,7 +25,7 @@ export function HeroSection() {
             </h1>
 
             <p className="mb-3 max-w-[460px] text-[13px] md:text-[14px] leading-tight text-text-secondary">
-              Internships, jobs, competitions, scholarships, workshops, college festivals and more — all in one place for India's students.
+              Internships, jobs, competitions, scholarships, workshops, college festivals and more — all in one place for India&apos;s students.
             </p>
 
             <div className="mb-4 flex flex-wrap items-center gap-2">

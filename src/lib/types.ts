@@ -25,6 +25,7 @@ export interface Opportunity {
   logoVariant: string;
   badges?: string[];
   timeLabel?: string;
+  href?: string;
 }
 
 export interface Category {

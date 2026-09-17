@@ -22,11 +22,16 @@ export function Header() {
     setScrolled(window.scrollY > 4);
   }, []);
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+useEffect(() => {
+  const frameId = window.requestAnimationFrame(handleScroll);
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  return () => {
+    window.cancelAnimationFrame(frameId);
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, [handleScroll]);
 
   const closeMenu = () => setMenuOpen(false);
 
