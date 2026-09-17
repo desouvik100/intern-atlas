@@ -17,15 +17,14 @@ export default function InternshipActions({
   const [applicationSubmitted, setApplicationSubmitted] = useState(false);
 
   useEffect(() => {
-    const savedItems: number[] = JSON.parse(
-      localStorage.getItem("savedInternships") || "[]",
-    );
+    const frameId = window.requestAnimationFrame(() => {
+      const savedItems: number[] = JSON.parse(
+        localStorage.getItem("savedInternships") || "[]",
+      );
+      setSaved(savedItems.includes(internshipId));
+    });
 
- const frameId = window.requestAnimationFrame(() => {
-  setSaved(savedItems.includes(internshipId));
-});
-
-return () => window.cancelAnimationFrame(frameId);
+    return () => window.cancelAnimationFrame(frameId);
   }, [internshipId]);
 
   function handleSave() {
@@ -66,7 +65,7 @@ return () => window.cancelAnimationFrame(frameId);
       <button
         type="button"
         onClick={() => setShowApplication(true)}
-        className="mt-6 w-full rounded-xl bg-indigo-600 px-5 py-3.5 font-bold text-white transition hover:bg-indigo-700"
+        className="mt-6 w-full rounded-full bg-[#1769e8] px-5 py-3.5 text-[13px] font-extrabold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-700"
       >
         Apply now
       </button>
@@ -76,8 +75,8 @@ return () => window.cancelAnimationFrame(frameId);
         onClick={handleSave}
         className={`mt-3 flex w-full items-center justify-center gap-2 rounded-xl border px-5 py-3.5 font-semibold transition ${
           saved
-            ? "border-indigo-600 bg-indigo-50 text-indigo-700"
-            : "border-slate-200 text-slate-700 hover:border-indigo-300 hover:text-indigo-600"
+            ? "border-[#1769e8] bg-blue-50 text-[#1769e8]"
+            : "border-[#bfd5f7] text-[#071c46] hover:border-[#1769e8] hover:text-[#1769e8]"
         }`}
       >
         <Bookmark
@@ -90,10 +89,10 @@ return () => window.cancelAnimationFrame(frameId);
 
       {showApplication && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
-          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl bg-white p-7 shadow-2xl">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-blue-100 bg-white p-7 shadow-2xl">
             <div className="flex items-start justify-between gap-5">
               <div>
-                <p className="text-sm font-semibold text-indigo-600">
+                <p className="text-sm font-semibold text-[#1769e8]">
                   Internship application
                 </p>
 
@@ -131,7 +130,7 @@ return () => window.cancelAnimationFrame(frameId);
                 <button
                   type="button"
                   onClick={closeApplicationModal}
-                  className="mt-6 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700"
+                  className="mt-6 rounded-full bg-[#1769e8] px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
                 >
                   Done
                 </button>
@@ -148,7 +147,7 @@ return () => window.cancelAnimationFrame(frameId);
                     required
                     name="name"
                     placeholder="Enter your full name"
-                    className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
@@ -160,7 +159,7 @@ return () => window.cancelAnimationFrame(frameId);
                     type="email"
                     name="email"
                     placeholder="you@example.com"
-                    className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
@@ -172,7 +171,7 @@ return () => window.cancelAnimationFrame(frameId);
                     type="url"
                     name="resume"
                     placeholder="https://drive.google.com/..."
-                    className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
@@ -184,13 +183,13 @@ return () => window.cancelAnimationFrame(frameId);
                     name="coverLetter"
                     rows={4}
                     placeholder="Briefly describe your skills and interest..."
-                    className="mt-2 w-full resize-none rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full resize-none rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-indigo-600 px-5 py-3.5 font-bold text-white transition hover:bg-indigo-700"
+                  className="w-full rounded-full bg-[#1769e8] px-5 py-3.5 font-bold text-white transition hover:bg-blue-700"
                 >
                   Submit application
                 </button>
