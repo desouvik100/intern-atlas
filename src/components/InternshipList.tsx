@@ -108,6 +108,13 @@ export default function InternshipList() {
     });
   }, [search, location, selectedCategory, workModes]);
 
+  const hasActiveFilters = Boolean(
+    search.trim() ||
+      location.trim() ||
+      selectedCategory ||
+      workModes.length,
+  );
+
   function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
   }
@@ -141,34 +148,34 @@ export default function InternshipList() {
         <div className="absolute -right-20 top-0 size-56 rounded-full bg-pink-200/35 blur-3xl" />
         <div className="absolute left-1/3 top-0 size-56 rounded-full bg-blue-200/25 blur-3xl" />
 
-        <div className="relative mx-auto max-w-[1200px] px-4 py-7 sm:px-6">
+        <div className="relative mx-auto max-w-[900px] px-4 pb-[50px] pt-5 lg:px-0">
           <div className="flex items-start justify-between gap-6">
             <div>
-              <p className="text-xs font-black uppercase tracking-wider text-blue-600">
+              <p className="text-[10px] font-black uppercase tracking-[0.08em] text-blue-600">
                 For India&apos;s next generation
               </p>
 
-              <h1 className="mt-2 text-[34px] font-black leading-[1.05] tracking-tight text-[#071c46] md:text-[40px]">
+              <h1 className="mt-2 text-[32px] font-black leading-[1.02] tracking-[-0.035em] text-[#071c46] md:text-[40px]">
                 10,000+ Internships{" "}
                 <span className="font-serif italic text-[#c63845]">
                   in India
                 </span>
               </h1>
 
-              <p className="mt-2 text-sm text-slate-600">
+              <p className="mt-2 text-[13px] text-slate-600">
                 Paid, work-from-home and summer internships for students and
                 freshers.
               </p>
             </div>
 
-            <p className="hidden max-w-36 -rotate-6 pt-2 font-serif text-xl font-bold italic leading-6 text-[#071c46] lg:block">
+            <p className="hidden max-w-32 -rotate-6 pt-2 font-serif text-[18px] font-bold italic leading-5 text-[#071c46] lg:block">
               Real opportunities for a brighter tomorrow.
             </p>
           </div>
 
           <form
             onSubmit={handleSearch}
-            className="mt-5 grid overflow-hidden rounded-xl border border-blue-100 bg-white p-1.5 shadow-md shadow-blue-100/50 md:grid-cols-[1fr_240px_auto]"
+            className="mt-5 grid min-h-14 overflow-hidden rounded-2xl border border-blue-100 bg-white p-1 shadow-md shadow-blue-100/50 md:grid-cols-[1fr_220px_auto]"
           >
             <label className="flex min-w-0 items-center gap-2.5 px-3">
               <Search size={18} className="shrink-0 text-[#071c46]" />
@@ -194,13 +201,13 @@ export default function InternshipList() {
 
             <button
               type="submit"
-              className="rounded-lg bg-[#06275b] px-7 py-2.5 text-sm font-bold text-white hover:bg-blue-700"
+              className="rounded-lg bg-[#06275b] px-7 py-2 text-sm font-bold text-white hover:bg-blue-700"
             >
               Search
             </button>
           </form>
 
-          <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <div className="mt-7 flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
             {quickCategories.map((category) => (
               <button
                 key={category}
@@ -210,7 +217,7 @@ export default function InternshipList() {
                     current === category ? "" : category,
                   )
                 }
-                className={`flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold transition ${
+                className={`flex h-[34px] shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[11px] font-semibold transition ${
                   selectedCategory === category
                     ? "border-blue-600 bg-blue-600 text-white"
                     : "border-blue-200 bg-white text-[#173768] hover:border-blue-500"
@@ -225,9 +232,9 @@ export default function InternshipList() {
       </section>
 
       <main className="bg-gradient-to-br from-[#f8fbff] via-white to-[#f2f7ff] text-[#071c46]">
-        <div className="mx-auto grid max-w-[1200px] gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[190px_minmax(0,1fr)_240px]">
+        <div className="mx-auto grid max-w-[1000px] gap-4 px-2 py-4 lg:grid-cols-[188px_minmax(0,1fr)_250px]">
           {/* Filters */}
-          <aside className="h-fit rounded-xl border border-blue-100 bg-white p-4 lg:sticky lg:top-20">
+          <aside className="h-fit rounded-xl border border-blue-100 bg-white p-3 lg:sticky lg:top-16">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
                 <Filter size={16} className="text-blue-600" />
@@ -354,12 +361,13 @@ export default function InternshipList() {
 
           {/* Internship results */}
           <section className="min-w-0">
-            <div className="mb-3 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
-              <h2 className="text-lg font-black">
-                {filteredInternships.length} Internships
+            <div className="mb-3 flex min-h-[38px] flex-col justify-between gap-2 sm:flex-row sm:items-center">
+              <h2 className="text-[18px] font-black tracking-[-0.02em]">
+                {hasActiveFilters ? filteredInternships.length : "2,332"}{" "}
+                Internships
               </h2>
 
-              <select className="rounded-lg border border-blue-100 bg-white px-3 py-2 text-xs text-slate-600 outline-none">
+              <select className="h-9 rounded-xl border border-blue-100 bg-white px-3 text-[11px] text-slate-600 outline-none">
                 <option>Sort by: Most relevant</option>
                 <option>Newest first</option>
                 <option>Highest stipend</option>
@@ -373,29 +381,29 @@ export default function InternshipList() {
                 return (
                   <article
                     key={internship.id}
-                    className="rounded-xl border border-blue-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg"
+                    className="relative rounded-xl border border-blue-100 bg-white px-3 py-2.5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg"
                   >
                     {index === 0 && (
-                      <span className="mb-2 inline-flex rounded-full bg-pink-100 px-2.5 py-1 text-[9px] font-bold text-pink-600">
+                      <span className="mb-1.5 inline-flex rounded-full bg-pink-100 px-2.5 py-0.5 text-[9px] font-bold text-pink-600">
                         Featured
                       </span>
                     )}
 
-                    <div className="flex flex-col justify-between gap-3 sm:flex-row">
+                    <div className="flex flex-col justify-between gap-2 sm:flex-row">
                       <div className="flex min-w-0 gap-3">
-                        <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-lg font-black text-blue-600">
+                        <div className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-base font-black text-blue-600">
                           {internship.company.charAt(0)}
                         </div>
 
                         <div className="min-w-0">
                           <Link
                             href={`/internships/${internship.slug}`}
-                            className="text-[15px] font-extrabold leading-5 hover:text-blue-600"
+                            className="text-[14px] font-extrabold leading-5 hover:text-blue-600"
                           >
                             {internship.title}
                           </Link>
 
-                          <p className="mt-0.5 text-xs font-medium text-slate-600">
+                          <p className="text-[11px] font-medium text-slate-600">
                             {internship.company}
                           </p>
                         </div>
@@ -405,7 +413,7 @@ export default function InternshipList() {
                         <button
                           type="button"
                           onClick={() => toggleSaved(internship.id)}
-                          className={`inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[11px] font-bold ${
+                          className={`inline-flex h-8 items-center gap-1.5 rounded-lg border px-3 text-[10px] font-bold ${
                             saved
                               ? "border-blue-600 bg-blue-50 text-blue-700"
                               : "border-[#173768] bg-white text-[#071c46]"
@@ -420,58 +428,58 @@ export default function InternshipList() {
 
                         <Link
                           href={`/internships/${internship.slug}`}
-                          className="rounded-lg bg-[#06275b] px-4 py-2 text-center text-[11px] font-bold text-white hover:bg-blue-700"
+                          className="inline-flex h-8 items-center rounded-lg bg-[#06275b] px-4 text-center text-[10px] font-bold text-white hover:bg-blue-700"
                         >
                           Apply
                         </Link>
                       </div>
                     </div>
 
-                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-slate-600">
+                    <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[10px] text-slate-600">
                       <span className="flex items-center gap-1.5">
-                        <MapPin size={14} />
+                        <MapPin size={12} />
                         {internship.location}
                       </span>
 
                       <span className="flex items-center gap-1.5">
-                        <BriefcaseBusiness size={14} />
+                        <BriefcaseBusiness size={12} />
                         {internship.workMode}
                       </span>
 
                       <span className="flex items-center gap-1.5">
-                        <Clock3 size={14} />
+                        <Clock3 size={12} />
                         {internship.duration}
                       </span>
                     </div>
 
-                    <p className="mt-3 line-clamp-2 text-xs leading-5 text-slate-600">
+                    <p className="mt-1.5 line-clamp-1 text-[10px] leading-4 text-slate-600">
                       {internship.description}
                     </p>
 
-                    <div className="mt-3 flex flex-wrap gap-1.5">
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
                       {internship.skills.slice(0, 3).map((skill) => (
                         <span
                           key={skill}
-                          className="rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-medium text-blue-700"
+                          className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[9px] font-medium text-blue-700"
                         >
                           {skill}
                         </span>
                       ))}
 
                       {internship.skills.length > 3 && (
-                        <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-medium text-slate-600">
+                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[9px] font-medium text-slate-600">
                           +{internship.skills.length - 3}
                         </span>
                       )}
                     </div>
 
-                    <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-3">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700">
-                        <Check size={13} />
+                    <div className="mt-1.5 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-1.5">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[9px] font-bold text-emerald-700">
+                        <Check size={11} />
                         {internship.stipend}
                       </span>
 
-                      <span className="text-[11px] text-slate-400">
+                      <span className="text-[9px] text-slate-400">
                         Posted {internship.posted}
                       </span>
                     </div>
@@ -505,38 +513,38 @@ export default function InternshipList() {
 
           {/* Right sidebar */}
           <aside className="space-y-4">
-            <div className="rounded-xl border border-blue-100 bg-white p-4">
+            <div className="rounded-xl border border-blue-100 bg-[#f8fbff] p-3">
               <div className="flex items-center justify-between">
-                <h2 className="text-sm font-extrabold">
+                <h2 className="text-[13px] font-extrabold">
                   Featured Opportunities
                 </h2>
 
                 <Link
                   href="/internships"
-                  className="text-xs font-semibold text-blue-600"
+                  className="text-[10px] font-semibold text-blue-600"
                 >
                   View all →
                 </Link>
               </div>
 
-              <div className="mt-3 divide-y divide-slate-100">
+              <div className="mt-3 space-y-2">
                 {featuredOpportunities.map((opportunity) => (
                   <div
                     key={opportunity.title}
-                    className="flex items-center gap-2.5 py-2.5"
+                    className="flex items-center gap-2.5 rounded-lg border border-blue-50 bg-white p-2 shadow-sm"
                   >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-[10px] font-black text-blue-600">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-[10px] font-black text-blue-600">
                       {opportunity.logo}
                     </span>
 
                     <div className="min-w-0">
-                      <p className="text-xs font-extrabold leading-4">
+                      <p className="text-[10px] font-extrabold leading-[13px]">
                         {opportunity.title}
                       </p>
-                      <p className="mt-1 text-[11px] text-slate-500">
+                      <p className="mt-0.5 text-[9px] text-slate-500">
                         {opportunity.company}
                       </p>
-                      <p className="mt-1 text-[11px] font-semibold text-blue-600">
+                      <p className="mt-0.5 text-[9px] font-semibold text-blue-600">
                         {opportunity.action}
                       </p>
                     </div>
@@ -545,7 +553,7 @@ export default function InternshipList() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-white p-4">
+            <div className="rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-white p-3">
               <span className="rounded-full bg-pink-100 px-3 py-1 text-[10px] font-bold uppercase text-pink-600">
                 For students
               </span>
@@ -582,7 +590,7 @@ export default function InternshipList() {
               </button>
             </div>
 
-            <div className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-4">
+            <div className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-3">
               <span className="rounded-full bg-cyan-100 px-3 py-1 text-[10px] font-bold uppercase text-blue-600">
                 For employers
               </span>

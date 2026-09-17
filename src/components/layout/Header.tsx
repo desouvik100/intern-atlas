@@ -38,14 +38,14 @@ export default function Header() {
     <>
       <header
         className={cn(
-          "sticky top-0 z-50 h-16 border-b border-slate-200/80 transition-all duration-200",
+          "sticky top-0 z-50 h-14 border-b border-slate-200/80 transition-all duration-200 lg:h-12",
           scrolled
             ? "bg-white/95 shadow-sm backdrop-blur-md"
             : "bg-white",
         )}
       >
-        <div className="mx-auto flex h-full max-w-[1200px] items-center justify-between px-4 sm:px-6">
-          <div className="flex items-center gap-10 xl:gap-14">
+        <div className="mx-auto flex h-full max-w-[900px] items-center justify-between px-4 lg:px-0">
+          <div className="flex items-center gap-8">
             <button
               type="button"
               aria-label={menuOpen ? "Close navigation" : "Open navigation"}
@@ -60,20 +60,20 @@ export default function Header() {
               href="/"
               aria-label="InternAtlas home"
               onClick={closeMenu}
-              className="shrink-0 text-[23px] font-black tracking-[-0.04em] text-[#071c46]"
+              className="shrink-0 text-[19px] font-black tracking-[-0.04em] text-[#071c46]"
             >
               Intern<span className="text-blue-600">Atlas.</span>
             </Link>
 
             <nav
               aria-label="Primary navigation"
-              className="hidden items-center gap-7 lg:flex xl:gap-9"
+              className="hidden items-center gap-6 lg:flex"
             >
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-[13px] font-semibold text-slate-600 transition-colors hover:text-[#071c46]"
+                  className="text-[11px] font-semibold text-slate-600 transition-colors hover:text-[#071c46]"
                 >
                   {link.label}
                 </Link>
@@ -81,25 +81,25 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-2.5 lg:flex">
             <Link
               href="/#explore"
               aria-label="Search opportunities"
-              className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-[#071c46] shadow-sm transition hover:border-blue-300 hover:bg-blue-50"
+              className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-[#071c46] shadow-sm transition hover:border-blue-300 hover:bg-blue-50"
             >
-              <Search size={18} strokeWidth={2} />
+              <Search size={16} strokeWidth={2} />
             </Link>
 
             <Button
               variant="outline"
-              className="h-10 rounded-full border-slate-200 bg-white px-6 text-[13px] font-bold text-[#071c46] shadow-sm hover:bg-slate-50"
+              className="h-9 rounded-full border-slate-200 bg-white px-5 text-[11px] font-bold text-[#071c46] shadow-sm hover:bg-slate-50"
               asChild
             >
               <Link href="#login">Log in</Link>
             </Button>
 
             <Button
-              className="h-10 rounded-full bg-[#071c46] px-6 text-[13px] font-bold text-white shadow-sm hover:bg-[#0b2c64]"
+              className="h-9 rounded-full bg-[#071c46] px-5 text-[11px] font-bold text-white shadow-sm hover:bg-[#0b2c64]"
               asChild
             >
               <Link href="#signup">Sign up</Link>
@@ -110,7 +110,7 @@ export default function Header() {
 
       <div
         className={cn(
-          "fixed inset-x-0 top-16 z-40 border-b border-slate-200 bg-white px-5 pb-5 shadow-lg transition-all duration-200 lg:hidden",
+          "fixed inset-x-0 top-14 z-40 border-b border-slate-200 bg-white px-5 pb-5 shadow-lg transition-all duration-200 lg:hidden",
           menuOpen
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-3 opacity-0",
