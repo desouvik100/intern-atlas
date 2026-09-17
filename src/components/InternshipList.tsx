@@ -138,69 +138,69 @@ export default function InternshipList() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-blue-100 bg-gradient-to-br from-[#f3f7ff] via-white to-[#fff0f6]">
-        <div className="absolute -right-24 top-4 size-72 rounded-full bg-pink-200/40 blur-3xl" />
-        <div className="absolute left-1/3 top-0 size-72 rounded-full bg-blue-200/30 blur-3xl" />
+        <div className="absolute -right-20 top-0 size-56 rounded-full bg-pink-200/35 blur-3xl" />
+        <div className="absolute left-1/3 top-0 size-56 rounded-full bg-blue-200/25 blur-3xl" />
 
-        <div className="relative mx-auto max-w-[1440px] px-5 py-10 lg:px-10">
-          <div className="flex items-start justify-between gap-8">
+        <div className="relative mx-auto max-w-[1200px] px-4 py-7 sm:px-6">
+          <div className="flex items-start justify-between gap-6">
             <div>
               <p className="text-xs font-black uppercase tracking-wider text-blue-600">
                 For India&apos;s next generation
               </p>
 
-              <h1 className="mt-3 text-4xl font-black tracking-tight text-[#071c46] md:text-5xl">
+              <h1 className="mt-2 text-[34px] font-black leading-[1.05] tracking-tight text-[#071c46] md:text-[40px]">
                 10,000+ Internships{" "}
                 <span className="font-serif italic text-[#c63845]">
                   in India
                 </span>
               </h1>
 
-              <p className="mt-3 text-base text-slate-600">
+              <p className="mt-2 text-sm text-slate-600">
                 Paid, work-from-home and summer internships for students and
                 freshers.
               </p>
             </div>
 
-            <p className="hidden max-w-40 -rotate-6 font-serif text-2xl font-bold italic leading-7 text-[#071c46] lg:block">
+            <p className="hidden max-w-36 -rotate-6 pt-2 font-serif text-xl font-bold italic leading-6 text-[#071c46] lg:block">
               Real opportunities for a brighter tomorrow.
             </p>
           </div>
 
           <form
             onSubmit={handleSearch}
-            className="mt-8 grid overflow-hidden rounded-2xl border border-blue-100 bg-white p-2 shadow-lg shadow-blue-100/60 md:grid-cols-[1fr_280px_auto]"
+            className="mt-5 grid overflow-hidden rounded-xl border border-blue-100 bg-white p-1.5 shadow-md shadow-blue-100/50 md:grid-cols-[1fr_240px_auto]"
           >
-            <label className="flex min-w-0 items-center gap-3 px-4">
-              <Search size={20} className="shrink-0 text-[#071c46]" />
+            <label className="flex min-w-0 items-center gap-2.5 px-3">
+              <Search size={18} className="shrink-0 text-[#071c46]" />
 
               <input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search internships, companies, skills..."
-                className="min-w-0 flex-1 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400"
+                className="min-w-0 flex-1 py-2.5 text-xs text-slate-900 outline-none placeholder:text-slate-400 sm:text-sm"
               />
             </label>
 
-            <label className="flex items-center gap-3 border-t border-slate-100 px-4 md:border-l md:border-t-0">
-              <MapPin size={19} className="shrink-0 text-[#071c46]" />
+            <label className="flex items-center gap-2.5 border-t border-slate-100 px-3 md:border-l md:border-t-0">
+              <MapPin size={17} className="shrink-0 text-[#071c46]" />
 
               <input
                 value={location}
                 onChange={(event) => setLocation(event.target.value)}
                 placeholder="Location"
-                className="min-w-0 flex-1 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400"
+                className="min-w-0 flex-1 py-2.5 text-xs text-slate-900 outline-none placeholder:text-slate-400 sm:text-sm"
               />
             </label>
 
             <button
               type="submit"
-              className="rounded-xl bg-[#06275b] px-9 py-3 text-sm font-bold text-white hover:bg-blue-700"
+              className="rounded-lg bg-[#06275b] px-7 py-2.5 text-sm font-bold text-white hover:bg-blue-700"
             >
               Search
             </button>
           </form>
 
-          <div className="mt-6 flex gap-3 overflow-x-auto pb-2">
+          <div className="mt-4 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
             {quickCategories.map((category) => (
               <button
                 key={category}
@@ -210,13 +210,13 @@ export default function InternshipList() {
                     current === category ? "" : category,
                   )
                 }
-                className={`flex shrink-0 items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold transition ${
+                className={`flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold transition ${
                   selectedCategory === category
                     ? "border-blue-600 bg-blue-600 text-white"
                     : "border-blue-200 bg-white text-[#173768] hover:border-blue-500"
                 }`}
               >
-                <Sparkles size={15} />
+                <Sparkles size={13} />
                 {category}
               </button>
             ))}
@@ -225,13 +225,13 @@ export default function InternshipList() {
       </section>
 
       <main className="bg-gradient-to-br from-[#f8fbff] via-white to-[#f2f7ff] text-[#071c46]">
-        <div className="mx-auto grid max-w-[1440px] gap-5 px-5 py-8 lg:grid-cols-[220px_minmax(0,1fr)_270px] lg:px-10">
+        <div className="mx-auto grid max-w-[1200px] gap-4 px-4 py-6 sm:px-6 lg:grid-cols-[190px_minmax(0,1fr)_240px]">
           {/* Filters */}
-          <aside className="h-fit rounded-2xl border border-blue-100 bg-white p-5 lg:sticky lg:top-24">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+          <aside className="h-fit rounded-xl border border-blue-100 bg-white p-4 lg:sticky lg:top-20">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2">
-                <Filter size={18} className="text-blue-600" />
-                <h2 className="font-extrabold">Filters</h2>
+                <Filter size={16} className="text-blue-600" />
+                <h2 className="text-sm font-extrabold">Filters</h2>
               </div>
 
               <button
@@ -346,7 +346,7 @@ export default function InternshipList() {
 
             <button
               type="button"
-              className="mt-6 w-full rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white hover:bg-blue-700"
+              className="mt-5 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-blue-700"
             >
               Apply filters
             </button>
@@ -354,48 +354,48 @@ export default function InternshipList() {
 
           {/* Internship results */}
           <section className="min-w-0">
-            <div className="mb-4 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-              <h2 className="text-xl font-black">
+            <div className="mb-3 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+              <h2 className="text-lg font-black">
                 {filteredInternships.length} Internships
               </h2>
 
-              <select className="rounded-xl border border-blue-100 bg-white px-4 py-2.5 text-sm text-slate-600 outline-none">
+              <select className="rounded-lg border border-blue-100 bg-white px-3 py-2 text-xs text-slate-600 outline-none">
                 <option>Sort by: Most relevant</option>
                 <option>Newest first</option>
                 <option>Highest stipend</option>
               </select>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {filteredInternships.map((internship, index) => {
                 const saved = savedIds.includes(internship.id);
 
                 return (
                   <article
                     key={internship.id}
-                    className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-xl"
+                    className="rounded-xl border border-blue-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg"
                   >
                     {index === 0 && (
-                      <span className="mb-3 inline-flex rounded-full bg-pink-100 px-3 py-1 text-[10px] font-bold text-pink-600">
+                      <span className="mb-2 inline-flex rounded-full bg-pink-100 px-2.5 py-1 text-[9px] font-bold text-pink-600">
                         Featured
                       </span>
                     )}
 
-                    <div className="flex flex-col justify-between gap-4 sm:flex-row">
-                      <div className="flex min-w-0 gap-4">
-                        <div className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-slate-50 text-xl font-black text-blue-600">
+                    <div className="flex flex-col justify-between gap-3 sm:flex-row">
+                      <div className="flex min-w-0 gap-3">
+                        <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-lg font-black text-blue-600">
                           {internship.company.charAt(0)}
                         </div>
 
                         <div className="min-w-0">
                           <Link
                             href={`/internships/${internship.slug}`}
-                            className="text-lg font-extrabold hover:text-blue-600"
+                            className="text-[15px] font-extrabold leading-5 hover:text-blue-600"
                           >
                             {internship.title}
                           </Link>
 
-                          <p className="mt-0.5 text-sm font-medium text-slate-600">
+                          <p className="mt-0.5 text-xs font-medium text-slate-600">
                             {internship.company}
                           </p>
                         </div>
@@ -405,7 +405,7 @@ export default function InternshipList() {
                         <button
                           type="button"
                           onClick={() => toggleSaved(internship.id)}
-                          className={`inline-flex items-center gap-2 rounded-lg border px-5 py-2 text-xs font-bold ${
+                          className={`inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[11px] font-bold ${
                             saved
                               ? "border-blue-600 bg-blue-50 text-blue-700"
                               : "border-[#173768] bg-white text-[#071c46]"
@@ -420,14 +420,14 @@ export default function InternshipList() {
 
                         <Link
                           href={`/internships/${internship.slug}`}
-                          className="rounded-lg bg-[#06275b] px-6 py-2 text-center text-xs font-bold text-white hover:bg-blue-700"
+                          className="rounded-lg bg-[#06275b] px-4 py-2 text-center text-[11px] font-bold text-white hover:bg-blue-700"
                         >
                           Apply
                         </Link>
                       </div>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-slate-600">
+                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-slate-600">
                       <span className="flex items-center gap-1.5">
                         <MapPin size={14} />
                         {internship.location}
@@ -444,34 +444,34 @@ export default function InternshipList() {
                       </span>
                     </div>
 
-                    <p className="mt-4 line-clamp-2 text-sm leading-6 text-slate-600">
+                    <p className="mt-3 line-clamp-2 text-xs leading-5 text-slate-600">
                       {internship.description}
                     </p>
 
-                    <div className="mt-4 flex flex-wrap gap-2">
+                    <div className="mt-3 flex flex-wrap gap-1.5">
                       {internship.skills.slice(0, 3).map((skill) => (
                         <span
                           key={skill}
-                          className="rounded-full bg-blue-50 px-3 py-1.5 text-[11px] font-medium text-blue-700"
+                          className="rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-medium text-blue-700"
                         >
                           {skill}
                         </span>
                       ))}
 
                       {internship.skills.length > 3 && (
-                        <span className="rounded-full bg-slate-100 px-3 py-1.5 text-[11px] font-medium text-slate-600">
+                        <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-medium text-slate-600">
                           +{internship.skills.length - 3}
                         </span>
                       )}
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-3">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold text-emerald-700">
+                    <div className="mt-3 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-3">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold text-emerald-700">
                         <Check size={13} />
                         {internship.stipend}
                       </span>
 
-                      <span className="text-xs text-slate-400">
+                      <span className="text-[11px] text-slate-400">
                         Posted {internship.posted}
                       </span>
                     </div>
@@ -480,7 +480,7 @@ export default function InternshipList() {
               })}
 
               {filteredInternships.length === 0 && (
-                <div className="rounded-2xl border border-dashed border-blue-200 bg-white px-6 py-16 text-center">
+                <div className="rounded-xl border border-dashed border-blue-200 bg-white px-6 py-12 text-center">
                   <Search size={35} className="mx-auto text-blue-300" />
 
                   <h3 className="mt-4 text-lg font-extrabold">
@@ -504,8 +504,8 @@ export default function InternshipList() {
           </section>
 
           {/* Right sidebar */}
-          <aside className="space-y-5">
-            <div className="rounded-2xl border border-blue-100 bg-white p-4">
+          <aside className="space-y-4">
+            <div className="rounded-xl border border-blue-100 bg-white p-4">
               <div className="flex items-center justify-between">
                 <h2 className="text-sm font-extrabold">
                   Featured Opportunities
@@ -519,13 +519,13 @@ export default function InternshipList() {
                 </Link>
               </div>
 
-              <div className="mt-4 divide-y divide-slate-100">
+              <div className="mt-3 divide-y divide-slate-100">
                 {featuredOpportunities.map((opportunity) => (
                   <div
                     key={opportunity.title}
-                    className="flex items-center gap-3 py-3"
+                    className="flex items-center gap-2.5 py-2.5"
                   >
-                    <span className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-slate-50 text-xs font-black text-blue-600">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-[10px] font-black text-blue-600">
                       {opportunity.logo}
                     </span>
 
@@ -545,16 +545,16 @@ export default function InternshipList() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-pink-200 bg-gradient-to-br from-pink-50 to-white p-6">
+            <div className="rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-white p-4">
               <span className="rounded-full bg-pink-100 px-3 py-1 text-[10px] font-bold uppercase text-pink-600">
                 For students
               </span>
 
-              <h2 className="mt-4 text-2xl font-black leading-7">
+              <h2 className="mt-3 text-lg font-black leading-6">
                 Create your free profile to get matched
               </h2>
 
-              <div className="mt-5 space-y-3">
+              <div className="mt-4 space-y-2.5">
                 {[
                   "Apply in one click",
                   "Get noticed by recruiters",
@@ -563,7 +563,7 @@ export default function InternshipList() {
                 ].map((benefit) => (
                   <p
                     key={benefit}
-                    className="flex items-center gap-2 text-sm text-slate-700"
+                    className="flex items-center gap-2 text-xs text-slate-700"
                   >
                     <span className="flex size-5 items-center justify-center rounded-full bg-white text-blue-600">
                       <Check size={13} />
@@ -575,32 +575,32 @@ export default function InternshipList() {
 
               <button
                 type="button"
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#06275b] px-4 py-3 text-sm font-bold text-white"
+                className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-[#06275b] px-4 py-2.5 text-xs font-bold text-white"
               >
                 Create your account
                 <ArrowRight size={15} />
               </button>
             </div>
 
-            <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-6">
+            <div className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-4">
               <span className="rounded-full bg-cyan-100 px-3 py-1 text-[10px] font-bold uppercase text-blue-600">
                 For employers
               </span>
 
-              <GraduationCap size={34} className="mt-5 text-blue-600" />
+              <GraduationCap size={28} className="mt-4 text-blue-600" />
 
-              <h2 className="mt-3 text-2xl font-black leading-7">
+              <h2 className="mt-3 text-lg font-black leading-6">
                 Hire talented students from InternAtlas
               </h2>
 
-              <p className="mt-3 text-sm leading-6 text-slate-600">
+              <p className="mt-2 text-xs leading-5 text-slate-600">
                 Post internships, reach qualified students and build your
                 campus presence.
               </p>
 
               <Link
                 href="/employer/internships/new"
-                className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-blue-500 bg-white px-4 py-3 text-sm font-bold text-blue-600"
+                className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-blue-500 bg-white px-4 py-2.5 text-xs font-bold text-blue-600"
               >
                 Hire on InternAtlas
                 <ArrowRight size={15} />
@@ -625,14 +625,14 @@ function FilterInput({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="mt-5 block">
+    <label className="mt-4 block">
       <span className="text-xs font-extrabold text-[#071c46]">{label}</span>
 
       <input
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="mt-2 w-full rounded-lg border border-blue-100 px-3 py-2.5 text-xs text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-500"
+        className="mt-1.5 w-full rounded-lg border border-blue-100 px-2.5 py-2 text-[11px] text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-500"
       />
     </label>
   );
@@ -646,9 +646,9 @@ function FilterSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-6">
+    <section className="mt-5">
       <h3 className="text-xs font-extrabold text-[#071c46]">{title}</h3>
-      <div className="mt-3 space-y-2.5">{children}</div>
+      <div className="mt-2.5 space-y-2">{children}</div>
     </section>
   );
 }
@@ -663,12 +663,12 @@ function FilterCheckbox({
   onChange: () => void;
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-2 text-xs text-slate-600">
+    <label className="flex cursor-pointer items-center gap-2 text-[11px] text-slate-600">
       <input
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="size-4 rounded border-blue-200 accent-blue-600"
+        className="size-3.5 rounded border-blue-200 accent-blue-600"
       />
       {label}
     </label>
