@@ -11,9 +11,13 @@ import {
   Users,
 } from "lucide-react";
 import Header from "@/components/Header";
-import { internships } from "@/data/internships";
+import { listInternships } from "@/lib/internship-db";
 
-export default function EmployerInternshipsPage() {
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
+
+export default async function EmployerInternshipsPage() {
+  const internships = await listInternships();
   return (
     <div className="min-h-screen bg-[#f6f9ff] text-[#071c46]">
       <Header />
@@ -46,7 +50,7 @@ export default function EmployerInternshipsPage() {
 
         <div className="mx-auto max-w-[1180px] px-5 py-7 sm:px-8 lg:py-9">
           <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <StatCard title="Active roles" value="4" change="All roles live" icon={<BriefcaseBusiness size={19} />} tone="blue" />
+            <StatCard title="Active roles" value={String(internships.length)} change="All roles live" icon={<BriefcaseBusiness size={19} />} tone="blue" />
             <StatCard title="Total views" value="1,248" change="+18.2% this month" icon={<Eye size={19} />} tone="cyan" />
             <StatCard title="Applications" value="86" change="12 new this week" icon={<Users size={19} />} tone="rose" />
             <StatCard title="Closing soon" value="2" change="Review before Friday" icon={<CalendarClock size={19} />} tone="amber" />
