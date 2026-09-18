@@ -19,11 +19,39 @@ const inputClass =
 
 export default function PostInternshipPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setSubmitting(true);
+    setSubmitError("");
+
+    const form = event.currentTarget;
+    const values = Object.fromEntries(new FormData(form).entries());
+
+    try {
+      const response = await fetch("/api/internships", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || "Unable to submit internship");
+      }
+
+      form.reset();
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Unable to submit internship",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -55,6 +83,12 @@ export default function PostInternshipPage() {
             </div>
           )}
 
+          {submitError && (
+            <div className="mb-5 rounded-2xl border border-rose-200 bg-rose-50 p-5 text-sm font-bold text-rose-700">
+              {submitError}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-5">
             <FormSection icon={<FileText size={18} />} step="01" title="Basic information" description="Help students understand the role at a glance.">
               <div className="grid gap-5 md:grid-cols-2">
@@ -82,7 +116,7 @@ export default function PostInternshipPage() {
               <p className="text-[10px] leading-4 text-[#8290a5]">By submitting, you confirm that this opportunity is genuine and free to apply.</p>
               <div className="flex gap-3">
                 <Link href="/employer/internships" className="inline-flex h-11 flex-1 items-center justify-center rounded-full border border-[#dbe7fa] px-5 text-[12px] font-bold text-[#526582] hover:border-[#1769e8] hover:text-[#1769e8] sm:flex-none">Save draft</Link>
-                <button type="submit" className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full bg-[#1769e8] px-6 text-[12px] font-extrabold text-white shadow-lg shadow-blue-200 hover:-translate-y-0.5 hover:bg-blue-700 sm:flex-none"><Send size={16} /> Submit for review</button>
+                <button disabled={submitting} type="submit" className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full bg-[#1769e8] px-6 text-[12px] font-extrabold text-white shadow-lg shadow-blue-200 hover:-translate-y-0.5 hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"><Send size={16} /> {submitting ? "Submitting..." : "Submit for review"}</button>
               </div>
             </div>
           </form>
