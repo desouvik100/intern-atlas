@@ -1,4 +1,3 @@
-import { env } from "cloudflare:workers";
 import type { Internship } from "@/data/internships";
 
 type InternshipRow = {
@@ -21,6 +20,11 @@ type InternshipRow = {
 };
 
 export type InternshipInput = Omit<Internship, "id">;
+
+async function getDatabase() {
+  const { env } = await import("cloudflare:workers");
+  return env.intern_atlas_db;
+}
 
 function parseList(value: string): string[] {
   try {
@@ -61,7 +65,8 @@ const selectColumns = `
 `;
 
 export async function listInternships(): Promise<Internship[]> {
-  const result = await env.intern_atlas_db
+  const database = await getDatabase();
+  const result = await database
     .prepare(
       `SELECT ${selectColumns}
        FROM internships
@@ -76,7 +81,8 @@ export async function listInternships(): Promise<Internship[]> {
 export async function findInternshipBySlug(
   slug: string,
 ): Promise<Internship | null> {
-  const row = await env.intern_atlas_db
+  const database = await getDatabase();
+  const row = await database
     .prepare(
       `SELECT ${selectColumns}
        FROM internships
@@ -92,7 +98,8 @@ export async function findInternshipBySlug(
 export async function createInternship(
   internship: InternshipInput,
 ): Promise<Internship> {
-  await env.intern_atlas_db
+  const database = await getDatabase();
+  await database
     .prepare(
       `INSERT INTO internships (
         slug, title, company, location, work_mode, stipend, duration,
@@ -132,7 +139,8 @@ export async function updateInternship(
   slug: string,
   updates: Partial<InternshipInput>,
 ): Promise<Internship | null> {
-  await env.intern_atlas_db
+  const database = await getDatabase();
+  await database
     .prepare(
       `UPDATE internships SET
         title = COALESCE(?, title),
@@ -177,7 +185,8 @@ export async function updateInternship(
 }
 
 export async function deleteInternship(slug: string): Promise<boolean> {
-  const result = await env.intern_atlas_db
+  const database = await getDatabase();
+  const result = await database
     .prepare(
       `UPDATE internships
        SET status = 'deleted', updated_at = CURRENT_TIMESTAMP
@@ -196,7 +205,8 @@ export async function createApplication(input: {
   resumeUrl: string;
   coverLetter: string;
 }): Promise<number> {
-  const result = await env.intern_atlas_db
+  const database = await getDatabase();
+  const result = await database
     .prepare(
       `INSERT INTO applications (
         internship_id, full_name, email, resume_url, cover_letter
