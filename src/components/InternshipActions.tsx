@@ -15,6 +15,8 @@ export default function InternshipActions({
   const [saved, setSaved] = useState(false);
   const [showApplication, setShowApplication] = useState(false);
   const [applicationSubmitted, setApplicationSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
@@ -48,16 +50,47 @@ export default function InternshipActions({
     setSaved(!saved);
   }
 
-  function handleApplicationSubmit(
+  async function handleApplicationSubmit(
     event: FormEvent<HTMLFormElement>,
   ) {
     event.preventDefault();
-    setApplicationSubmitted(true);
+    setSubmitting(true);
+    setSubmitError("");
+
+    const values = new FormData(event.currentTarget);
+
+    try {
+      const response = await fetch("/api/applications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          internshipId,
+          fullName: values.get("name"),
+          email: values.get("email"),
+          resumeUrl: values.get("resume"),
+          coverLetter: values.get("coverLetter"),
+        }),
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || "Unable to submit application");
+      }
+
+      setApplicationSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Unable to submit application",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function closeApplicationModal() {
     setShowApplication(false);
     setApplicationSubmitted(false);
+    setSubmitError("");
   }
 
   return (
@@ -140,6 +173,11 @@ export default function InternshipActions({
                 onSubmit={handleApplicationSubmit}
                 className="mt-7 space-y-5"
               >
+                {submitError && (
+                  <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+                    {submitError}
+                  </p>
+                )}
                 <label className="block text-sm font-semibold text-slate-700">
                   Full name
 
@@ -189,9 +227,10 @@ export default function InternshipActions({
 
                 <button
                   type="submit"
-                  className="w-full rounded-full bg-[#1769e8] px-5 py-3.5 font-bold text-white transition hover:bg-blue-700"
+                  disabled={submitting}
+                  className="w-full rounded-full bg-[#1769e8] px-5 py-3.5 font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Submit application
+                  {submitting ? "Submitting..." : "Submit application"}
                 </button>
               </form>
             )}
