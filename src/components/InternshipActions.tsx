@@ -15,13 +15,18 @@ export default function InternshipActions({
   const [saved, setSaved] = useState(false);
   const [showApplication, setShowApplication] = useState(false);
   const [applicationSubmitted, setApplicationSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
-    const savedItems: number[] = JSON.parse(
-      localStorage.getItem("savedInternships") || "[]",
-    );
+    const frameId = window.requestAnimationFrame(() => {
+      const savedItems: number[] = JSON.parse(
+        localStorage.getItem("savedInternships") || "[]",
+      );
+      setSaved(savedItems.includes(internshipId));
+    });
 
-    setSaved(savedItems.includes(internshipId));
+    return () => window.cancelAnimationFrame(frameId);
   }, [internshipId]);
 
   function handleSave() {
@@ -45,16 +50,47 @@ export default function InternshipActions({
     setSaved(!saved);
   }
 
-  function handleApplicationSubmit(
+  async function handleApplicationSubmit(
     event: FormEvent<HTMLFormElement>,
   ) {
     event.preventDefault();
-    setApplicationSubmitted(true);
+    setSubmitting(true);
+    setSubmitError("");
+
+    const values = new FormData(event.currentTarget);
+
+    try {
+      const response = await fetch("/api/applications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          internshipId,
+          fullName: values.get("name"),
+          email: values.get("email"),
+          resumeUrl: values.get("resume"),
+          coverLetter: values.get("coverLetter"),
+        }),
+      });
+      const result = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || "Unable to submit application");
+      }
+
+      setApplicationSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Unable to submit application",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function closeApplicationModal() {
     setShowApplication(false);
     setApplicationSubmitted(false);
+    setSubmitError("");
   }
 
   return (
@@ -62,7 +98,7 @@ export default function InternshipActions({
       <button
         type="button"
         onClick={() => setShowApplication(true)}
-        className="mt-6 w-full rounded-xl bg-indigo-600 px-5 py-3.5 font-bold text-white transition hover:bg-indigo-700"
+        className="mt-6 w-full rounded-full bg-[#1769e8] px-5 py-3.5 text-[13px] font-extrabold text-white shadow-lg shadow-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-700"
       >
         Apply now
       </button>
@@ -72,8 +108,8 @@ export default function InternshipActions({
         onClick={handleSave}
         className={`mt-3 flex w-full items-center justify-center gap-2 rounded-xl border px-5 py-3.5 font-semibold transition ${
           saved
-            ? "border-indigo-600 bg-indigo-50 text-indigo-700"
-            : "border-slate-200 text-slate-700 hover:border-indigo-300 hover:text-indigo-600"
+            ? "border-[#1769e8] bg-blue-50 text-[#1769e8]"
+            : "border-[#bfd5f7] text-[#071c46] hover:border-[#1769e8] hover:text-[#1769e8]"
         }`}
       >
         <Bookmark
@@ -86,10 +122,10 @@ export default function InternshipActions({
 
       {showApplication && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
-          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl bg-white p-7 shadow-2xl">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-blue-100 bg-white p-7 shadow-2xl">
             <div className="flex items-start justify-between gap-5">
               <div>
-                <p className="text-sm font-semibold text-indigo-600">
+                <p className="text-sm font-semibold text-[#1769e8]">
                   Internship application
                 </p>
 
@@ -127,7 +163,7 @@ export default function InternshipActions({
                 <button
                   type="button"
                   onClick={closeApplicationModal}
-                  className="mt-6 rounded-xl bg-indigo-600 px-6 py-3 font-semibold text-white transition hover:bg-indigo-700"
+                  className="mt-6 rounded-full bg-[#1769e8] px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
                 >
                   Done
                 </button>
@@ -137,6 +173,11 @@ export default function InternshipActions({
                 onSubmit={handleApplicationSubmit}
                 className="mt-7 space-y-5"
               >
+                {submitError && (
+                  <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+                    {submitError}
+                  </p>
+                )}
                 <label className="block text-sm font-semibold text-slate-700">
                   Full name
 
@@ -144,7 +185,7 @@ export default function InternshipActions({
                     required
                     name="name"
                     placeholder="Enter your full name"
-                    className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
@@ -156,7 +197,7 @@ export default function InternshipActions({
                     type="email"
                     name="email"
                     placeholder="you@example.com"
-                    className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
@@ -168,7 +209,7 @@ export default function InternshipActions({
                     type="url"
                     name="resume"
                     placeholder="https://drive.google.com/..."
-                    className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
@@ -180,15 +221,16 @@ export default function InternshipActions({
                     name="coverLetter"
                     rows={4}
                     placeholder="Briefly describe your skills and interest..."
-                    className="mt-2 w-full resize-none rounded-xl border border-slate-200 px-4 py-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
+                    className="mt-2 w-full resize-none rounded-xl border border-blue-100 px-4 py-3 text-slate-900 outline-none transition focus:border-[#1769e8] focus:ring-4 focus:ring-blue-50"
                   />
                 </label>
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-indigo-600 px-5 py-3.5 font-bold text-white transition hover:bg-indigo-700"
+                  disabled={submitting}
+                  className="w-full rounded-full bg-[#1769e8] px-5 py-3.5 font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Submit application
+                  {submitting ? "Submitting..." : "Submit application"}
                 </button>
               </form>
             )}
