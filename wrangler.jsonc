@@ -6,6 +6,14 @@
     "nodejs_compat"
   ],
   "main": "vinext/server/fetch-handler",
+  "d1_databases": [
+    {
+      "binding": "intern_atlas_db",
+      "database_name": "intern-atlas-db",
+      "database_id": "2e44edc5-46d3-4b67-8552-1b82958d2c2d",
+      "remote": true
+    }
+  ],
   "build": {
     "command": "npx vite build"
   },
