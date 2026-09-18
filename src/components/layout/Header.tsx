@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { AuthChoiceModal, type AuthMode } from "@/components/ui/AuthChoiceModal";
 
 const NAV_LINKS = [
   { label: "Opportunities", href: "/#explore" },
@@ -12,11 +13,13 @@ const NAV_LINKS = [
   { label: "Scholarships", href: "/#scholarships" },
   { label: "For Colleges", href: "/#colleges" },
   { label: "Resources", href: "/#resources" },
+  { label: "For Employers", href: "/employer/login" },
 ];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<AuthMode | null>(null);
 
   const handleScroll = useCallback(() => {
     setScrolled(window.scrollY > 4);
@@ -93,16 +96,16 @@ export default function Header() {
             <Button
               variant="outline"
               className="h-9 rounded-full border-slate-200 bg-white px-5 text-[11px] font-bold text-[#071c46] shadow-sm hover:bg-slate-50"
-              asChild
+              onClick={() => setAuthMode("login")}
             >
-              <Link href="#login">Log in</Link>
+              Log in
             </Button>
 
             <Button
               className="h-9 rounded-full bg-[#071c46] px-5 text-[11px] font-bold text-white shadow-sm hover:bg-[#0b2c64]"
-              asChild
+              onClick={() => setAuthMode("signup")}
             >
-              <Link href="#signup">Sign up</Link>
+              Sign up
             </Button>
           </div>
         </div>
@@ -133,22 +136,30 @@ export default function Header() {
           <Button
             variant="outline"
             className="h-10 rounded-full border-slate-200 font-bold text-[#071c46]"
-            asChild
+            onClick={() => {
+              closeMenu();
+              setAuthMode("login");
+            }}
           >
-            <Link href="#login" onClick={closeMenu}>
-              Log in
-            </Link>
+            Log in
           </Button>
           <Button
             className="h-10 rounded-full bg-[#071c46] font-bold text-white"
-            asChild
+            onClick={() => {
+              closeMenu();
+              setAuthMode("signup");
+            }}
           >
-            <Link href="#signup" onClick={closeMenu}>
-              Sign up
-            </Link>
+            Sign up
           </Button>
         </div>
       </div>
+
+      <AuthChoiceModal
+        open={authMode !== null}
+        mode={authMode ?? "login"}
+        onClose={() => setAuthMode(null)}
+      />
     </>
   );
 }

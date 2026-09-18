@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Compass,
   Menu,
@@ -9,19 +10,53 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import { AuthChoiceModal, type AuthMode } from "@/components/ui/AuthChoiceModal";
 
 const navigation = [
   { label: "Opportunities", href: "/internships" },
   { label: "Events", href: "/#events" },
   { label: "Scholarships", href: "/#scholarships" },
-  { label: "For Colleges", href: "/employer/internships" },
+  { label: "For Colleges", href: "/#colleges" },
+  { label: "For Employers", href: "/employer/login" },
   { label: "Resources", href: "/#resources" },
 ];
 
 export default function Header() {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<AuthMode | null>(null);
+  const [signedIn, setSignedIn] = useState(false);
+
+  // Swaps the auth buttons for dashboard controls when an employer session exists.
+  useEffect(() => {
+    let active = true;
+
+    fetch("/api/employer/profile")
+      .then((response) => {
+        if (active) {
+          setSignedIn(response.ok);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setSignedIn(false);
+        }
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
+
+  async function handleLogout() {
+    closeMenu();
+    await fetch("/api/employer/logout", { method: "POST" });
+    setSignedIn(false);
+    router.push("/");
+    router.refresh();
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-blue-100 bg-white/95 backdrop-blur-md">
@@ -70,20 +105,44 @@ export default function Header() {
             <Search size={18} />
           </button>
 
-          <Link
-            href="#login"
-            className="flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-blue-200 px-5 text-[13px] font-bold text-[#071c46] transition-colors hover:border-blue-600 hover:bg-blue-50"
-          >
-            <UserRound size={16} />
-            Log in
-          </Link>
+          {signedIn ? (
+            <>
+              <Link
+                href="/employer/internships"
+                className="flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-blue-200 px-5 text-[13px] font-bold text-[#071c46] transition-colors hover:border-blue-600 hover:bg-blue-50"
+              >
+                <UserRound size={16} />
+                Dashboard
+              </Link>
 
-          <Link
-            href="#signup"
-            className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-[#06275b] px-5 text-[13px] font-bold text-white transition-colors hover:bg-blue-700"
-          >
-            Sign up
-          </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-[#06275b] px-5 text-[13px] font-bold text-white transition-colors hover:bg-blue-700"
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => setAuthMode("login")}
+                className="flex h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-blue-200 px-5 text-[13px] font-bold text-[#071c46] transition-colors hover:border-blue-600 hover:bg-blue-50"
+              >
+                <UserRound size={16} />
+                Log in
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setAuthMode("signup")}
+                className="flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-full bg-[#06275b] px-5 text-[13px] font-bold text-white transition-colors hover:bg-blue-700"
+              >
+                Sign up
+              </button>
+            </>
+          )}
         </div>
 
         <button
@@ -119,26 +178,61 @@ export default function Header() {
             ))}
 
             <div className="mt-5 grid grid-cols-2 gap-3">
-              <Link
-                href="#login"
-                onClick={closeMenu}
-                className="flex h-11 items-center justify-center gap-2 rounded-full border border-blue-200 text-sm font-bold text-[#071c46]"
-              >
-                <UserRound size={17} />
-                Log in
-              </Link>
+              {signedIn ? (
+                <>
+                  <Link
+                    href="/employer/internships"
+                    onClick={closeMenu}
+                    className="flex h-11 items-center justify-center gap-2 rounded-full border border-blue-200 text-sm font-bold text-[#071c46]"
+                  >
+                    <UserRound size={17} />
+                    Dashboard
+                  </Link>
 
-              <Link
-                href="#signup"
-                onClick={closeMenu}
-                className="flex h-11 items-center justify-center rounded-full bg-[#06275b] text-sm font-bold text-white"
-              >
-                Sign up
-              </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="flex h-11 items-center justify-center rounded-full bg-[#06275b] text-sm font-bold text-white"
+                  >
+                    Log out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      closeMenu();
+                      setAuthMode("login");
+                    }}
+                    className="flex h-11 items-center justify-center gap-2 rounded-full border border-blue-200 text-sm font-bold text-[#071c46]"
+                  >
+                    <UserRound size={17} />
+                    Log in
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      closeMenu();
+                      setAuthMode("signup");
+                    }}
+                    className="flex h-11 items-center justify-center rounded-full bg-[#06275b] text-sm font-bold text-white"
+                  >
+                    Sign up
+                  </button>
+                </>
+              )}
             </div>
           </nav>
         </div>
       )}
+
+      <AuthChoiceModal
+        open={authMode !== null}
+        mode={authMode ?? "login"}
+        onClose={() => setAuthMode(null)}
+      />
     </header>
   );
 }
