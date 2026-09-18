@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 export const runtime = "edge";
+export const dynamic = "force-dynamic";
 import {
   ArrowLeft,
   BadgeCheck,
@@ -15,7 +16,7 @@ import {
 } from "lucide-react";
 import Header from "@/components/Header";
 import InternshipActions from "@/components/InternshipActions";
-import { getInternship } from "@/data/internships";
+import { findInternshipBySlug } from "@/lib/internship-db";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -23,7 +24,7 @@ type PageProps = {
 
 export default async function InternshipDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const internship = getInternship(slug);
+  const internship = await findInternshipBySlug(slug);
 
   if (!internship) notFound();
 
