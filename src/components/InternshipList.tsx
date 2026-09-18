@@ -1,4 +1,6 @@
 "use client";
+import { LogoMark } from "@/components/ui/LogoMark";
+import { resolveLogoUrl } from "@/lib/logo";
 
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
@@ -28,30 +30,35 @@ const quickCategories = [
 const featuredOpportunities = [
   {
     logo: "GOI",
+    website: "https://www.india.gov.in",
     title: "Digital Shram Sankalp",
     company: "Government of India",
     action: "Register now",
   },
   {
     logo: "MS",
+    website: "https://www.marutisuzuki.com",
     title: "Maruti Suzuki XCELerate 2026",
     company: "Maruti Suzuki",
     action: "Register now",
   },
   {
     logo: "C",
+    website: "https://www.coursera.org",
     title: "Unlock Unlimited Learning",
     company: "Coursera",
     action: "₹7,499/year",
   },
   {
     logo: "G",
+    website: "https://gemini.google.com",
     title: "Fund My Crazy",
     company: "Google Gemini",
     action: "Register now",
   },
   {
     logo: "ET",
+    website: "https://economictimes.indiatimes.com",
     title: "ET AI Hackathon",
     company: "The Economic Times",
     action: "Explore now",
@@ -395,9 +402,12 @@ export default function InternshipList({
 
                     <div className="flex flex-col justify-between gap-2 sm:flex-row">
                       <div className="flex min-w-0 gap-3">
-                        <div className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-base font-black text-blue-600">
-                          {internship.company.charAt(0)}
-                        </div>
+                        <LogoMark
+                          src={resolveLogoUrl(internship.logoUrl, internship.companyWebsite)}
+                          name={internship.company}
+                          className="size-11 shrink-0 rounded-lg border border-blue-100 bg-slate-50 text-base font-black text-blue-600"
+                          imageClassName="size-7"
+                        />
 
                         <div className="min-w-0">
                           <Link
@@ -537,9 +547,12 @@ export default function InternshipList({
                     key={opportunity.title}
                     className="flex items-center gap-2.5 rounded-lg border border-blue-50 bg-white p-2 shadow-sm"
                   >
-                    <span className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-[10px] font-black text-blue-600">
-                      {opportunity.logo}
-                    </span>
+                    <LogoMark
+                      src={resolveLogoUrl(null, opportunity.website)}
+                      name={opportunity.company}
+                      className="size-11 shrink-0 rounded-lg border border-blue-100 bg-slate-50 text-[10px] font-black text-blue-600"
+                      imageClassName="size-7"
+                    />
 
                     <div className="min-w-0">
                       <p className="text-[10px] font-extrabold leading-[13px]">

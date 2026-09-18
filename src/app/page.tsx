@@ -9,13 +9,37 @@ import { BeyondJobs }          from "@/components/sections/BeyondJobs";
 import { Testimonial }         from "@/components/sections/Testimonial";
 import { BottomCTA }           from "@/components/sections/BottomCTA";
 
-import {
-  latestInternships,
-  latestJobs,
-  categories,
-} from "@/data/mock-opportunities";
+import { categories } from "@/data/categories";
+import { listInternships } from "@/lib/internship-db";
+import { listOpportunitiesByType } from "@/lib/opportunity-db";
+import { resolveLogoUrl } from "@/lib/logo";
+import type { Opportunity } from "@/lib/types";
 
-export default function HomePage() {
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [internships, latestJobs] = await Promise.all([
+    listInternships(),
+    listOpportunitiesByType("job", 8),
+  ]);
+
+  const latestInternships: Opportunity[] = internships
+    .slice(0, 8)
+    .map((internship) => ({
+      id: String(internship.id),
+      title: internship.title,
+      organization: internship.company,
+      type: "internship",
+      location: `${internship.workMode} - ${internship.location}`,
+      compensation: internship.stipend,
+      applyBy: internship.applyBy,
+      badges: ["Internship", internship.category],
+      timeLabel: internship.posted,
+      href: `/internships/${internship.slug}`,
+      logoUrl: resolveLogoUrl(internship.logoUrl, internship.companyWebsite),
+    }));
+
   return (
     <>
       <Header />
@@ -23,27 +47,31 @@ export default function HomePage() {
         <HeroSection />
         <ExploreCategories categories={categories} />
 
-        <OpportunitySection
-          eyebrow="FEATURED"
-          title="Top internships"
-          highlightText="this week."
-          opportunities={latestInternships}
-          viewAllLabel="View all internships"
-          bgWhite={false}
-        />
+        {latestInternships.length > 0 && (
+          <OpportunitySection
+            eyebrow="FEATURED"
+            title="Top internships"
+            highlightText="this week."
+            opportunities={latestInternships}
+            viewAllLabel="View all internships"
+            bgWhite={false}
+          />
+        )}
 
         <CompetitionsBanner />
 
         <HackathonsBanner />
 
-        <OpportunitySection
-          eyebrow="LATEST"
-          title="Entry-level jobs to kickstart"
-          highlightText="your career."
-          opportunities={latestJobs}
-          viewAllLabel="View all jobs"
-          bgWhite={false}
-        />
+        {latestJobs.length > 0 && (
+          <OpportunitySection
+            eyebrow="LATEST"
+            title="Entry-level jobs to kickstart"
+            highlightText="your career."
+            opportunities={latestJobs}
+            viewAllLabel="View all jobs"
+            bgWhite={false}
+          />
+        )}
 
         <BeyondJobs />
 

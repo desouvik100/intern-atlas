@@ -4,6 +4,7 @@ import {
   listInternships,
   type InternshipInput,
 } from "@/lib/internship-db";
+import { getCurrentEmployer } from "@/lib/employer-session";
 
 export const runtime = "edge";
 
@@ -50,10 +51,27 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const employer = await getCurrentEmployer();
+
+  if (!employer) {
+    return NextResponse.json(
+      { error: "Sign in to your employer account to post an internship" },
+      { status: 401 },
+    );
+  }
+
+  if (!employer.profileCompleted) {
+    return NextResponse.json(
+      { error: "Complete your company profile before posting an internship" },
+      { status: 403 },
+    );
+  }
+
   try {
     const body = (await request.json()) as Record<string, unknown>;
     const title = text(body.title);
-    const company = text(body.company);
+    // The company name always comes from the verified account, never the form.
+    const company = employer.companyName;
     const location = text(body.location);
     const workMode = text(body.workMode);
     const stipend = text(body.stipend);
@@ -96,9 +114,13 @@ export async function POST(request: Request) {
       responsibilities: list(body.responsibilities),
       requirements: list(body.requirements),
       perks: list(body.perks),
+      // Branding comes from the employer profile, so listing cards always show
+      // the real company logo.
+      logoUrl: employer.logoUrl || undefined,
+      companyWebsite: employer.companyWebsite || undefined,
     };
 
-    return NextResponse.json(await createInternship(internship), {
+    return NextResponse.json(await createInternship(internship, employer.id), {
       status: 201,
     });
   } catch {

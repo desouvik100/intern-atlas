@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { LogoMark } from "@/components/ui/LogoMark";
+import { resolveLogoUrl } from "@/lib/logo";
 import { notFound } from "next/navigation";
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -45,9 +47,12 @@ export default async function InternshipDetailPage({ params }: PageProps) {
 
           <div className="mt-7 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <div className="flex items-start gap-4 sm:gap-5">
-              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl border border-blue-100 bg-white text-2xl font-black text-[#1769e8] shadow-[0_10px_28px_rgba(7,28,70,0.08)] sm:size-20">
-                {internship.company.charAt(0)}
-              </div>
+              <LogoMark
+                src={resolveLogoUrl(internship.logoUrl, internship.companyWebsite)}
+                name={internship.company}
+                className="size-16 shrink-0 rounded-2xl border border-blue-100 bg-white text-2xl font-black text-[#1769e8] shadow-[0_10px_28px_rgba(7,28,70,0.08)] sm:size-20"
+                imageClassName="size-10 sm:size-12"
+              />
               <div>
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-700">

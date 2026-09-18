@@ -22,7 +22,9 @@ export interface Opportunity {
   compensation?: string;
   applyBy?: string;
   daysLeft?: number;
-  logoVariant: string;
+  logoVariant?: string;
+  logoUrl?: string | null;
+  organizationWebsite?: string;
   badges?: string[];
   timeLabel?: string;
   href?: string;

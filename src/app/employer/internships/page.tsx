@@ -10,14 +10,26 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+import { redirect } from "next/navigation";
 import Header from "@/components/Header";
-import { listInternships } from "@/lib/internship-db";
+import { listInternshipsByEmployer } from "@/lib/internship-db";
+import { getCurrentEmployer } from "@/lib/employer-session";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export default async function EmployerInternshipsPage() {
-  const internships = await listInternships();
+  const employer = await getCurrentEmployer();
+
+  if (!employer) {
+    redirect("/employer/login");
+  }
+
+  if (!employer.profileCompleted) {
+    redirect("/employer/profile");
+  }
+
+  const internships = await listInternshipsByEmployer(employer.id);
   return (
     <div className="min-h-screen bg-[#f6f9ff] text-[#071c46]">
       <Header />

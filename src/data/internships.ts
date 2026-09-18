@@ -15,6 +15,8 @@ export type Internship = {
   responsibilities: string[];
   requirements: string[];
   perks: string[];
+  logoUrl?: string;
+  companyWebsite?: string;
 };
 
 export const internships: Internship[] = [

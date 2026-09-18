@@ -17,6 +17,8 @@ type InternshipRow = {
   responsibilities: string;
   requirements: string;
   perks: string;
+  logo_url: string | null;
+  company_website: string | null;
 };
 
 export type InternshipInput = Omit<Internship, "id">;
@@ -55,13 +57,15 @@ function mapRow(row: InternshipRow): Internship {
     responsibilities: parseList(row.responsibilities),
     requirements: parseList(row.requirements),
     perks: parseList(row.perks),
+    logoUrl: row.logo_url ?? undefined,
+    companyWebsite: row.company_website ?? undefined,
   };
 }
 
 const selectColumns = `
   id, slug, title, company, location, work_mode, stipend, duration,
   posted, apply_by, category, description, skills, responsibilities,
-  requirements, perks
+  requirements, perks, logo_url, company_website
 `;
 
 export async function listInternships(): Promise<Internship[]> {
@@ -73,6 +77,23 @@ export async function listInternships(): Promise<Internship[]> {
        WHERE status = 'active'
        ORDER BY id DESC`,
     )
+    .all<InternshipRow>();
+
+  return result.results.map(mapRow);
+}
+
+export async function listInternshipsByEmployer(
+  employerId: number,
+): Promise<Internship[]> {
+  const database = await getDatabase();
+  const result = await database
+    .prepare(
+      `SELECT ${selectColumns}
+       FROM internships
+       WHERE employer_id = ? AND status != 'deleted'
+       ORDER BY id DESC`,
+    )
+    .bind(employerId)
     .all<InternshipRow>();
 
   return result.results.map(mapRow);
@@ -97,6 +118,7 @@ export async function findInternshipBySlug(
 
 export async function createInternship(
   internship: InternshipInput,
+  employerId: number,
 ): Promise<Internship> {
   const database = await getDatabase();
   await database
@@ -104,8 +126,8 @@ export async function createInternship(
       `INSERT INTO internships (
         slug, title, company, location, work_mode, stipend, duration,
         posted, apply_by, category, description, skills, responsibilities,
-        requirements, perks
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        requirements, perks, employer_id, logo_url, company_website
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     )
     .bind(
       internship.slug,
@@ -123,6 +145,9 @@ export async function createInternship(
       JSON.stringify(internship.responsibilities),
       JSON.stringify(internship.requirements),
       JSON.stringify(internship.perks),
+      employerId,
+      internship.logoUrl ?? null,
+      internship.companyWebsite ?? null,
     )
     .run();
 
