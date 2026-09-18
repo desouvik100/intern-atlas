@@ -14,7 +14,7 @@ import {
   Search,
   Sparkles,
 } from "lucide-react";
-import { internships } from "@/data/internships";
+import type { Internship } from "@/data/internships";
 
 const quickCategories = [
   "Data Analysis",
@@ -58,7 +58,11 @@ const featuredOpportunities = [
   },
 ];
 
-export default function InternshipList() {
+export default function InternshipList({
+  internships,
+}: {
+  internships: Internship[];
+}) {
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -106,7 +110,7 @@ export default function InternshipList() {
         matchesWorkMode
       );
     });
-  }, [search, location, selectedCategory, workModes]);
+  }, [internships, search, location, selectedCategory, workModes]);
 
   const hasActiveFilters = Boolean(
     search.trim() ||
