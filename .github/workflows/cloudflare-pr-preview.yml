@@ -39,4 +39,5 @@ jobs:
         run: |
           cd frontend
           npm run build:vinext
-          npx wrangler deploy --name intern-atlas-pr-${{ inputs.pr_number }} --config dist/server/wrangler.json
+          jq '.name = "intern-atlas-pr-${{ inputs.pr_number }}"' dist/server/wrangler.json > dist/server/wrangler.tmp.json && mv dist/server/wrangler.tmp.json dist/server/wrangler.json
+          npm run deploy:vinext

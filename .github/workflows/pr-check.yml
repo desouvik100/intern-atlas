@@ -26,7 +26,11 @@ jobs:
           cache-dependency-path: package-lock.json
           
       - name: Install dependencies
-        run: npm ci || npm install
+        run: |
+          npm ci || npm install
+          cd frontend && npm install
         
       - name: Check Types (No Secrets Required)
-        run: npx tsc --noEmit
+        run: |
+          cd frontend
+          npx tsc --noEmit
