@@ -9,13 +9,13 @@
     "./internship-db": "./src/internship-db.ts",
     "./types": "./src/types.ts"
   },
-  "dependencies": {
-    "@prisma/adapter-pg": "^6.19.3",
-    "@prisma/client": "^6.19.3",
-    "pg": "^8.23.0"
-  },
   "devDependencies": {
     "@types/pg": "^8.23.1",
-    "prisma": "^6.19.3"
+    "prisma": "^7.10.0"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "pg": "^8.23.0"
   }
 }

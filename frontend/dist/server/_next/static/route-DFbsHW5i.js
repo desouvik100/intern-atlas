@@ -1,0 +1,1 @@
+import{i as e,n as t,t as n}from"./api-CwdWcX3u.js";var r=`nodejs`;async function i(e,{params:n}){let{slug:r}=await n;return t(r)}async function a(t,{params:n}){let{slug:r}=await n;return e(t,r)}async function o(e,{params:t}){let{slug:r}=await t;return n(r)}export{o as DELETE,i as GET,a as PATCH,r as runtime};

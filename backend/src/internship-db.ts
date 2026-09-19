@@ -1,8 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import type { Internship } from "./types";
 
 export type InternshipInput = Omit<Internship, "id">;
+
 
 function getPrisma() {
   const connectionString = process.env.DATABASE_URL;

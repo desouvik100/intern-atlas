@@ -42,8 +42,13 @@ function slugify(value: string): string {
 export async function getInternshipsResponse(): Promise<Response> {
   try {
     return Response.json(await listInternships());
-  } catch {
-    return Response.json({ error: "Unable to load internships" }, { status: 500 });
+  } catch (error) {
+    console.error("GET /api/internships failed:", error);
+
+    return Response.json(
+      { error: "Unable to load internships" },
+      { status: 500 },
+    );
   }
 }
 
