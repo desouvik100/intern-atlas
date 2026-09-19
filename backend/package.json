@@ -10,9 +10,12 @@
     "./types": "./src/types.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.3"
+    "@prisma/adapter-pg": "^6.19.3",
+    "@prisma/client": "^6.19.3",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
+    "@types/pg": "^8.23.1",
     "prisma": "^6.19.3"
   }
 }

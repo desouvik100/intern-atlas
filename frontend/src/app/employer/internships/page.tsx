@@ -13,7 +13,7 @@ import {
 import Header from "@/components/Header";
 import { listInternships } from "@internatlas/backend/internship-db";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export default async function EmployerInternshipsPage() {

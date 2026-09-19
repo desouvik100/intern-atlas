@@ -3,7 +3,7 @@ import {
   postInternshipResponse,
 } from "@internatlas/backend/api";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function GET() {
   return getInternshipsResponse();
