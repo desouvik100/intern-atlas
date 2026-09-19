@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client"
+  runtime  = "cloudflare"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Employer {
+  id                 Int          @id @default(autoincrement())
+  email              String       @unique
+  passwordHash       String
+  name               String?
+  companyName        String?
+  companyWebsite     String?
+  companyDescription String?
+  industry           String?
+  location           String?
+  logoUrl            String?
+  phone              String?
+  profileCompleted   Boolean      @default(false)
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+
+  internships        Internship[]
+}
+
+model Internship {
+  id               Int           @id @default(autoincrement())
+  slug             String        @unique
+  title            String
+  company          String
+  location         String
+  workMode         String
+  stipend          String
+  duration         String
+  posted           String
+  applyBy          String
+  category         String
+  description      String
+  skills           String[]
+  responsibilities String[]
+  requirements     String[]
+  perks            String[]
+  status           String        @default("active")
+
+  employerId       Int?
+  employer         Employer?     @relation(fields: [employerId], references: [id])
+
+  applications     Application[]
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+}
+
+model Application {
+  id           Int        @id @default(autoincrement())
+  internshipId Int
+  fullName     String
+  email        String
+  resumeUrl    String
+  coverLetter  String
+  createdAt    DateTime   @default(now())
+
+  internship   Internship @relation(fields: [internshipId], references: [id])
+
+  @@unique([internshipId, email])
+}

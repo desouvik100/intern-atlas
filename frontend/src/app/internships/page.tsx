@@ -2,7 +2,7 @@ import Header from "@/components/layout/Header";
 import InternshipList from "@/components/InternshipList";
 import { listInternships } from "@internatlas/backend/internship-db";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export default async function InternshipsPage() {

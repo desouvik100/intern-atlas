@@ -1,201 +1,195 @@
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import type { Internship } from "./types";
 
-type InternshipRow = {
+export type InternshipInput = Omit<Internship, "id">;
+
+
+function getPrisma() {
+  const connectionString = process.env.DATABASE_URL;
+
+  if (!connectionString) {
+    throw new Error("DATABASE_URL is not configured");
+  }
+
+  const adapter = new PrismaPg({
+    connectionString,
+  });
+
+  return new PrismaClient({
+    adapter,
+  });
+}
+
+function mapInternship(row: {
   id: number;
   slug: string;
   title: string;
   company: string;
   location: string;
-  work_mode: Internship["workMode"];
+  workMode: string;
   stipend: string;
   duration: string;
   posted: string;
-  apply_by: string;
+  applyBy: string;
   category: string;
   description: string;
-  skills: string;
-  responsibilities: string;
-  requirements: string;
-  perks: string;
-};
-
-export type InternshipInput = Omit<Internship, "id">;
-
-async function getDatabase() {
-  const { env } = await import("cloudflare:workers");
-  return env.intern_atlas_db;
-}
-
-function parseList(value: string): string[] {
-  try {
-    const parsed: unknown = JSON.parse(value);
-    return Array.isArray(parsed)
-      ? parsed.filter((item): item is string => typeof item === "string")
-      : [];
-  } catch {
-    return [];
-  }
-}
-
-function mapRow(row: InternshipRow): Internship {
+  skills: string[];
+  responsibilities: string[];
+  requirements: string[];
+  perks: string[];
+}): Internship {
   return {
     id: row.id,
     slug: row.slug,
     title: row.title,
     company: row.company,
     location: row.location,
-    workMode: row.work_mode,
+    workMode: row.workMode as Internship["workMode"],
     stipend: row.stipend,
     duration: row.duration,
     posted: row.posted,
-    applyBy: row.apply_by,
+    applyBy: row.applyBy,
     category: row.category,
     description: row.description,
-    skills: parseList(row.skills),
-    responsibilities: parseList(row.responsibilities),
-    requirements: parseList(row.requirements),
-    perks: parseList(row.perks),
+    skills: row.skills,
+    responsibilities: row.responsibilities,
+    requirements: row.requirements,
+    perks: row.perks,
   };
 }
 
-const selectColumns = `
-  id, slug, title, company, location, work_mode, stipend, duration,
-  posted, apply_by, category, description, skills, responsibilities,
-  requirements, perks
-`;
-
 export async function listInternships(): Promise<Internship[]> {
-  const database = await getDatabase();
-  const result = await database
-    .prepare(
-      `SELECT ${selectColumns}
-       FROM internships
-       WHERE status = 'active'
-       ORDER BY id DESC`,
-    )
-    .all<InternshipRow>();
+  const prisma = getPrisma();
 
-  return result.results.map(mapRow);
+  const rows = await prisma.internship.findMany({
+    where: {
+      status: "active",
+    },
+    orderBy: {
+      id: "desc",
+    },
+  });
+
+  return rows.map(mapInternship);
 }
 
 export async function findInternshipBySlug(
   slug: string,
 ): Promise<Internship | null> {
-  const database = await getDatabase();
-  const row = await database
-    .prepare(
-      `SELECT ${selectColumns}
-       FROM internships
-       WHERE slug = ? AND status != 'deleted'
-       LIMIT 1`,
-    )
-    .bind(slug)
-    .first<InternshipRow>();
+  const prisma = getPrisma();
 
-  return row ? mapRow(row) : null;
+  const row = await prisma.internship.findFirst({
+    where: {
+      slug,
+      status: {
+        not: "deleted",
+      },
+    },
+  });
+
+  return row ? mapInternship(row) : null;
 }
 
 export async function createInternship(
   internship: InternshipInput,
 ): Promise<Internship> {
-  const database = await getDatabase();
-  await database
-    .prepare(
-      `INSERT INTO internships (
-        slug, title, company, location, work_mode, stipend, duration,
-        posted, apply_by, category, description, skills, responsibilities,
-        requirements, perks
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    )
-    .bind(
-      internship.slug,
-      internship.title,
-      internship.company,
-      internship.location,
-      internship.workMode,
-      internship.stipend,
-      internship.duration,
-      internship.posted,
-      internship.applyBy,
-      internship.category,
-      internship.description,
-      JSON.stringify(internship.skills),
-      JSON.stringify(internship.responsibilities),
-      JSON.stringify(internship.requirements),
-      JSON.stringify(internship.perks),
-    )
-    .run();
+  const prisma = getPrisma();
 
-  const created = await findInternshipBySlug(internship.slug);
+  const created = await prisma.internship.create({
+    data: {
+      slug: internship.slug,
+      title: internship.title,
+      company: internship.company,
+      location: internship.location,
+      workMode: internship.workMode,
+      stipend: internship.stipend,
+      duration: internship.duration,
+      posted: internship.posted,
+      applyBy: internship.applyBy,
+      category: internship.category,
+      description: internship.description,
+      skills: internship.skills,
+      responsibilities: internship.responsibilities,
+      requirements: internship.requirements,
+      perks: internship.perks,
+      status: "active",
+    },
+  });
 
-  if (!created) {
-    throw new Error("Failed to create internship");
-  }
-
-  return created;
+  return mapInternship(created);
 }
 
 export async function updateInternship(
   slug: string,
   updates: Partial<InternshipInput>,
 ): Promise<Internship | null> {
-  const database = await getDatabase();
-  await database
-    .prepare(
-      `UPDATE internships SET
-        title = COALESCE(?, title),
-        company = COALESCE(?, company),
-        location = COALESCE(?, location),
-        work_mode = COALESCE(?, work_mode),
-        stipend = COALESCE(?, stipend),
-        duration = COALESCE(?, duration),
-        posted = COALESCE(?, posted),
-        apply_by = COALESCE(?, apply_by),
-        category = COALESCE(?, category),
-        description = COALESCE(?, description),
-        skills = COALESCE(?, skills),
-        responsibilities = COALESCE(?, responsibilities),
-        requirements = COALESCE(?, requirements),
-        perks = COALESCE(?, perks),
-        updated_at = CURRENT_TIMESTAMP
-       WHERE slug = ? AND status != 'deleted'`,
-    )
-    .bind(
-      updates.title ?? null,
-      updates.company ?? null,
-      updates.location ?? null,
-      updates.workMode ?? null,
-      updates.stipend ?? null,
-      updates.duration ?? null,
-      updates.posted ?? null,
-      updates.applyBy ?? null,
-      updates.category ?? null,
-      updates.description ?? null,
-      updates.skills ? JSON.stringify(updates.skills) : null,
-      updates.responsibilities
-        ? JSON.stringify(updates.responsibilities)
-        : null,
-      updates.requirements ? JSON.stringify(updates.requirements) : null,
-      updates.perks ? JSON.stringify(updates.perks) : null,
-      slug,
-    )
-    .run();
+  const prisma = getPrisma();
 
-  return findInternshipBySlug(slug);
+  const existing = await prisma.internship.findFirst({
+    where: {
+      slug,
+      status: {
+        not: "deleted",
+      },
+    },
+  });
+
+  if (!existing) {
+    return null;
+  }
+
+  const updated = await prisma.internship.update({
+    where: {
+      id: existing.id,
+    },
+    data: {
+      title: updates.title,
+      company: updates.company,
+      location: updates.location,
+      workMode: updates.workMode,
+      stipend: updates.stipend,
+      duration: updates.duration,
+      posted: updates.posted,
+      applyBy: updates.applyBy,
+      category: updates.category,
+      description: updates.description,
+      skills: updates.skills,
+      responsibilities: updates.responsibilities,
+      requirements: updates.requirements,
+      perks: updates.perks,
+    },
+  });
+
+  return mapInternship(updated);
 }
 
 export async function deleteInternship(slug: string): Promise<boolean> {
-  const database = await getDatabase();
-  const result = await database
-    .prepare(
-      `UPDATE internships
-       SET status = 'deleted', updated_at = CURRENT_TIMESTAMP
-       WHERE slug = ? AND status != 'deleted'`,
-    )
-    .bind(slug)
-    .run();
+  const prisma = getPrisma();
 
-  return (result.meta.changes ?? 0) > 0;
+  const existing = await prisma.internship.findFirst({
+    where: {
+      slug,
+      status: {
+        not: "deleted",
+      },
+    },
+  });
+
+  if (!existing) {
+    return false;
+  }
+
+  await prisma.internship.update({
+    where: {
+      id: existing.id,
+    },
+    data: {
+      status: "deleted",
+    },
+  });
+
+  return true;
 }
 
 export async function createApplication(input: {
@@ -205,27 +199,17 @@ export async function createApplication(input: {
   resumeUrl: string;
   coverLetter: string;
 }): Promise<number> {
-  const database = await getDatabase();
-  const result = await database
-    .prepare(
-      `INSERT INTO applications (
-        internship_id, full_name, email, resume_url, cover_letter
-      ) VALUES (?, ?, ?, ?, ?)`,
-    )
-    .bind(
-      input.internshipId,
-      input.fullName,
-      input.email,
-      input.resumeUrl,
-      input.coverLetter,
-    )
-    .run();
+  const prisma = getPrisma();
 
-  const id = result.meta.last_row_id;
+  const application = await prisma.application.create({
+    data: {
+      internshipId: input.internshipId,
+      fullName: input.fullName,
+      email: input.email,
+      resumeUrl: input.resumeUrl,
+      coverLetter: input.coverLetter,
+    },
+  });
 
-  if (typeof id !== "number") {
-    throw new Error("Failed to create application");
-  }
-
-  return id;
+  return application.id;
 }

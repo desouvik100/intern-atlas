@@ -4,7 +4,7 @@ import {
   patchInternshipResponse,
 } from "@internatlas/backend/api";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 type RouteContext = {
   params: Promise<{ slug: string }>;

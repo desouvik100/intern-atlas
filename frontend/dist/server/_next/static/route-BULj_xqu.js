@@ -1,0 +1,1 @@
+import{a as e}from"./api-CwdWcX3u.js";var t=`nodejs`;async function n(t){return e(t)}export{n as POST,t as runtime};
