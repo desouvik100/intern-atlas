@@ -8,5 +8,11 @@
     "./api": "./src/api.ts",
     "./internship-db": "./src/internship-db.ts",
     "./types": "./src/types.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3"
+  },
+  "devDependencies": {
+    "prisma": "^6.19.3"
   }
 }
