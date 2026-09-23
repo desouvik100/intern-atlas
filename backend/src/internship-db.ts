@@ -4,7 +4,6 @@ import type { Internship } from "./types";
 
 export type InternshipInput = Omit<Internship, "id">;
 
-
 function getPrisma() {
   const connectionString = process.env.DATABASE_URL;
 
@@ -208,8 +207,107 @@ export async function createApplication(input: {
       email: input.email,
       resumeUrl: input.resumeUrl,
       coverLetter: input.coverLetter,
+      status: "APPLIED",
     },
   });
 
   return application.id;
+}
+
+export async function getEmployer(id: number) {
+  const prisma = getPrisma();
+
+  return prisma.employer.findUnique({
+    where: { id },
+  });
+}
+
+export async function updateEmployer(
+  id: number,
+  data: {
+    name?: string;
+    phone?: string;
+    companyName?: string;
+    companyWebsite?: string;
+    companyDescription?: string;
+    companyLogoUrl?: string;
+    industry?: string;
+    companyType?: string;
+    companySize?: string;
+    foundedYear?: number;
+    address?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    linkedinUrl?: string;
+    gstNumber?: string;
+    cinNumber?: string;
+  },
+) {
+  const prisma = getPrisma();
+
+  return prisma.employer.update({
+    where: { id },
+    data: {
+      ...data,
+      profileCompleted: Boolean(
+        data.companyName &&
+          data.companyDescription &&
+          data.industry &&
+          data.city,
+      ),
+    },
+  });
+}
+
+export async function listDatasetOptions(type: string) {
+  const prisma = getPrisma();
+
+  return prisma.datasetOption.findMany({
+    where: {
+      type: type.toUpperCase(),
+      active: true,
+    },
+    orderBy: [
+      {
+        sortOrder: "asc",
+      },
+      {
+        value: "asc",
+      },
+    ],
+  });
+}
+export async function listApplicationsByInternship(
+  internshipId: number,
+) {
+  const prisma = getPrisma();
+
+  return prisma.application.findMany({
+    where: {
+      internshipId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
+
+export async function updateApplicationStatus(
+  id: number,
+  status: string,
+  employerNote?: string,
+) {
+  const prisma = getPrisma();
+
+  return prisma.application.update({
+    where: {
+      id,
+    },
+    data: {
+      status,
+      employerNote,
+    },
+  });
 }
