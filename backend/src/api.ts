@@ -4,6 +4,7 @@ import {
   deleteInternship,
   findInternshipBySlug,
   getEmployer,
+  listApplicationsByInternship,
   listDatasetOptions,
   listInternships,
   updateApplicationStatus,
@@ -277,7 +278,47 @@ export async function deleteInternshipResponse(
 /* =========================================================
    APPLICATIONS
 ========================================================= */
+export async function getApplicationsResponse(
+  internshipId: number,
+): Promise<Response> {
+  try {
+    if (
+      !Number.isInteger(internshipId) ||
+      internshipId <= 0
+    ) {
+      return Response.json(
+        {
+          error: "Invalid internship id",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
 
+    const applications =
+      await listApplicationsByInternship(
+        internshipId,
+      );
+
+    return Response.json(applications);
+  } catch (error) {
+    console.error(
+      "GET applications failed:",
+      error,
+    );
+
+    return Response.json(
+      {
+        error:
+          "Unable to load applications",
+      },
+      {
+        status: 500,
+      },
+    );
+  }
+}
 export async function postApplicationResponse(
   request: Request,
 ): Promise<Response> {

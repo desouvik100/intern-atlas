@@ -278,6 +278,21 @@ export async function listDatasetOptions(type: string) {
     ],
   });
 }
+export async function listApplicationsByInternship(
+  internshipId: number,
+) {
+  const prisma = getPrisma();
+
+  return prisma.application.findMany({
+    where: {
+      internshipId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
 
 export async function updateApplicationStatus(
   id: number,
