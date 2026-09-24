@@ -27,6 +27,7 @@ export const latestJobs: Opportunity[] = [
     badges: ["Full-time", "Fresher"],
     timeLabel: "1 day ago",
     logoVariant: "yellow-F",
+    href: "/jobs",
   },
   {
     id: "job-2",
@@ -37,6 +38,7 @@ export const latestJobs: Opportunity[] = [
     badges: ["Full-time", "Fresher"],
     timeLabel: "2 days ago",
     logoVariant: "green-D",
+    href: "/jobs",
   },
   {
     id: "job-3",
@@ -47,6 +49,7 @@ export const latestJobs: Opportunity[] = [
     badges: ["Full-time", "Fresher"],
     timeLabel: "4 days ago",
     logoVariant: "blue-R",
+    href: "/jobs",
   },
   {
     id: "job-4",
@@ -57,6 +60,7 @@ export const latestJobs: Opportunity[] = [
     badges: ["Full-time", "Fresher"],
     timeLabel: "5 days ago",
     logoVariant: "blue-J",
+    href: "/jobs",
   },
   {
     id: "job-5",
@@ -67,6 +71,7 @@ export const latestJobs: Opportunity[] = [
     badges: ["Full-time", "Fresher"],
     timeLabel: "6 days ago",
     logoVariant: "red-O",
+    href: "/jobs",
   },
 ];
 
