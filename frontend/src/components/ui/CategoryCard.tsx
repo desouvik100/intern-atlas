@@ -11,16 +11,16 @@ interface CategoryCardProps {
 
 const categoryLinks: Record<OpportunityType, string> = {
   internship: "/internships",
-  job: "/#explore",
-  competition: "/#competitions",
-  hackathon: "/#hackathons",
-  scholarship: "/#explore",
-  event: "/#explore",
-  contest: "/#competitions",
-  quiz: "/#competitions",
-  workshops: "/#explore",
-  college_fest: "/#explore",
-  cultural: "/#explore",
+  job: "/jobs",
+  competition: "/competitions",
+  hackathon: "/hackathons",
+  scholarship: "/scholarships",
+  event: "/events",
+  contest: "/competitions",
+  quiz: "/competitions",
+  workshops: "/workshops",
+  college_fest: "/college-festivals",
+  cultural: "/cultural-events",
 };
 
 export function CategoryCard({
