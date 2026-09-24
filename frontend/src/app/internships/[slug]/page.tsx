@@ -1,19 +1,19 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
 import {
   ArrowLeft,
-  BadgeCheck,
+  BriefcaseBusiness,
   CalendarDays,
   Check,
   Clock3,
   MapPin,
-  ShieldCheck,
-  Sparkles,
-  UsersRound,
   WalletCards,
 } from "lucide-react";
+
 import Header from "@/components/Header";
 import InternshipActions from "@/components/InternshipActions";
 import { findInternshipBySlug } from "@internatlas/backend/internship-db";
@@ -22,164 +22,331 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export default async function InternshipDetailPage({ params }: PageProps) {
+function safeValue(value?: string | null) {
+  if (!value || !value.trim()) {
+    return "Not specified";
+  }
+
+  return value;
+}
+
+export default async function InternshipDetailPage({
+  params,
+}: PageProps) {
   const { slug } = await params;
+
   const internship = await findInternshipBySlug(slug);
 
-  if (!internship) notFound();
+  if (!internship) {
+    notFound();
+  }
+
+  const companyName = safeValue(internship.company);
 
   return (
-    <div className="min-h-screen bg-[#f7faff] text-[#071c46]">
+    <div className="min-h-screen bg-[#f8f9fa] text-slate-900">
       <Header />
 
-      <section className="relative overflow-hidden border-b border-[#dbe7fa] bg-gradient-to-br from-[#f3f7ff] via-white to-[#fff1f5]">
-        <div className="absolute -right-20 -top-24 size-80 rounded-full bg-rose-200/30 blur-3xl" />
-        <div className="absolute left-1/3 top-0 size-72 rounded-full bg-blue-200/25 blur-3xl" />
-        <div className="relative mx-auto max-w-[1120px] px-5 py-8 sm:px-8 lg:py-10">
+      {/* Back navigation */}
+      <div className="border-b border-slate-200 bg-white">
+        <div className="mx-auto max-w-[1100px] px-4 py-4 sm:px-6">
           <Link
             href="/internships"
-            className="inline-flex items-center gap-2 text-[13px] font-bold text-[#526582] hover:text-[#1769e8]"
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-[#008BDC]"
           >
-            <ArrowLeft size={16} /> Back to internships
+            <ArrowLeft size={16} />
+            Back to internships
           </Link>
+        </div>
+      </div>
 
-          <div className="mt-7 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-            <div className="flex items-start gap-4 sm:gap-5">
-              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl border border-blue-100 bg-white text-2xl font-black text-[#1769e8] shadow-[0_10px_28px_rgba(7,28,70,0.08)] sm:size-20">
-                {internship.company.charAt(0)}
-              </div>
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-bold text-emerald-700">
-                    <BadgeCheck size={13} /> Actively hiring
-                  </span>
-                  <span className="rounded-full bg-blue-50 px-3 py-1 text-[11px] font-bold text-[#1769e8]">
-                    {internship.category}
-                  </span>
+      <main className="mx-auto max-w-[1100px] px-4 py-6 sm:px-6 lg:py-8">
+        {/* Main internship card */}
+        <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div className="p-5 sm:p-7">
+            {/* Header */}
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-start">
+              <div className="flex gap-4">
+                {/* Company logo fallback */}
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-2xl font-bold text-[#008BDC]">
+                  {companyName.charAt(0).toUpperCase()}
                 </div>
-                <h1 className="mt-3 text-3xl font-black tracking-[-0.035em] sm:text-4xl">
-                  {internship.title}
-                </h1>
-                <p className="mt-2 text-base font-semibold text-[#526582]">
-                  {internship.company}
-                </p>
+
+                <div>
+                  {internship.category && (
+                    <span className="inline-flex rounded-md bg-blue-50 px-2.5 py-1 text-xs font-semibold text-[#008BDC]">
+                      {internship.category}
+                    </span>
+                  )}
+
+                  <h1 className="mt-3 text-2xl font-semibold text-slate-900 sm:text-[28px]">
+                    {safeValue(internship.title)}
+                  </h1>
+
+                  <p className="mt-2 text-sm font-medium text-slate-600">
+                    {companyName}
+                  </p>
+
+                  <p className="mt-3 inline-flex items-center gap-1.5 text-sm text-slate-600">
+                    <MapPin size={16} />
+                    {safeValue(internship.location)}
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-[12px] font-semibold text-[#526582]">
-              <UsersRound size={16} className="text-[#1769e8]" />
-              184 applicants · Posted {internship.posted}
+            {/* Internship information */}
+            <div className="mt-7 grid grid-cols-2 gap-y-6 border-y border-slate-200 py-5 sm:grid-cols-4">
+              <InfoItem
+                icon={<Clock3 size={17} />}
+                label="Duration"
+                value={safeValue(internship.duration)}
+              />
+
+              <InfoItem
+                icon={<WalletCards size={17} />}
+                label="Stipend"
+                value={safeValue(internship.stipend)}
+              />
+
+              <InfoItem
+                icon={<CalendarDays size={17} />}
+                label="Apply by"
+                value={safeValue(internship.applyBy)}
+              />
+
+              <InfoItem
+                icon={<BriefcaseBusiness size={17} />}
+                label="Work mode"
+                value={safeValue(internship.workMode)}
+              />
+            </div>
+
+            {/* Bottom information */}
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-medium text-slate-500">
+              {internship.posted && (
+                <span>
+                  Posted {internship.posted}
+                </span>
+              )}
+
+              <span className="rounded bg-emerald-50 px-2 py-1 font-semibold text-emerald-700">
+                No application fee
+              </span>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <main className="mx-auto grid max-w-[1120px] gap-6 px-5 py-7 sm:px-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:py-9">
-        <div className="space-y-6">
-          <section className="grid grid-cols-2 overflow-hidden rounded-2xl border border-[#dbe7fa] bg-white shadow-[0_18px_50px_rgba(7,28,70,0.08)] sm:grid-cols-4">
-            <DetailItem icon={<MapPin size={18} />} label="Location" value={internship.location} />
-            <DetailItem icon={<WalletCards size={18} />} label="Stipend" value={internship.stipend} />
-            <DetailItem icon={<Clock3 size={18} />} label="Duration" value={internship.duration} />
-            <DetailItem icon={<CalendarDays size={18} />} label="Apply by" value={internship.applyBy} />
-          </section>
-
-          <article className="rounded-2xl border border-[#dbe7fa] bg-white p-6 shadow-[0_18px_50px_rgba(7,28,70,0.08)] sm:p-8">
-            <ContentSection index="01" title="About the internship">
-              <p>{internship.description}</p>
-              <p className="mt-3">
-                You will work with a small, high-ownership team and ship meaningful product improvements used by real customers.
+        {/* Main content */}
+        <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+          {/* Left column */}
+          <div className="space-y-5">
+            {/* About internship */}
+            <ContentCard title="About the internship">
+              <p className="whitespace-pre-line">
+                {safeValue(internship.description)}
               </p>
-            </ContentSection>
+            </ContentCard>
 
-            <ContentSection index="02" title="What you will do">
-              <BulletList items={internship.responsibilities} />
-            </ContentSection>
+            {/* Responsibilities */}
+            {internship.responsibilities.length > 0 && (
+              <ContentCard title="Selected intern's day-to-day responsibilities">
+                <BulletList
+                  items={internship.responsibilities}
+                />
+              </ContentCard>
+            )}
 
-            <ContentSection index="03" title="Who we are looking for">
-              <BulletList items={internship.requirements} />
-            </ContentSection>
+            {/* Skills */}
+            {internship.skills.length > 0 && (
+              <ContentCard title="Skills required">
+                <div className="flex flex-wrap gap-2">
+                  {internship.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </ContentCard>
+            )}
 
-            <ContentSection index="04" title="Skills you will use">
-              <div className="flex flex-wrap gap-2">
-                {internship.skills.map((skill) => (
-                  <span key={skill} className="rounded-full border border-blue-100 bg-[#f3f7ff] px-3.5 py-2 text-[12px] font-bold text-[#1769e8]">
-                    {skill}
-                  </span>
-                ))}
+            {/* Eligibility */}
+            {internship.requirements.length > 0 && (
+              <ContentCard title="Who can apply">
+                <p className="mb-4">
+                  Only those candidates can apply who:
+                </p>
+
+                <BulletList
+                  items={internship.requirements}
+                  numbered
+                />
+              </ContentCard>
+            )}
+
+            {/* Perks */}
+            {internship.perks.length > 0 && (
+              <ContentCard title="Perks">
+                <div className="flex flex-wrap gap-2">
+                  {internship.perks.map((perk) => (
+                    <span
+                      key={perk}
+                      className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700"
+                    >
+                      <Check
+                        size={14}
+                        className="text-emerald-600"
+                      />
+
+                      {perk}
+                    </span>
+                  ))}
+                </div>
+              </ContentCard>
+            )}
+
+            {/* Company */}
+            <ContentCard title={`About ${companyName}`}>
+              <p>
+                Learn more about {companyName} and the internship opportunity
+                through the details provided in this listing.
+              </p>
+            </ContentCard>
+          </div>
+
+          {/* Right column */}
+          <aside className="h-fit lg:sticky lg:top-24">
+            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h2 className="text-lg font-semibold text-slate-900">
+                Apply for this internship
+              </h2>
+
+              <div className="mt-4 space-y-3 border-b border-slate-200 pb-5 text-sm">
+                <SidebarDetail
+                  label="Stipend"
+                  value={safeValue(internship.stipend)}
+                />
+
+                <SidebarDetail
+                  label="Duration"
+                  value={safeValue(internship.duration)}
+                />
+
+                <SidebarDetail
+                  label="Apply by"
+                  value={safeValue(internship.applyBy)}
+                />
               </div>
-            </ContentSection>
 
-            <ContentSection index="05" title="Perks and benefits">
-              <div className="grid gap-3 sm:grid-cols-2">
-                {internship.perks.map((perk) => (
-                  <div key={perk} className="flex items-center gap-3 rounded-xl border border-[#e7eefb] bg-[#fbfdff] p-3.5 text-sm font-semibold text-[#344666]">
-                    <span className="flex size-7 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Check size={15} /></span>
-                    {perk}
-                  </div>
-                ))}
-              </div>
-            </ContentSection>
-          </article>
+              <InternshipActions
+                internshipId={internship.id}
+                internshipTitle={internship.title}
+                companyName={companyName}
+              />
+            </div>
+          </aside>
         </div>
-
-        <aside className="h-fit lg:sticky lg:top-[92px]">
-          <div className="rounded-2xl border border-[#cfe0fa] bg-white p-5 shadow-[0_18px_50px_rgba(7,28,70,0.08)]">
-            <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.08em] text-[#1769e8]">
-              <Sparkles size={14} /> Ready to apply?
-            </div>
-            <h2 className="mt-3 text-xl font-black tracking-[-0.02em]">Take the next step.</h2>
-            <p className="mt-2 text-[12px] leading-5 text-[#64748b]">
-              Your profile and resume will be shared securely with {internship.company}.
-            </p>
-            <InternshipActions internshipId={internship.id} internshipTitle={internship.title} />
-            <div className="mt-5 space-y-3 border-t border-[#e7eefb] pt-5 text-[11px] font-semibold text-[#526582]">
-              <p className="flex items-center gap-2"><ShieldCheck size={15} className="text-emerald-600" /> No application fee</p>
-              <p className="flex items-center gap-2"><BadgeCheck size={15} className="text-[#1769e8]" /> Verified opportunity</p>
-            </div>
-          </div>
-
-          <div className="mt-4 rounded-2xl bg-[#071c46] p-5 text-white">
-            <p className="text-[10px] font-black uppercase tracking-[0.1em] text-cyan-300">Application tip</p>
-            <p className="mt-2 text-sm font-bold leading-5">Tailor your profile to the skills listed in this role.</p>
-            <Link href="/#resources" className="mt-4 inline-flex text-[11px] font-bold text-cyan-300 hover:text-white">Explore career resources →</Link>
-          </div>
-        </aside>
       </main>
     </div>
   );
 }
 
-function DetailItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function InfoItem({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
   return (
-    <div className="border-[#e7eefb] p-4 odd:border-r sm:border-r sm:last:border-r-0 sm:p-5">
-      <span className="flex size-8 items-center justify-center rounded-lg bg-blue-50 text-[#1769e8]">{icon}</span>
-      <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.08em] text-[#94a3b8]">{label}</p>
-      <p className="mt-1 text-[12px] font-extrabold leading-5 text-[#071c46]">{value}</p>
+    <div className="px-2 first:pl-0">
+      <div className="flex items-center gap-1.5 text-slate-400">
+        {icon}
+
+        <span className="text-xs font-medium">
+          {label}
+        </span>
+      </div>
+
+      <p className="mt-2 text-sm font-semibold text-slate-800">
+        {value}
+      </p>
     </div>
   );
 }
 
-function ContentSection({ index, title, children }: { index: string; title: string; children: React.ReactNode }) {
+function ContentCard({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <section className="border-b border-[#e7eefb] py-7 first:pt-0 last:border-0 last:pb-0">
-      <div className="flex items-center gap-3">
-        <span className="text-[10px] font-black text-[#1769e8]">{index}</span>
-        <h2 className="text-lg font-black tracking-[-0.02em]">{title}</h2>
+    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <h2 className="text-lg font-semibold text-slate-900">
+        {title}
+      </h2>
+
+      <div className="mt-4 text-sm leading-7 text-slate-600">
+        {children}
       </div>
-      <div className="mt-4 text-[13px] leading-6 text-[#526582]">{children}</div>
     </section>
   );
 }
 
-function BulletList({ items }: { items: string[] }) {
+function BulletList({
+  items,
+  numbered = false,
+}: {
+  items: string[];
+  numbered?: boolean;
+}) {
   return (
     <ul className="space-y-3">
-      {items.map((item) => (
-        <li key={item} className="flex items-start gap-3">
-          <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600"><Check size={12} strokeWidth={3} /></span>
-          <span>{item}</span>
+      {items.map((item, index) => (
+        <li
+          key={`${item}-${index}`}
+          className="flex items-start gap-3"
+        >
+          {numbered ? (
+            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[10px] font-bold text-[#008BDC]">
+              {index + 1}
+            </span>
+          ) : (
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" />
+          )}
+
+          <span>
+            {item}
+          </span>
         </li>
       ))}
     </ul>
+  );
+}
+
+function SidebarDetail({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <span className="text-slate-500">
+        {label}
+      </span>
+
+      <span className="text-right font-semibold text-slate-800">
+        {value}
+      </span>
+    </div>
   );
 }
