@@ -12,7 +12,7 @@ import {
 
 const navigation = [
   { label: "Opportunities", href: "/internships" },
-  { label: "Events", href: "/#events" },
+  { label: "Events", href: "/events" },
   { label: "Scholarships", href: "/#scholarships" },
   { label: "For Colleges", href: "/employer/internships" },
   { label: "Resources", href: "/#resources" },

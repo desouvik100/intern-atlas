@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Trophy, Code, Award, HelpCircle } from "lucide-react";
+import { ArrowLeft, Trophy, Code, Award, HelpCircle, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SubNavProps {
-  activeModule?: "competitions" | "hackathons" | "contests" | "quizzes";
+  activeModule?: "competitions" | "hackathons" | "contests" | "quizzes" | "events";
   className?: string;
 }
 
@@ -45,6 +45,12 @@ export function SubNav({ activeModule = "competitions", className }: SubNavProps
       label: "Quizzes",
       href: "/quizzes",
       icon: HelpCircle,
+    },
+    {
+      id: "events",
+      label: "Events",
+      href: "/events",
+      icon: Calendar,
     },
   ];
 
