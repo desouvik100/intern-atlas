@@ -1,10 +1,34 @@
-export default function Page() {
+import type { Metadata } from "next";
+import Header from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { CompetitionsListingClient } from "@/components/opportunities/CompetitionsListingClient";
+import { competitionService } from "@/lib/services/competitionService";
+
+export const metadata: Metadata = {
+  title: "Competitions — Explore Student Challenges & Contests",
+  description:
+    "Discover high-impact student competitions, hackathons, case studies, and engineering challenges. Win cash prizes, certificates, and job fast-tracks.",
+  openGraph: {
+    title: "Competitions | InternAtlas",
+    description:
+      "Explore top student competitions and case challenges. Connect with mentors, win prizes, and fast-track your career.",
+  },
+};
+
+export default async function CompetitionsPage() {
+  const [initialCompetitions, metadata] = await Promise.all([
+    competitionService.getCompetitions(),
+    competitionService.getFilterMetadata(),
+  ]);
+
   return (
-    <main className="min-h-screen p-10">
-      <h1 className="text-3xl font-bold">Coming soon</h1>
-      <p className="mt-3 text-gray-600">
-        This page is under development.
-      </p>
-    </main>
+    <>
+      <Header />
+      <CompetitionsListingClient
+        initialCompetitions={initialCompetitions}
+        metadata={metadata}
+      />
+      <Footer />
+    </>
   );
 }
