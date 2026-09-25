@@ -2,115 +2,108 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   Bookmark,
   BriefcaseBusiness,
+  CalendarDays,
   Check,
   Clock3,
   Filter,
-  GraduationCap,
   MapPin,
   Search,
   Sparkles,
+  WalletCards,
 } from "lucide-react";
+
 import type { Internship } from "@/data/internships";
 
-const quickCategories = [
-  "Data Analysis",
-  "Data Science",
-  "Software Development",
-  "Digital Marketing",
-  "Web Development",
-  "Design",
-];
-
-const featuredOpportunities = [
-  {
-    logo: "GOI",
-    title: "Digital Shram Sankalp",
-    company: "Government of India",
-    action: "Register now",
-  },
-  {
-    logo: "MS",
-    title: "Maruti Suzuki XCELerate 2026",
-    company: "Maruti Suzuki",
-    action: "Register now",
-  },
-  {
-    logo: "C",
-    title: "Unlock Unlimited Learning",
-    company: "Coursera",
-    action: "₹7,499/year",
-  },
-  {
-    logo: "G",
-    title: "Fund My Crazy",
-    company: "Google Gemini",
-    action: "Register now",
-  },
-  {
-    logo: "ET",
-    title: "ET AI Hackathon",
-    company: "The Economic Times",
-    action: "Explore now",
-  },
-];
+function safeValue(value: string | null | undefined, fallback = "Not specified") {
+  const cleaned = value?.trim();
+  return cleaned ? cleaned : fallback;
+}
 
 export default function InternshipList({
   internships,
 }: {
   internships: Internship[];
 }) {
-  const router = useRouter();
-
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [workModes, setWorkModes] = useState<string[]>([]);
   const [savedIds, setSavedIds] = useState<number[]>([]);
 
+  const availableCategories = useMemo(() => {
+    return Array.from(
+      new Set(
+        internships
+          .map((internship) => internship.category?.trim())
+          .filter((category): category is string => Boolean(category)),
+      ),
+    ).sort((a, b) => a.localeCompare(b));
+  }, [internships]);
+
+  const availableWorkModes = useMemo(() => {
+    return Array.from(
+      new Set(
+        internships
+          .map((internship) => internship.workMode?.trim())
+          .filter((mode): mode is string => Boolean(mode)),
+      ),
+    ).sort((a, b) => a.localeCompare(b));
+  }, [internships]);
+
+  const quickCategories = availableCategories.slice(0, 6);
+
   const filteredInternships = useMemo(() => {
-    const query = search.toLowerCase().trim();
-    const locationQuery = location.toLowerCase().trim();
-    const categoryQuery = selectedCategory.toLowerCase();
+    const query = search.trim().toLowerCase();
+    const locationQuery = location.trim().toLowerCase();
+    const categoryQuery = selectedCategory.trim().toLowerCase();
 
     return internships.filter((internship) => {
-      const searchableText = [
-        internship.title,
-        internship.company,
-        internship.category,
+      const title = safeValue(internship.title, "").toLowerCase();
+      const company = safeValue(internship.company, "").toLowerCase();
+      const internshipLocation = safeValue(
         internship.location,
-        ...internship.skills,
-      ]
-        .join(" ")
-        .toLowerCase();
+        "",
+      ).toLowerCase();
+      const workMode = safeValue(internship.workMode, "").toLowerCase();
+      const category = safeValue(internship.category, "").toLowerCase();
+      const description = safeValue(
+        internship.description,
+        "",
+      ).toLowerCase();
 
-      const matchesSearch =
-        !query || searchableText.includes(query);
+      const skills = (internship.skills ?? []).map((skill) =>
+        skill.toLowerCase(),
+      );
+
+      const searchableText = [
+        title,
+        company,
+        internshipLocation,
+        workMode,
+        category,
+        description,
+        ...skills,
+      ].join(" ");
+
+      const matchesSearch = !query || searchableText.includes(query);
 
       const matchesLocation =
         !locationQuery ||
-        internship.location
-          .toLowerCase()
-          .includes(locationQuery) ||
-        internship.workMode
-          .toLowerCase()
-          .includes(locationQuery);
+        internshipLocation.includes(locationQuery) ||
+        workMode.includes(locationQuery);
 
       const matchesCategory =
-        !categoryQuery ||
-        searchableText.includes(categoryQuery) ||
-        (categoryQuery === "software development" &&
-          searchableText.includes("engineering")) ||
-        (categoryQuery === "data analysis" &&
-          searchableText.includes("analytics"));
+        !categoryQuery || category.includes(categoryQuery);
 
       const matchesWorkMode =
         workModes.length === 0 ||
-        workModes.includes(internship.workMode);
+        workModes.some(
+          (mode) => mode.toLowerCase() === workMode.toLowerCase(),
+        );
 
       return (
         matchesSearch &&
@@ -119,24 +112,15 @@ export default function InternshipList({
         matchesWorkMode
       );
     });
-  }, [
-    internships,
-    search,
-    location,
-    selectedCategory,
-    workModes,
-  ]);
+  }, [internships, search, location, selectedCategory, workModes]);
 
-  const hasActiveFilters = Boolean(
-    search.trim() ||
-      location.trim() ||
-      selectedCategory ||
-      workModes.length,
-  );
+  const hasActiveFilters =
+    search.trim().length > 0 ||
+    location.trim().length > 0 ||
+    selectedCategory.length > 0 ||
+    workModes.length > 0;
 
-  function handleSearch(
-    event: FormEvent<HTMLFormElement>,
-  ) {
+  function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
   }
 
@@ -163,460 +147,368 @@ export default function InternshipList({
     setWorkModes([]);
   }
 
-  function openInternship(slug: string) {
-    if (!slug) {
-      return;
-    }
-
-    router.push(`/internships/${slug}`);
-  }
-
   return (
     <>
-      <section className="relative overflow-hidden border-b border-blue-100 bg-gradient-to-br from-[#f3f7ff] via-white to-[#fff0f6]">
-        <div className="absolute -right-20 top-0 size-56 rounded-full bg-pink-200/35 blur-3xl" />
+      {/* Hero */}
+      <section className="relative overflow-hidden border-b border-blue-100 bg-gradient-to-br from-[#f3f7ff] via-white to-[#fff4f7]">
+        <div className="absolute -right-20 top-0 size-56 rounded-full bg-pink-200/30 blur-3xl" />
         <div className="absolute left-1/3 top-0 size-56 rounded-full bg-blue-200/25 blur-3xl" />
 
-        <div className="relative mx-auto max-w-[900px] px-4 pb-[50px] pt-5 lg:px-0">
-          <div className="flex items-start justify-between gap-6">
-            <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.08em] text-blue-600">
-                For India&apos;s next generation
-              </p>
+        <div className="relative mx-auto max-w-[1100px] px-4 py-10 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="text-xs font-black uppercase tracking-[0.08em] text-blue-600">
+              Internships for students
+            </p>
 
-              <h1 className="mt-2 text-[32px] font-black leading-[1.02] tracking-[-0.035em] text-[#071c46] md:text-[40px]">
-                10,000+ Internships{" "}
-                <span className="font-serif italic text-[#c63845]">
-                  in India
-                </span>
-              </h1>
+            <h1 className="mt-2 text-3xl font-black leading-tight tracking-[-0.035em] text-[#071c46] md:text-4xl">
+              Find internships that{" "}
+              <span className="font-serif italic text-[#c63845]">
+                match your goals
+              </span>
+            </h1>
 
-              <p className="mt-2 text-[13px] text-slate-600">
-                Paid, work-from-home and summer internships
-                for students and freshers.
-              </p>
-            </div>
-
-            <p className="hidden max-w-32 -rotate-6 pt-2 font-serif text-[18px] font-bold italic leading-5 text-[#071c46] lg:block">
-              Real opportunities for a brighter tomorrow.
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
+              Search internship opportunities by profile, company, skills,
+              location and work mode.
             </p>
           </div>
 
           <form
             onSubmit={handleSearch}
-            className="mt-5 grid min-h-14 overflow-hidden rounded-2xl border border-blue-100 bg-white p-1 shadow-md shadow-blue-100/50 md:grid-cols-[1fr_220px_auto]"
+            className="mt-7 grid overflow-hidden rounded-2xl border border-blue-100 bg-white p-1.5 shadow-lg shadow-blue-100/40 md:grid-cols-[1fr_260px_auto]"
           >
-            <label className="flex min-w-0 items-center gap-2.5 px-3">
-              <Search
-                size={18}
-                className="shrink-0 text-[#071c46]"
-              />
+            <label className="flex min-w-0 items-center gap-3 px-4">
+              <Search size={19} className="shrink-0 text-blue-600" />
 
               <input
                 value={search}
-                onChange={(event) =>
-                  setSearch(event.target.value)
-                }
-                placeholder="Search internships, companies, skills..."
-                className="min-w-0 flex-1 py-2.5 text-xs text-slate-900 outline-none placeholder:text-slate-400 sm:text-sm"
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search profile, company or skills"
+                className="min-w-0 flex-1 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400"
               />
             </label>
 
-            <label className="flex items-center gap-2.5 border-t border-slate-100 px-3 md:border-l md:border-t-0">
-              <MapPin
-                size={17}
-                className="shrink-0 text-[#071c46]"
-              />
+            <label className="flex min-w-0 items-center gap-3 border-t border-slate-100 px-4 md:border-l md:border-t-0">
+              <MapPin size={18} className="shrink-0 text-blue-600" />
 
               <input
                 value={location}
-                onChange={(event) =>
-                  setLocation(event.target.value)
-                }
-                placeholder="Location"
-                className="min-w-0 flex-1 py-2.5 text-xs text-slate-900 outline-none placeholder:text-slate-400 sm:text-sm"
+                onChange={(event) => setLocation(event.target.value)}
+                placeholder="Location or Remote"
+                className="min-w-0 flex-1 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400"
               />
             </label>
 
             <button
               type="submit"
-              className="rounded-lg bg-[#06275b] px-7 py-2 text-sm font-bold text-white hover:bg-blue-700"
+              className="rounded-xl bg-[#06275b] px-8 py-3 text-sm font-bold text-white transition hover:bg-blue-700"
             >
               Search
             </button>
           </form>
 
-          <div className="mt-7 flex gap-2.5 overflow-x-auto pb-1 scrollbar-none">
-            {quickCategories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                onClick={() =>
-                  setSelectedCategory((current) =>
-                    current === category ? "" : category,
-                  )
-                }
-                className={`flex h-[34px] shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-[11px] font-semibold transition ${
-                  selectedCategory === category
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-blue-200 bg-white text-[#173768] hover:border-blue-500"
-                }`}
-              >
-                <Sparkles size={13} />
-                {category}
-              </button>
-            ))}
-          </div>
+          {quickCategories.length > 0 && (
+            <div className="mt-5 flex items-center gap-2 overflow-x-auto pb-1">
+              <span className="shrink-0 text-xs font-semibold text-slate-500">
+                Popular:
+              </span>
+
+              {quickCategories.map((category) => {
+                const selected = selectedCategory === category;
+
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() =>
+                      setSelectedCategory((current) =>
+                        current === category ? "" : category,
+                      )
+                    }
+                    className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-4 text-xs font-semibold transition ${
+                      selected
+                        ? "border-blue-600 bg-blue-600 text-white"
+                        : "border-blue-200 bg-white text-[#173768] hover:border-blue-500"
+                    }`}
+                  >
+                    <Sparkles size={13} />
+                    {category}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
-      <main className="bg-gradient-to-br from-[#f8fbff] via-white to-[#f2f7ff] text-[#071c46]">
-        <div className="mx-auto grid max-w-[1000px] gap-4 px-2 py-4 lg:grid-cols-[188px_minmax(0,1fr)_250px]">
+      {/* Results */}
+      <main className="min-h-[600px] bg-[#f8fafc] text-[#071c46]">
+        <div className="mx-auto grid max-w-[1100px] gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[230px_minmax(0,1fr)_245px] lg:px-8">
           {/* Filters */}
-          <aside className="h-fit rounded-xl border border-blue-100 bg-white p-3 lg:sticky lg:top-16">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-20">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div className="flex items-center gap-2">
-                <Filter
-                  size={16}
-                  className="text-blue-600"
-                />
-                <h2 className="text-sm font-extrabold">
-                  Filters
-                </h2>
+                <Filter size={17} className="text-blue-600" />
+                <h2 className="text-sm font-extrabold">Filters</h2>
               </div>
 
-              <button
-                type="button"
-                onClick={clearFilters}
-                className="text-xs font-semibold text-blue-600"
-              >
-                Clear all
-              </button>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="text-xs font-semibold text-blue-600 hover:text-blue-700"
+                >
+                  Clear all
+                </button>
+              )}
             </div>
 
             <FilterInput
-              label="Keyword"
+              label="Profile"
               value={search}
-              placeholder="e.g. Marketing, Content..."
+              placeholder="e.g. Software Development"
               onChange={setSearch}
             />
 
             <FilterInput
               label="Location"
               value={location}
-              placeholder="e.g. Delhi, Remote"
+              placeholder="e.g. Pune, Mumbai, Remote"
               onChange={setLocation}
             />
 
-            <FilterSection title="Type">
-              {["Remote", "On-site", "Hybrid"].map(
-                (mode) => (
+            {availableWorkModes.length > 0 && (
+              <FilterSection title="Work mode">
+                {availableWorkModes.map((mode) => (
                   <FilterCheckbox
                     key={mode}
-                    label={
-                      mode === "Remote"
-                        ? "Work from home"
-                        : mode
-                    }
+                    label={mode === "Remote" ? "Work from home" : mode}
                     checked={workModes.includes(mode)}
                     onChange={() => toggleWorkMode(mode)}
                   />
-                ),
-              )}
-            </FilterSection>
+                ))}
+              </FilterSection>
+            )}
 
-            <FilterSection title="Stipend (₹/Month)">
-              <div className="flex justify-between text-xs text-slate-500">
-                <span>₹0</span>
-                <span>₹50K+</span>
-              </div>
-
-              <input
-                type="range"
-                min="0"
-                max="50000"
-                defaultValue="15000"
-                className="mt-2 w-full accent-blue-600"
-              />
-            </FilterSection>
-
-            <FilterSection title="Duration">
-              {[
-                "1 month",
-                "2-3 months",
-                "3-6 months",
-                "6+ months",
-              ].map((duration) => (
-                <FilterCheckbox
-                  key={duration}
-                  label={duration}
-                  checked={false}
-                  onChange={() => undefined}
-                />
-              ))}
-            </FilterSection>
-
-            <FilterSection title="Experience">
-              <FilterCheckbox
-                label="Freshers only"
-                checked={false}
-                onChange={() => undefined}
-              />
-
-              <FilterCheckbox
-                label="No prior experience"
-                checked={false}
-                onChange={() => undefined}
-              />
-            </FilterSection>
-
-            <FilterSection title="Roles">
-              {[
-                "Engineering",
-                "Product",
-                "Design",
-                "Marketing",
-                "Operations",
-                "Human Resources",
-              ].map((role) => (
-                <FilterCheckbox
-                  key={role}
-                  label={role}
-                  checked={selectedCategory === role}
-                  onChange={() =>
-                    setSelectedCategory((current) =>
-                      current === role ? "" : role,
-                    )
-                  }
-                />
-              ))}
-            </FilterSection>
-
-            <FilterSection title="Eligibility">
-              {[
-                "Undergraduate",
-                "Postgraduate",
-                "MBA",
-                "High school",
-              ].map((item) => (
-                <FilterCheckbox
-                  key={item}
-                  label={item}
-                  checked={false}
-                  onChange={() => undefined}
-                />
-              ))}
-            </FilterSection>
-
-            <button
-              type="button"
-              className="mt-5 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-blue-700"
-            >
-              Apply filters
-            </button>
+            {availableCategories.length > 0 && (
+              <FilterSection title="Category">
+                {availableCategories.map((category) => (
+                  <FilterCheckbox
+                    key={category}
+                    label={category}
+                    checked={selectedCategory === category}
+                    onChange={() =>
+                      setSelectedCategory((current) =>
+                        current === category ? "" : category,
+                      )
+                    }
+                  />
+                ))}
+              </FilterSection>
+            )}
           </aside>
 
-          {/* Internship results */}
+          {/* Internship cards */}
           <section className="min-w-0">
-            <div className="mb-3 flex min-h-[38px] flex-col justify-between gap-2 sm:flex-row sm:items-center">
-              <h2 className="text-[18px] font-black tracking-[-0.02em]">
-                {hasActiveFilters
-                  ? filteredInternships.length
-                  : "2,332"}{" "}
-                Internships
-              </h2>
+            <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
+                  Opportunities
+                </p>
 
-              <select className="h-9 rounded-xl border border-blue-100 bg-white px-3 text-[11px] text-slate-600 outline-none">
-                <option>Sort by: Most relevant</option>
-                <option>Newest first</option>
-                <option>Highest stipend</option>
-              </select>
+                <h2 className="mt-1 text-xl font-black tracking-[-0.02em] text-[#071c46]">
+                  {filteredInternships.length}{" "}
+                  {filteredInternships.length === 1
+                    ? "Internship"
+                    : "Internships"}
+                </h2>
+              </div>
+
+              {hasActiveFilters && (
+                <p className="text-xs text-slate-500">
+                  Showing filtered results
+                </p>
+              )}
             </div>
 
-            <div className="space-y-3">
-              {filteredInternships.map(
-                (internship, index) => {
-                  const saved = savedIds.includes(
-                    internship.id,
-                  );
+            <div className="space-y-4">
+              {filteredInternships.map((internship) => {
+                const saved = savedIds.includes(internship.id);
 
-                  const detailsHref = `/internships/${internship.slug}`;
+                const title = safeValue(
+                  internship.title,
+                  "Internship opportunity",
+                );
 
-                  return (
-                    <article
-                      key={internship.id}
-                      role="link"
-                      tabIndex={0}
-                      onClick={() =>
-                        openInternship(internship.slug)
-                      }
-                      onKeyDown={(event) => {
-                        if (
-                          event.target !==
-                          event.currentTarget
-                        ) {
-                          return;
-                        }
+                const company = safeValue(
+                  internship.company,
+                  "Company not specified",
+                );
 
-                        if (
-                          event.key === "Enter" ||
-                          event.key === " "
-                        ) {
-                          event.preventDefault();
-                          openInternship(
-                            internship.slug,
-                          );
-                        }
-                      }}
-                      className="relative cursor-pointer rounded-xl border border-blue-100 bg-white px-3 py-2.5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-lg"
-                    >
-                      {index === 0 && (
-                        <span className="mb-1.5 inline-flex rounded-full bg-pink-100 px-2.5 py-0.5 text-[9px] font-bold text-pink-600">
-                          Featured
-                        </span>
-                      )}
+                const locationValue = safeValue(internship.location);
+                const workModeValue = safeValue(internship.workMode);
+                const durationValue = safeValue(internship.duration);
+                const stipendValue = safeValue(internship.stipend);
+                const applyByValue = safeValue(internship.applyBy);
+                const categoryValue = safeValue(internship.category, "");
+                const postedValue = safeValue(internship.posted, "");
+                const description = safeValue(internship.description, "");
 
-                      <div className="flex flex-col justify-between gap-2 sm:flex-row">
+                const skills = internship.skills ?? [];
+
+                return (
+                  <article
+                    key={internship.id}
+                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
+                  >
+                    {/* Makes the entire card clickable */}
+                    <Link
+                      href={`/internships/${internship.slug}`}
+                      aria-label={`View ${title} at ${company}`}
+                      className="absolute inset-0 z-10"
+                    />
+
+                    <div className="relative z-20 pointer-events-none">
+                      <div className="flex items-start justify-between gap-4">
                         <div className="flex min-w-0 gap-3">
-                          <div className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-base font-black text-blue-600">
-                            {internship.company.charAt(0)}
+                          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-lg font-black uppercase text-blue-700">
+                            {company.charAt(0)}
                           </div>
 
                           <div className="min-w-0">
-                            <Link
-                              href={detailsHref}
-                              onClick={(event) =>
-                                event.stopPropagation()
-                              }
-                              className="text-[14px] font-extrabold leading-5 hover:text-blue-600"
-                            >
-                              {internship.title}
-                            </Link>
+                            <h3 className="text-base font-extrabold leading-6 text-[#071c46] transition group-hover:text-blue-600">
+                              {title}
+                            </h3>
 
-                            <p className="text-[11px] font-medium text-slate-600">
-                              {internship.company}
+                            <p className="mt-0.5 text-sm font-medium text-slate-600">
+                              {company}
                             </p>
+
+                            {categoryValue && (
+                              <span className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-700">
+                                {categoryValue}
+                              </span>
+                            )}
                           </div>
                         </div>
 
-                        <div className="flex shrink-0 gap-2">
-                          <button
-                            type="button"
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              toggleSaved(
-                                internship.id,
-                              );
-                            }}
-                            className={`inline-flex h-8 items-center gap-1.5 rounded-lg border px-3 text-[10px] font-bold ${
-                              saved
-                                ? "border-blue-600 bg-blue-50 text-blue-700"
-                                : "border-[#173768] bg-white text-[#071c46]"
-                            }`}
-                          >
-                            <Bookmark
-                              size={14}
-                              className={
-                                saved
-                                  ? "fill-blue-600"
-                                  : ""
-                              }
-                            />
-
-                            {saved ? "Saved" : "Save"}
-                          </button>
-
-                          <Link
-                            href={detailsHref}
-                            onClick={(event) =>
-                              event.stopPropagation()
-                            }
-                            className="inline-flex h-8 items-center rounded-lg bg-[#06275b] px-4 text-center text-[10px] font-bold text-white hover:bg-blue-700"
-                          >
-                            Apply
-                          </Link>
-                        </div>
-                      </div>
-
-                      <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[10px] text-slate-600">
-                        <span className="flex items-center gap-1.5">
-                          <MapPin size={12} />
-                          {internship.location}
-                        </span>
-
-                        <span className="flex items-center gap-1.5">
-                          <BriefcaseBusiness
-                            size={12}
+                        <button
+                          type="button"
+                          aria-label={
+                            saved ? "Remove saved internship" : "Save internship"
+                          }
+                          onClick={() => toggleSaved(internship.id)}
+                          className={`pointer-events-auto relative z-30 flex size-9 shrink-0 items-center justify-center rounded-full border transition ${
+                            saved
+                              ? "border-blue-600 bg-blue-50 text-blue-700"
+                              : "border-slate-200 bg-white text-slate-500 hover:border-blue-400 hover:text-blue-600"
+                          }`}
+                        >
+                          <Bookmark
+                            size={17}
+                            className={saved ? "fill-current" : ""}
                           />
-                          {internship.workMode}
-                        </span>
-
-                        <span className="flex items-center gap-1.5">
-                          <Clock3 size={12} />
-                          {internship.duration}
-                        </span>
+                        </button>
                       </div>
 
-                      <p className="mt-1.5 line-clamp-1 text-[10px] leading-4 text-slate-600">
-                        {internship.description}
-                      </p>
+                      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                        <MetaItem
+                          icon={<MapPin size={15} />}
+                          label="Location"
+                          value={locationValue}
+                        />
 
-                      <div className="mt-1.5 flex flex-wrap gap-1.5">
-                        {internship.skills
-                          .slice(0, 3)
-                          .map((skill) => (
+                        <MetaItem
+                          icon={<BriefcaseBusiness size={15} />}
+                          label="Work mode"
+                          value={workModeValue}
+                        />
+
+                        <MetaItem
+                          icon={<Clock3 size={15} />}
+                          label="Duration"
+                          value={durationValue}
+                        />
+
+                        <MetaItem
+                          icon={<WalletCards size={15} />}
+                          label="Stipend"
+                          value={stipendValue}
+                        />
+                      </div>
+
+                      {description && (
+                        <p className="mt-4 line-clamp-2 text-sm leading-6 text-slate-600">
+                          {description}
+                        </p>
+                      )}
+
+                      {skills.length > 0 && (
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {skills.slice(0, 4).map((skill) => (
                             <span
                               key={skill}
-                              className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[9px] font-medium text-blue-700"
+                              className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-600"
                             >
                               {skill}
                             </span>
                           ))}
 
-                        {internship.skills.length >
-                          3 && (
-                          <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[9px] font-medium text-slate-600">
-                            +
-                            {internship.skills
-                              .length - 3}
+                          {skills.length > 4 && (
+                            <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-500">
+                              +{skills.length - 4} more
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
+                          {postedValue && (
+                            <span className="inline-flex items-center gap-1.5">
+                              <Clock3 size={13} />
+                              Posted {postedValue}
+                            </span>
+                          )}
+
+                          <span className="inline-flex items-center gap-1.5">
+                            <CalendarDays size={13} />
+                            Apply by {applyByValue}
                           </span>
-                        )}
-                      </div>
+                        </div>
 
-                      <div className="mt-1.5 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-1.5">
-                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[9px] font-bold text-emerald-700">
-                          <Check size={11} />
-                          {internship.stipend}
-                        </span>
-
-                        <span className="text-[9px] text-slate-400">
-                          Posted {internship.posted}
+                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600">
+                          View details
+                          <ArrowRight
+                            size={14}
+                            className="transition group-hover:translate-x-0.5"
+                          />
                         </span>
                       </div>
-                    </article>
-                  );
-                },
-              )}
+                    </div>
+                  </article>
+                );
+              })}
 
               {filteredInternships.length === 0 && (
-                <div className="rounded-xl border border-dashed border-blue-200 bg-white px-6 py-12 text-center">
-                  <Search
-                    size={35}
-                    className="mx-auto text-blue-300"
-                  />
+                <div className="rounded-2xl border border-dashed border-blue-200 bg-white px-6 py-14 text-center shadow-sm">
+                  <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-blue-50">
+                    <Search size={24} className="text-blue-500" />
+                  </div>
 
-                  <h3 className="mt-4 text-lg font-extrabold">
+                  <h3 className="mt-4 text-lg font-extrabold text-[#071c46]">
                     No internships found
                   </h3>
 
-                  <p className="mt-2 text-sm text-slate-500">
-                    Try changing your search or filters.
+                  <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">
+                    We couldn&apos;t find an internship matching your current
+                    search and filters.
                   </p>
 
                   <button
                     type="button"
                     onClick={clearFilters}
-                    className="mt-5 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white"
+                    className="mt-5 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700"
                   >
                     Clear filters
                   </button>
@@ -625,121 +517,107 @@ export default function InternshipList({
             </div>
           </section>
 
-          {/* Right sidebar */}
+          {/* Useful sidebar */}
           <aside className="space-y-4">
-            <div className="rounded-xl border border-blue-100 bg-[#f8fbff] p-3">
-              <div className="flex items-center justify-between">
-                <h2 className="text-[13px] font-extrabold">
-                  Featured Opportunities
-                </h2>
+            <div className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
+              <p className="text-xs font-bold uppercase tracking-wide text-blue-600">
+                How it works
+              </p>
 
-                <Link
-                  href="/internships"
-                  className="text-[10px] font-semibold text-blue-600"
-                >
-                  View all →
-                </Link>
-              </div>
-
-              <div className="mt-3 space-y-2">
-                {featuredOpportunities.map(
-                  (opportunity) => (
-                    <div
-                      key={opportunity.title}
-                      className="flex items-center gap-2.5 rounded-lg border border-blue-50 bg-white p-2 shadow-sm"
-                    >
-                      <span className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-blue-100 bg-slate-50 text-[10px] font-black text-blue-600">
-                        {opportunity.logo}
-                      </span>
-
-                      <div className="min-w-0">
-                        <p className="text-[10px] font-extrabold leading-[13px]">
-                          {opportunity.title}
-                        </p>
-
-                        <p className="mt-0.5 text-[9px] text-slate-500">
-                          {opportunity.company}
-                        </p>
-
-                        <p className="mt-0.5 text-[9px] font-semibold text-blue-600">
-                          {opportunity.action}
-                        </p>
-                      </div>
-                    </div>
-                  ),
-                )}
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-white p-3">
-              <span className="rounded-full bg-pink-100 px-3 py-1 text-[10px] font-bold uppercase text-pink-600">
-                For students
-              </span>
-
-              <h2 className="mt-3 text-lg font-black leading-6">
-                Create your free profile to get matched
+              <h2 className="mt-2 text-lg font-black leading-6 text-[#071c46]">
+                Find and apply in a few simple steps
               </h2>
 
-              <div className="mt-4 space-y-2.5">
-                {[
-                  "Apply in one click",
-                  "Get noticed by recruiters",
-                  "Track your applications",
-                  "Access resources and events",
-                ].map((benefit) => (
-                  <p
-                    key={benefit}
-                    className="flex items-center gap-2 text-xs text-slate-700"
-                  >
-                    <span className="flex size-5 items-center justify-center rounded-full bg-white text-blue-600">
-                      <Check size={13} />
-                    </span>
+              <div className="mt-5 space-y-4">
+                <StepItem
+                  number="1"
+                  title="Find an internship"
+                  description="Search by profile, skills, location or work mode."
+                />
 
-                    {benefit}
-                  </p>
-                ))}
+                <StepItem
+                  number="2"
+                  title="Review the details"
+                  description="Check the role, company, stipend, duration and requirements."
+                />
+
+                <StepItem
+                  number="3"
+                  title="Apply"
+                  description="Complete your details, answer the application question and review before submitting."
+                />
               </div>
-
-              <button
-                type="button"
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-[#06275b] px-4 py-2.5 text-xs font-bold text-white"
-              >
-                Create your account
-                <ArrowRight size={15} />
-              </button>
             </div>
 
-            <div className="rounded-xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-3">
-              <span className="rounded-full bg-cyan-100 px-3 py-1 text-[10px] font-bold uppercase text-blue-600">
+            <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-5 shadow-sm">
+              <span className="inline-flex rounded-full bg-blue-100 px-3 py-1 text-[10px] font-bold uppercase text-blue-700">
                 For employers
               </span>
 
-              <GraduationCap
-                size={28}
-                className="mt-4 text-blue-600"
-              />
-
-              <h2 className="mt-3 text-lg font-black leading-6">
-                Hire talented students from InternAtlas
+              <h2 className="mt-3 text-lg font-black leading-6 text-[#071c46]">
+                Looking for talented interns?
               </h2>
 
               <p className="mt-2 text-xs leading-5 text-slate-600">
-                Post internships, reach qualified
-                students and build your campus presence.
+                Create an internship opportunity and start receiving
+                applications from students.
               </p>
 
               <Link
                 href="/employer/internships/new"
-                className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-blue-500 bg-white px-4 py-2.5 text-xs font-bold text-blue-600"
+                className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-[#06275b] px-4 py-2.5 text-xs font-bold text-white transition hover:bg-blue-700"
               >
-                Hire on InternAtlas
-                <ArrowRight size={15} />
+                Post an internship
+                <ArrowRight size={14} />
               </Link>
+            </div>
+
+            <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-5">
+              <div className="flex gap-2">
+                <Check size={17} className="mt-0.5 shrink-0 text-emerald-600" />
+
+                <div>
+                  <p className="text-sm font-extrabold text-slate-800">
+                    No application fee
+                  </p>
+
+                  <p className="mt-1 text-xs leading-5 text-slate-600">
+                    Students can review internship details before submitting
+                    their application.
+                  </p>
+                </div>
+              </div>
             </div>
           </aside>
         </div>
       </main>
     </>
+  );
+}
+
+function MetaItem({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-start gap-2.5">
+      <span className="mt-0.5 text-slate-400">{icon}</span>
+
+      <div className="min-w-0">
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
+          {label}
+        </p>
+
+        <p className="mt-0.5 text-xs font-semibold text-slate-700">
+          {value}
+        </p>
+      </div>
+    </div>
   );
 }
 
@@ -755,18 +633,14 @@ function FilterInput({
   onChange: (value: string) => void;
 }) {
   return (
-    <label className="mt-4 block">
-      <span className="text-xs font-extrabold text-[#071c46]">
-        {label}
-      </span>
+    <label className="mt-5 block">
+      <span className="text-xs font-extrabold text-[#071c46]">{label}</span>
 
       <input
         value={value}
-        onChange={(event) =>
-          onChange(event.target.value)
-        }
+        onChange={(event) => onChange(event.target.value)}
         placeholder={placeholder}
-        className="mt-1.5 w-full rounded-lg border border-blue-100 px-2.5 py-2 text-[11px] text-slate-900 outline-none placeholder:text-slate-400 focus:border-blue-500"
+        className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-xs text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
       />
     </label>
   );
@@ -780,14 +654,10 @@ function FilterSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-5">
-      <h3 className="text-xs font-extrabold text-[#071c46]">
-        {title}
-      </h3>
+    <section className="mt-6 border-t border-slate-100 pt-5">
+      <h3 className="text-xs font-extrabold text-[#071c46]">{title}</h3>
 
-      <div className="mt-2.5 space-y-2">
-        {children}
-      </div>
+      <div className="mt-3 space-y-2.5">{children}</div>
     </section>
   );
 }
@@ -802,15 +672,41 @@ function FilterCheckbox({
   onChange: () => void;
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-2 text-[11px] text-slate-600">
+    <label className="flex cursor-pointer items-center gap-2.5 text-xs text-slate-600">
       <input
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className="size-3.5 rounded border-blue-200 accent-blue-600"
+        className="size-4 rounded border-slate-300 accent-blue-600"
       />
 
-      {label}
+      <span>{label}</span>
     </label>
+  );
+}
+
+function StepItem({
+  number,
+  title,
+  description,
+}: {
+  number: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex gap-3">
+      <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-black text-white">
+        {number}
+      </span>
+
+      <div>
+        <p className="text-xs font-extrabold text-[#071c46]">{title}</p>
+
+        <p className="mt-1 text-[11px] leading-5 text-slate-500">
+          {description}
+        </p>
+      </div>
+    </div>
   );
 }
