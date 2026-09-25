@@ -12,6 +12,7 @@ interface ListingControlsProps {
   sortBy: CompetitionSortOption;
   onSortChange: (sort: CompetitionSortOption) => void;
   totalResults: number;
+  itemLabel?: string;
   className?: string;
 }
 
@@ -31,8 +32,11 @@ export function ListingControls({
   sortBy,
   onSortChange,
   totalResults,
+  itemLabel = "Competition",
   className,
 }: ListingControlsProps) {
+  const pluralLabel = itemLabel.endsWith("s") ? itemLabel : `${itemLabel}s`;
+
   return (
     <div
       className={cn(
@@ -43,7 +47,7 @@ export function ListingControls({
       {/* Left: Results Count */}
       <div className="flex items-center gap-2">
         <span className="text-sm font-bold text-primary">
-          {totalResults} {totalResults === 1 ? "Competition" : "Competitions"}
+          {totalResults} {totalResults === 1 ? itemLabel : pluralLabel}
         </span>
         {activeFilterCount > 0 && (
           <span className="text-xs font-medium text-text-muted">
@@ -78,7 +82,7 @@ export function ListingControls({
         {/* Sort Select */}
         <div className="relative inline-flex items-center">
           <label htmlFor="sort-select" className="sr-only">
-            Sort competitions
+            Sort opportunities
           </label>
           <div className="relative flex items-center">
             <span className="pointer-events-none absolute left-3 text-text-muted">

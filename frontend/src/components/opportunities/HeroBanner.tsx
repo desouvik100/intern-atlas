@@ -8,6 +8,14 @@ interface HeroBannerProps {
   onSearchChange: (query: string) => void;
   totalCount: number;
   className?: string;
+  badgeText?: string;
+  title?: React.ReactNode;
+  subtitle?: string;
+  metric1Value?: string;
+  metric1Label?: string;
+  metric2Value?: string;
+  metric2Label?: string;
+  searchPlaceholder?: string;
 }
 
 export function HeroBanner({
@@ -15,10 +23,25 @@ export function HeroBanner({
   onSearchChange,
   totalCount,
   className,
+  badgeText = "Discover & Compete",
+  title = (
+    <>
+      Competitions to challenge your intellect <br className="hidden sm:inline" />
+      <span className="text-cyan">and unlock your career.</span>
+    </>
+  ),
+  subtitle = "Discover relevant student competitions, participate in challenges, and explore exciting opportunities with prizes, certificates, and fast-track interviews.",
+  metric1Value,
+  metric1Label = "Active Challenges",
+  metric2Value = "₹25L+",
+  metric2Label = "Total Cash Pool",
+  searchPlaceholder = "Search by competition name, company, college, category, or city...",
 }: HeroBannerProps) {
+  const displayMetric1 = metric1Value || `${totalCount}+`;
+
   return (
     <section
-      aria-label="Competition Hero"
+      aria-label="Opportunity Hero"
       className={cn(
         "relative overflow-hidden bg-deep-navy text-white py-10 sm:py-12 px-4 sm:px-6",
         className
@@ -40,17 +63,15 @@ export function HeroBanner({
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1 text-xs font-semibold text-cyan-light mb-3">
               <Sparkles size={13} className="text-cyan animate-pulse" />
-              <span>Discover & Compete</span>
+              <span>{badgeText}</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              Competitions to challenge your intellect <br className="hidden sm:inline" />
-              <span className="text-cyan">and unlock your career.</span>
+              {title}
             </h1>
 
             <p className="mt-2.5 text-xs sm:text-sm text-border/90 leading-relaxed max-w-xl">
-              Discover relevant student competitions, participate in challenges, and explore
-              exciting opportunities with prizes, certificates, and fast-track interviews.
+              {subtitle}
             </p>
           </div>
 
@@ -58,19 +79,19 @@ export function HeroBanner({
           <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 w-fit backdrop-blur-sm">
             <div>
               <div className="text-lg font-bold text-white leading-none">
-                {totalCount}+
+                {displayMetric1}
               </div>
               <div className="text-[11px] font-medium text-text-muted mt-0.5">
-                Active Challenges
+                {metric1Label}
               </div>
             </div>
             <div className="h-7 w-[1px] bg-white/15" />
             <div>
               <div className="text-lg font-bold text-cyan leading-none">
-                ₹25L+
+                {metric2Value}
               </div>
               <div className="text-[11px] font-medium text-text-muted mt-0.5">
-                Total Cash Pool
+                {metric2Label}
               </div>
             </div>
           </div>
@@ -79,19 +100,19 @@ export function HeroBanner({
         {/* Search Bar Container */}
         <div className="mt-6 max-w-3xl">
           <div className="relative flex items-center w-full">
-            <label htmlFor="competition-search" className="sr-only">
-              Search competitions by title, organizer, category, or location
+            <label htmlFor="opportunity-search" className="sr-only">
+              Search opportunities
             </label>
             <div className="pointer-events-none absolute left-4 text-text-muted">
               <Search size={18} />
             </div>
 
             <input
-              id="competition-search"
+              id="opportunity-search"
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search by competition name, company, college, category, or city..."
+              placeholder={searchPlaceholder}
               className="h-12 w-full rounded-xl border border-border/80 bg-white pl-11 pr-10 text-sm font-medium text-primary shadow-card placeholder:text-text-muted transition-all focus:border-cyan focus:outline-none focus:ring-2 focus:ring-cyan/30"
             />
 
