@@ -10,7 +10,6 @@ import {
 
 import { OpportunityCard } from "@/components/ui/OpportunityCard";
 import type { Opportunity } from "@/lib/types";
-import { cn } from "@/lib/utils";
 
 type OpportunitySectionProps = {
   eyebrow: string;
@@ -18,8 +17,7 @@ type OpportunitySectionProps = {
   highlightText?: string;
   opportunities: Opportunity[];
   viewAllLabel: string;
-  viewAllHref?: string;
-  bgWhite?: boolean;
+  viewAllHref: string;
 };
 
 export function OpportunitySection({
@@ -29,15 +27,8 @@ export function OpportunitySection({
   opportunities,
   viewAllLabel,
   viewAllHref,
-  bgWhite = false,
 }: OpportunitySectionProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
-
-  const resolvedViewAllHref =
-    viewAllHref ??
-    (opportunities[0]?.type === "internship"
-      ? "/internships"
-      : "#jobs");
 
   function scrollCards(direction: "left" | "right") {
     sliderRef.current?.scrollBy({
@@ -47,102 +38,90 @@ export function OpportunitySection({
   }
 
   return (
-    <section
-      className={cn(
-        "py-14 lg:py-16",
-        bgWhite ? "bg-white" : "bg-background",
-      )}
-    >
-      <div className="mx-auto max-w-[1400px] px-6">
+    <section className="bg-[#f8fafc] py-14 lg:py-16">
+      <div className="mx-auto max-w-[1100px] px-6">
         <div className="mb-8 flex items-end justify-between gap-6">
           <div>
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-blue">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-blue-600">
               {eyebrow}
             </p>
 
-            <h2 className="text-3xl font-extrabold tracking-tight text-primary sm:text-4xl lg:text-[42px]">
+            <h2 className="text-3xl font-extrabold tracking-tight text-[#071c46] sm:text-4xl">
               {title}{" "}
-              {highlightText ? (
-                <span className="font-serif font-normal italic text-editorial-red">
+              {highlightText && (
+                <span className="font-serif font-normal italic text-[#c63845]">
                   {highlightText}
                 </span>
-              ) : null}
+              )}
             </h2>
           </div>
 
-          <div className="hidden shrink-0 items-center gap-4 sm:flex">
+          <div className="hidden items-center gap-4 sm:flex">
             <Link
-              href={resolvedViewAllHref}
-              className="inline-flex items-center gap-2 font-semibold text-primary transition-colors hover:text-blue"
+              href={viewAllHref}
+              className="inline-flex items-center gap-2 font-semibold text-[#071c46] hover:text-blue-600"
             >
               {viewAllLabel}
-              <ArrowRight size={19} />
+              <ArrowRight size={18} />
             </Link>
 
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => scrollCards("left")}
-                aria-label="Scroll opportunities left"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-primary transition-colors hover:border-cyan-light hover:bg-background"
-              >
-                <ChevronLeft size={18} />
-              </button>
+            {opportunities.length > 1 && (
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => scrollCards("left")}
+                  aria-label="Scroll internships left"
+                  className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white"
+                >
+                  <ChevronLeft size={18} />
+                </button>
 
-              <button
-                type="button"
-                onClick={() => scrollCards("right")}
-                aria-label="Scroll opportunities right"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-primary transition-colors hover:border-cyan-light hover:bg-background"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
+                <button
+                  type="button"
+                  onClick={() => scrollCards("right")}
+                  aria-label="Scroll internships right"
+                  className="flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="relative -mx-6 px-6 lg:mx-0 lg:px-0">
+        {opportunities.length > 0 ? (
           <div
             ref={sliderRef}
-            className="-mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto py-4 scrollbar-none lg:gap-5"
+            className="flex snap-x gap-4 overflow-x-auto pb-3"
           >
-            {opportunities.map((opportunity) =>
-              opportunity.href ? (
-                <Link
-                  key={opportunity.id}
-                  href={opportunity.href}
-                  className="shrink-0 snap-start rounded-[20px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                >
-                  <OpportunityCard
-                    opportunity={opportunity}
-                    className="w-[260px] lg:w-[254px]"
-                  />
-                </Link>
-              ) : (
-                <div
-                  key={opportunity.id}
-                  className="shrink-0 snap-start"
-                >
-                  <OpportunityCard
-                    opportunity={opportunity}
-                    className="w-[260px] lg:w-[254px]"
-                  />
-                </div>
-              ),
-            )}
+            {opportunities.map((opportunity) => (
+              <Link
+                key={opportunity.id}
+                href={opportunity.href || viewAllHref}
+                className="shrink-0 snap-start rounded-[20px]"
+              >
+                <OpportunityCard
+                  opportunity={opportunity}
+                  className="w-[270px]"
+                />
+              </Link>
+            ))}
           </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
+            <p className="font-bold text-[#071c46]">
+              No internships are currently available.
+            </p>
 
-          <div
-            className={cn(
-              "pointer-events-none absolute bottom-4 right-0 top-0 w-16 bg-gradient-to-l to-transparent lg:hidden",
-              bgWhite ? "from-white" : "from-background",
-            )}
-          />
-        </div>
+            <p className="mt-2 text-sm text-slate-500">
+              Please check again later for new opportunities.
+            </p>
+          </div>
+        )}
 
         <Link
-          href={resolvedViewAllHref}
-          className="mt-5 inline-flex items-center gap-2 font-semibold text-primary sm:hidden"
+          href={viewAllHref}
+          className="mt-5 inline-flex items-center gap-2 font-semibold text-[#071c46] sm:hidden"
         >
           {viewAllLabel}
           <ArrowRight size={18} />

@@ -1,23 +1,19 @@
-name: PR Syntax Check
+name: PR Launch Checks
 
 on:
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
-    inputs:
-      pr_number:
-        description: "Pull Request Number"
-        required: true
-        type: string
 
 jobs:
   frontend-check:
-    name: Check Frontend Syntax
+    name: Lint, Typecheck & Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout PR Code
+      - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          ref: refs/pull/${{ github.event.inputs.pr_number }}/head
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -46,10 +42,18 @@ jobs:
         working-directory: frontend
         run: npm ci
 
-      - name: Check Types
+      - name: Lint
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Typecheck
         working-directory: frontend
         run: npx tsc --noEmit
 
-      - name: Build Application
+      - name: Build Next.js
         working-directory: frontend
         run: npm run build
+
+      - name: Build Vinext Worker
+        working-directory: frontend
+        run: npm run build:vinext
