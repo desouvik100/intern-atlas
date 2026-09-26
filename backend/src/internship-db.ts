@@ -81,9 +81,7 @@ export async function findInternshipBySlug(
   const row = await prisma.internship.findFirst({
     where: {
       slug,
-      status: {
-        not: "deleted",
-      },
+      status: "active",
     },
   });
 
@@ -189,6 +187,41 @@ export async function deleteInternship(slug: string): Promise<boolean> {
   });
 
   return true;
+}
+
+
+export async function findActiveInternshipById(
+  id: number,
+): Promise<Internship | null> {
+  const prisma = getPrisma();
+
+  const row = await prisma.internship.findFirst({
+    where: {
+      id,
+      status: "active",
+    },
+  });
+
+  return row ? mapInternship(row) : null;
+}
+
+export async function applicationExists(
+  internshipId: number,
+  email: string,
+): Promise<boolean> {
+  const prisma = getPrisma();
+
+  const existing = await prisma.application.findUnique({
+    where: {
+      internshipId_email: {
+        internshipId,
+        email,
+      },
+    },
+    select: { id: true },
+  });
+
+  return Boolean(existing);
 }
 
 export async function createApplication(input: {

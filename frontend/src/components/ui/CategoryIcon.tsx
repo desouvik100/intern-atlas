@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import type { CategoryIconKey } from "@/lib/types";
 
 interface CategoryIconProps {
   iconKey: string;

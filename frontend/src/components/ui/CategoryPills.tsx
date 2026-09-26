@@ -30,12 +30,12 @@ export function CategoryPills({ className, onSelect }: CategoryPillsProps) {
   };
 
   return (
-    <div role="list" aria-label="Browse by category" className={cn("flex gap-2 overflow-x-auto scrollbar-none pb-1", className)}>
+    <div role="group" aria-label="Browse by category" className={cn("flex gap-2 overflow-x-auto scrollbar-none pb-1", className)}>
       {PILLS.map((pill) => {
         const isActive = active === pill.id;
         return (
           <button
-            key={pill.id} role="listitem" onClick={() => handleSelect(pill)} aria-pressed={isActive}
+            key={pill.id} onClick={() => handleSelect(pill)} aria-pressed={isActive}
             className={cn(
               "flex-shrink-0 rounded-full border px-3.5 py-1.5 text-[13px] font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue focus-visible:ring-offset-1",
               isActive ? "border-blue bg-blue text-white shadow-sm" : "border-border bg-white text-text-secondary hover:border-blue-hover hover:text-blue-hover hover:bg-background"

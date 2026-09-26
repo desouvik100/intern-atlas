@@ -3,16 +3,18 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { Menu, Search, X } from "lucide-react";
+
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+
 
 const NAV_LINKS = [
-  { label: "Opportunities", href: "/#explore" },
+  { label: "Home", href: "/" },
+  { label: "Internships", href: "/internships" },
   { label: "Events", href: "/events" },
-  { label: "Scholarships", href: "/#scholarships" },
-  { label: "For Colleges", href: "/#colleges" },
-  { label: "Resources", href: "/#resources" },
+  { label: "Competitions", href: "/competitions" },
+  { label: "Hackathons", href: "/hackathons" },
 ];
+
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,7 +26,10 @@ export default function Header() {
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(handleScroll);
-    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
 
     return () => {
       window.cancelAnimationFrame(frameId);
@@ -38,13 +43,13 @@ export default function Header() {
     <>
       <header
         className={cn(
-          "sticky top-0 z-50 h-14 border-b border-slate-200/80 transition-all duration-200 lg:h-12",
+          "sticky top-0 z-50 h-14 border-b border-slate-200/80 transition-all lg:h-12",
           scrolled
             ? "bg-white/95 shadow-sm backdrop-blur-md"
             : "bg-white",
         )}
       >
-        <div className="mx-auto flex h-full max-w-[900px] items-center justify-between px-4 lg:px-0">
+        <div className="mx-auto flex h-full max-w-[1100px] items-center justify-between px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-8">
             <button
               type="button"
@@ -60,20 +65,17 @@ export default function Header() {
               href="/"
               aria-label="InternAtlas home"
               onClick={closeMenu}
-              className="shrink-0 text-[19px] font-black tracking-[-0.04em] text-[#071c46]"
+              className="text-[19px] font-black tracking-[-0.04em] text-[#071c46]"
             >
               Intern<span className="text-blue-600">Atlas.</span>
             </Link>
 
-            <nav
-              aria-label="Primary navigation"
-              className="hidden items-center gap-6 lg:flex"
-            >
+            <nav className="hidden items-center gap-6 lg:flex">
               {NAV_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-[11px] font-semibold text-slate-600 transition-colors hover:text-[#071c46]"
+                  className="text-[12px] font-semibold text-slate-600 transition hover:text-blue-600"
                 >
                   {link.label}
                 </Link>
@@ -81,74 +83,32 @@ export default function Header() {
             </nav>
           </div>
 
-          <div className="hidden items-center gap-2.5 lg:flex">
-            <Link
-              href="/#explore"
-              aria-label="Search opportunities"
-              className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-[#071c46] shadow-sm transition hover:border-blue-300 hover:bg-blue-50"
-            >
-              <Search size={16} strokeWidth={2} />
-            </Link>
-
-            <Button
-              variant="outline"
-              className="h-9 rounded-full border-slate-200 bg-white px-5 text-[11px] font-bold text-[#071c46] shadow-sm hover:bg-slate-50"
-              asChild
-            >
-              <Link href="#login">Log in</Link>
-            </Button>
-
-            <Button
-              className="h-9 rounded-full bg-[#071c46] px-5 text-[11px] font-bold text-white shadow-sm hover:bg-[#0b2c64]"
-              asChild
-            >
-              <Link href="#signup">Sign up</Link>
-            </Button>
-          </div>
+          <Link
+            href="/internships"
+            aria-label="Search internships"
+            className="hidden size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-[#071c46] transition hover:border-blue-300 hover:bg-blue-50 lg:flex"
+          >
+            <Search size={16} />
+          </Link>
         </div>
       </header>
 
-      <div
-        className={cn(
-          "fixed inset-x-0 top-14 z-40 border-b border-slate-200 bg-white px-5 pb-5 shadow-lg transition-all duration-200 lg:hidden",
-          menuOpen
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-3 opacity-0",
-        )}
-      >
-        <nav aria-label="Mobile navigation" className="flex flex-col pt-2">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              onClick={closeMenu}
-              className="border-b border-slate-100 py-3 text-sm font-semibold text-slate-700"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <Button
-            variant="outline"
-            className="h-10 rounded-full border-slate-200 font-bold text-[#071c46]"
-            asChild
-          >
-            <Link href="#login" onClick={closeMenu}>
-              Log in
-            </Link>
-          </Button>
-          <Button
-            className="h-10 rounded-full bg-[#071c46] font-bold text-white"
-            asChild
-          >
-            <Link href="#signup" onClick={closeMenu}>
-              Sign up
-            </Link>
-          </Button>
+      {menuOpen && (
+        <div className="fixed inset-x-0 top-14 z-40 border-b border-slate-200 bg-white px-5 pb-5 shadow-lg lg:hidden">
+          <nav className="flex flex-col pt-2">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={closeMenu}
+                className="border-b border-slate-100 py-3 text-sm font-semibold text-slate-700"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
-      </div>
+      )}
     </>
   );
 }

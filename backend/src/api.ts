@@ -1,7 +1,9 @@
 import {
+  applicationExists,
   createApplication,
   createInternship,
   deleteInternship,
+  findActiveInternshipById,
   findInternshipBySlug,
   getEmployer,
   listApplicationsByInternship,
@@ -329,29 +331,53 @@ export async function postApplicationResponse(
     >;
 
     const internshipId = Number(body.internshipId);
-
     const fullName = text(body.fullName);
-
     const email = text(body.email).toLowerCase();
-
     const resumeUrl = text(body.resumeUrl);
-
     const coverLetter = text(body.coverLetter);
+
+    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    let resumeUrlIsValid = false;
+    try {
+      const parsed = new URL(resumeUrl);
+      resumeUrlIsValid = parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
+      resumeUrlIsValid = false;
+    }
 
     if (
       !Number.isInteger(internshipId) ||
       internshipId <= 0 ||
-      !fullName ||
-      !email ||
-      !resumeUrl ||
-      !coverLetter
+      fullName.length < 2 ||
+      fullName.length > 120 ||
+      !emailIsValid ||
+      email.length > 254 ||
+      !resumeUrlIsValid ||
+      resumeUrl.length > 2048 ||
+      coverLetter.length < 20 ||
+      coverLetter.length > 5000
     ) {
       return Response.json(
         {
-          error:
-            "Required application fields are missing or invalid",
+          error: "Please provide a valid name, email, resume link, and cover letter.",
         },
         { status: 400 },
+      );
+    }
+
+    const internship = await findActiveInternshipById(internshipId);
+    if (!internship) {
+      return Response.json(
+        { error: "Internship is no longer available." },
+        { status: 404 },
+      );
+    }
+
+    if (await applicationExists(internshipId, email)) {
+      return Response.json(
+        { error: "You have already applied for this internship" },
+        { status: 409 },
       );
     }
 

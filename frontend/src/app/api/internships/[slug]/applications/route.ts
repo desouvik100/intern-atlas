@@ -1,22 +1,8 @@
-import {
-  getApplicationsResponse,
-} from "@internatlas/backend/api";
-
 export const runtime = "nodejs";
 
-type RouteContext = {
-  params: Promise<{
-    slug: string;
-  }>;
-};
-
-export async function GET(
-  _request: Request,
-  { params }: RouteContext,
-) {
-  const { slug } = await params;
-
-  return getApplicationsResponse(
-    Number(slug),
+export async function GET() {
+  return Response.json(
+    { error: "Application management requires employer authentication and is not available in this release." },
+    { status: 403 },
   );
 }

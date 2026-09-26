@@ -1,16 +1,8 @@
-import { patchApplicationStatusResponse } from "@internatlas/backend/api";
-
 export const runtime = "nodejs";
 
-type RouteContext = {
-  params: Promise<{ id: string }>;
-};
-
-export async function PATCH(
-  request: Request,
-  { params }: RouteContext,
-) {
-  const { id } = await params;
-
-  return patchApplicationStatusResponse(request, Number(id));
+export async function PATCH() {
+  return Response.json(
+    { error: "Application management requires employer authentication and is not available in this release." },
+    { status: 403 },
+  );
 }

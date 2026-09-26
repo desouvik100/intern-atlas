@@ -1,56 +1,53 @@
-import  Header               from "@/components/layout/Header";
-import { Footer }              from "@/components/layout/Footer";
-import { HeroSection }         from "@/components/sections/HeroSection";
-import { ExploreCategories }   from "@/components/sections/ExploreCategories";
-import { OpportunitySection }  from "@/components/sections/OpportunitySection";
-import { CompetitionsBanner }  from "@/components/sections/CompetitionsBanner";
-import { HackathonsBanner }    from "@/components/sections/HackathonsBanner";
-import { BeyondJobs }          from "@/components/sections/BeyondJobs";
-import { Testimonial }         from "@/components/sections/Testimonial";
-import { BottomCTA }           from "@/components/sections/BottomCTA";
+import Header from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { OpportunitySection } from "@/components/sections/OpportunitySection";
+import { BottomCTA } from "@/components/sections/BottomCTA";
 
-import {
-  latestInternships,
-  latestJobs,
-  categories,
-} from "@/data/mock-opportunities";
+import { listInternships } from "@internatlas/backend/internship-db";
+import type { Opportunity } from "@/lib/types";
 
-export default function HomePage() {
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const internships = await listInternships();
+
+  const opportunities: Opportunity[] = internships.slice(0, 6).map(
+    (internship) => ({
+      id: String(internship.id),
+      title: internship.title,
+      organization: internship.company,
+      type: "internship",
+      location: `${internship.workMode} · ${internship.location}`,
+      compensation: internship.stipend,
+      applyBy: internship.applyBy,
+      badges: internship.category ? [internship.category] : [],
+      timeLabel: internship.posted,
+      logoVariant: "startup",
+      href: `/internships/${internship.slug}`,
+    }),
+  );
+
   return (
     <>
       <Header />
+
       <main className="bg-[#F8FAFC]/50">
         <HeroSection />
-        <ExploreCategories categories={categories} />
 
         <OpportunitySection
-          eyebrow="FEATURED"
-          title="Top internships"
-          highlightText="this week."
-          opportunities={latestInternships}
+          eyebrow="OPPORTUNITIES"
+          title="Latest internships"
+          highlightText="for students."
+          opportunities={opportunities}
           viewAllLabel="View all internships"
-          bgWhite={false}
+          viewAllHref="/internships"
         />
-
-        <CompetitionsBanner />
-
-        <HackathonsBanner />
-
-        <OpportunitySection
-          eyebrow="LATEST"
-          title="Entry-level jobs to kickstart"
-          highlightText="your career."
-          opportunities={latestJobs}
-          viewAllLabel="View all jobs"
-          bgWhite={false}
-        />
-
-        <BeyondJobs />
-
-        <Testimonial />
 
         <BottomCTA />
       </main>
+
       <Footer />
     </>
   );

@@ -1,8 +1,4 @@
-import {
-  deleteInternshipResponse,
-  getInternshipResponse,
-  patchInternshipResponse,
-} from "@internatlas/backend/api";
+import { getInternshipResponse } from "@internatlas/backend/api";
 
 export const runtime = "nodejs";
 
@@ -15,12 +11,10 @@ export async function GET(_request: Request, { params }: RouteContext) {
   return getInternshipResponse(slug);
 }
 
-export async function PATCH(request: Request, { params }: RouteContext) {
-  const { slug } = await params;
-  return patchInternshipResponse(request, slug);
+export async function PATCH() {
+  return Response.json({ error: "Employer editing is not available in this release." }, { status: 403 });
 }
 
-export async function DELETE(_request: Request, { params }: RouteContext) {
-  const { slug } = await params;
-  return deleteInternshipResponse(slug);
+export async function DELETE() {
+  return Response.json({ error: "Employer editing is not available in this release." }, { status: 403 });
 }
