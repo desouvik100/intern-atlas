@@ -94,7 +94,7 @@ export function HeroVisual() {
       {/* Decorative text 2 (Bottom Right) */}
       <div className="absolute bottom-[2%] right-[-5%] -rotate-3 font-hand text-[20px] text-primary z-20 leading-[1.1]">
         Skills <br /> today. <br /> Opportunities <br /> tomorrow.
-        <svg className="absolute -bottom-4 right-0 text-cyan" width="50" height="10" viewBox="0 0 100 20" fill="none">
+        <svg className="absolute -bottom-4 right-8 lg:right-12 xl:right-16 text-cyan" width="50" height="10" viewBox="0 0 100 20" fill="none">
           <path d="M5 8 Q 45 2, 95 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
           <path d="M20 18 Q 55 12, 85 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
         </svg>
