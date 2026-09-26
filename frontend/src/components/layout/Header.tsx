@@ -6,10 +6,15 @@ import { Menu, Search, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+
 const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Internships", href: "/internships" },
+  { label: "Events", href: "/events" },
+  { label: "Competitions", href: "/competitions" },
+  { label: "Hackathons", href: "/hackathons" },
 ];
+
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
