@@ -217,7 +217,7 @@ export default function InternshipList({
         <div className="absolute -right-20 top-0 size-56 rounded-full bg-pink-200/30 blur-3xl" />
         <div className="absolute left-1/3 top-0 size-56 rounded-full bg-blue-200/25 blur-3xl" />
 
-        <div className="relative mx-auto max-w-[1100px] px-4 py-10 sm:px-6 lg:px-8">
+       <div className="relative mx-auto max-w-[1440px] px-4 py-10 sm:px-6 lg:px-8 xl:px-10">
           <div className="max-w-3xl">
             <p className="text-xs font-black uppercase tracking-[0.08em] text-blue-600">
               Internships for students
@@ -320,7 +320,7 @@ export default function InternshipList({
 
       {/* Results */}
       <main className="min-h-[600px] bg-[#f8fafc] text-[#071c46]">
-        <div className="mx-auto grid max-w-[1100px] gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[230px_minmax(0,1fr)_245px] lg:px-8">
+<div className="mx-auto grid max-w-[1440px] gap-7 px-4 py-8 sm:px-6 lg:grid-cols-[260px_minmax(0,1fr)_290px] lg:px-8 xl:px-10">
 
           {/* Filters */}
           <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-20">
@@ -486,7 +486,7 @@ export default function InternshipList({
                   return (
                     <article
                       key={internship.id}
-                      className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
+                     className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
                     >
                       {/* Entire card link */}
                       <Link
@@ -550,7 +550,7 @@ export default function InternshipList({
                           </button>
                         </div>
 
-                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                        <div className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-2">
                           <MetaItem
                             icon={
                               <MapPin size={15} />
