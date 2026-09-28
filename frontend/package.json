@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cd ../backend && npx prisma generate && cd ../frontend && next build",
     "start": "next start",
     "lint": "eslint",
     "dev:vinext": "vinext dev --port 3001",

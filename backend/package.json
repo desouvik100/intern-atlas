@@ -9,9 +9,6 @@
     "./internship-db": "./src/internship-db.ts",
     "./types": "./src/types.ts"
   },
-  "scripts": {
-    "postinstall": "npx prisma generate"
-  },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
