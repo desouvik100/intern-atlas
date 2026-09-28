@@ -28,11 +28,13 @@ export type AggregateInternship = {
 
 export type InternshipAvgAggregateOutputType = {
   id: number | null
+  openings: number | null
   employerId: number | null
 }
 
 export type InternshipSumAggregateOutputType = {
   id: number | null
+  openings: number | null
   employerId: number | null
 }
 
@@ -49,6 +51,11 @@ export type InternshipMinAggregateOutputType = {
   applyBy: string | null
   category: string | null
   description: string | null
+  openings: number | null
+  startDate: string | null
+  qualification: string | null
+  employmentType: string | null
+  experience: string | null
   status: string | null
   employerId: number | null
   createdAt: Date | null
@@ -68,6 +75,11 @@ export type InternshipMaxAggregateOutputType = {
   applyBy: string | null
   category: string | null
   description: string | null
+  openings: number | null
+  startDate: string | null
+  qualification: string | null
+  employmentType: string | null
+  experience: string | null
   status: string | null
   employerId: number | null
   createdAt: Date | null
@@ -87,6 +99,11 @@ export type InternshipCountAggregateOutputType = {
   applyBy: number
   category: number
   description: number
+  openings: number
+  startDate: number
+  qualification: number
+  employmentType: number
+  experience: number
   skills: number
   responsibilities: number
   requirements: number
@@ -101,11 +118,13 @@ export type InternshipCountAggregateOutputType = {
 
 export type InternshipAvgAggregateInputType = {
   id?: true
+  openings?: true
   employerId?: true
 }
 
 export type InternshipSumAggregateInputType = {
   id?: true
+  openings?: true
   employerId?: true
 }
 
@@ -122,6 +141,11 @@ export type InternshipMinAggregateInputType = {
   applyBy?: true
   category?: true
   description?: true
+  openings?: true
+  startDate?: true
+  qualification?: true
+  employmentType?: true
+  experience?: true
   status?: true
   employerId?: true
   createdAt?: true
@@ -141,6 +165,11 @@ export type InternshipMaxAggregateInputType = {
   applyBy?: true
   category?: true
   description?: true
+  openings?: true
+  startDate?: true
+  qualification?: true
+  employmentType?: true
+  experience?: true
   status?: true
   employerId?: true
   createdAt?: true
@@ -160,6 +189,11 @@ export type InternshipCountAggregateInputType = {
   applyBy?: true
   category?: true
   description?: true
+  openings?: true
+  startDate?: true
+  qualification?: true
+  employmentType?: true
+  experience?: true
   skills?: true
   responsibilities?: true
   requirements?: true
@@ -270,6 +304,11 @@ export type InternshipGroupByOutputType = {
   applyBy: string
   category: string
   description: string
+  openings: number | null
+  startDate: string | null
+  qualification: string | null
+  employmentType: string | null
+  experience: string | null
   skills: string[]
   responsibilities: string[]
   requirements: string[]
@@ -316,6 +355,11 @@ export type InternshipWhereInput = {
   applyBy?: Prisma.StringFilter<"Internship"> | string
   category?: Prisma.StringFilter<"Internship"> | string
   description?: Prisma.StringFilter<"Internship"> | string
+  openings?: Prisma.IntNullableFilter<"Internship"> | number | null
+  startDate?: Prisma.StringNullableFilter<"Internship"> | string | null
+  qualification?: Prisma.StringNullableFilter<"Internship"> | string | null
+  employmentType?: Prisma.StringNullableFilter<"Internship"> | string | null
+  experience?: Prisma.StringNullableFilter<"Internship"> | string | null
   skills?: Prisma.StringNullableListFilter<"Internship">
   responsibilities?: Prisma.StringNullableListFilter<"Internship">
   requirements?: Prisma.StringNullableListFilter<"Internship">
@@ -341,6 +385,11 @@ export type InternshipOrderByWithRelationInput = {
   applyBy?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  openings?: Prisma.SortOrderInput | Prisma.SortOrder
+  startDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualification?: Prisma.SortOrderInput | Prisma.SortOrder
+  employmentType?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience?: Prisma.SortOrderInput | Prisma.SortOrder
   skills?: Prisma.SortOrder
   responsibilities?: Prisma.SortOrder
   requirements?: Prisma.SortOrder
@@ -369,6 +418,11 @@ export type InternshipWhereUniqueInput = Prisma.AtLeast<{
   applyBy?: Prisma.StringFilter<"Internship"> | string
   category?: Prisma.StringFilter<"Internship"> | string
   description?: Prisma.StringFilter<"Internship"> | string
+  openings?: Prisma.IntNullableFilter<"Internship"> | number | null
+  startDate?: Prisma.StringNullableFilter<"Internship"> | string | null
+  qualification?: Prisma.StringNullableFilter<"Internship"> | string | null
+  employmentType?: Prisma.StringNullableFilter<"Internship"> | string | null
+  experience?: Prisma.StringNullableFilter<"Internship"> | string | null
   skills?: Prisma.StringNullableListFilter<"Internship">
   responsibilities?: Prisma.StringNullableListFilter<"Internship">
   requirements?: Prisma.StringNullableListFilter<"Internship">
@@ -394,6 +448,11 @@ export type InternshipOrderByWithAggregationInput = {
   applyBy?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  openings?: Prisma.SortOrderInput | Prisma.SortOrder
+  startDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  qualification?: Prisma.SortOrderInput | Prisma.SortOrder
+  employmentType?: Prisma.SortOrderInput | Prisma.SortOrder
+  experience?: Prisma.SortOrderInput | Prisma.SortOrder
   skills?: Prisma.SortOrder
   responsibilities?: Prisma.SortOrder
   requirements?: Prisma.SortOrder
@@ -425,6 +484,11 @@ export type InternshipScalarWhereWithAggregatesInput = {
   applyBy?: Prisma.StringWithAggregatesFilter<"Internship"> | string
   category?: Prisma.StringWithAggregatesFilter<"Internship"> | string
   description?: Prisma.StringWithAggregatesFilter<"Internship"> | string
+  openings?: Prisma.IntNullableWithAggregatesFilter<"Internship"> | number | null
+  startDate?: Prisma.StringNullableWithAggregatesFilter<"Internship"> | string | null
+  qualification?: Prisma.StringNullableWithAggregatesFilter<"Internship"> | string | null
+  employmentType?: Prisma.StringNullableWithAggregatesFilter<"Internship"> | string | null
+  experience?: Prisma.StringNullableWithAggregatesFilter<"Internship"> | string | null
   skills?: Prisma.StringNullableListFilter<"Internship">
   responsibilities?: Prisma.StringNullableListFilter<"Internship">
   requirements?: Prisma.StringNullableListFilter<"Internship">
@@ -447,6 +511,11 @@ export type InternshipCreateInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -471,6 +540,11 @@ export type InternshipUncheckedCreateInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -494,6 +568,11 @@ export type InternshipUpdateInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -518,6 +597,11 @@ export type InternshipUncheckedUpdateInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -542,6 +626,11 @@ export type InternshipCreateManyInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -564,6 +653,11 @@ export type InternshipUpdateManyMutationInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -586,6 +680,11 @@ export type InternshipUncheckedUpdateManyInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -627,6 +726,11 @@ export type InternshipCountOrderByAggregateInput = {
   applyBy?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  openings?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  qualification?: Prisma.SortOrder
+  employmentType?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
   skills?: Prisma.SortOrder
   responsibilities?: Prisma.SortOrder
   requirements?: Prisma.SortOrder
@@ -639,6 +743,7 @@ export type InternshipCountOrderByAggregateInput = {
 
 export type InternshipAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  openings?: Prisma.SortOrder
   employerId?: Prisma.SortOrder
 }
 
@@ -655,6 +760,11 @@ export type InternshipMaxOrderByAggregateInput = {
   applyBy?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  openings?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  qualification?: Prisma.SortOrder
+  employmentType?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
   status?: Prisma.SortOrder
   employerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -674,6 +784,11 @@ export type InternshipMinOrderByAggregateInput = {
   applyBy?: Prisma.SortOrder
   category?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  openings?: Prisma.SortOrder
+  startDate?: Prisma.SortOrder
+  qualification?: Prisma.SortOrder
+  employmentType?: Prisma.SortOrder
+  experience?: Prisma.SortOrder
   status?: Prisma.SortOrder
   employerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -682,6 +797,7 @@ export type InternshipMinOrderByAggregateInput = {
 
 export type InternshipSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  openings?: Prisma.SortOrder
   employerId?: Prisma.SortOrder
 }
 
@@ -768,14 +884,6 @@ export type InternshipUpdateperksInput = {
   push?: string | string[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type InternshipCreateNestedOneWithoutApplicationsInput = {
   create?: Prisma.XOR<Prisma.InternshipCreateWithoutApplicationsInput, Prisma.InternshipUncheckedCreateWithoutApplicationsInput>
   connectOrCreate?: Prisma.InternshipCreateOrConnectWithoutApplicationsInput
@@ -802,6 +910,11 @@ export type InternshipCreateWithoutEmployerInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -825,6 +938,11 @@ export type InternshipUncheckedCreateWithoutEmployerInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -877,6 +995,11 @@ export type InternshipScalarWhereInput = {
   applyBy?: Prisma.StringFilter<"Internship"> | string
   category?: Prisma.StringFilter<"Internship"> | string
   description?: Prisma.StringFilter<"Internship"> | string
+  openings?: Prisma.IntNullableFilter<"Internship"> | number | null
+  startDate?: Prisma.StringNullableFilter<"Internship"> | string | null
+  qualification?: Prisma.StringNullableFilter<"Internship"> | string | null
+  employmentType?: Prisma.StringNullableFilter<"Internship"> | string | null
+  experience?: Prisma.StringNullableFilter<"Internship"> | string | null
   skills?: Prisma.StringNullableListFilter<"Internship">
   responsibilities?: Prisma.StringNullableListFilter<"Internship">
   requirements?: Prisma.StringNullableListFilter<"Internship">
@@ -899,6 +1022,11 @@ export type InternshipCreateWithoutApplicationsInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -922,6 +1050,11 @@ export type InternshipUncheckedCreateWithoutApplicationsInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -960,6 +1093,11 @@ export type InternshipUpdateWithoutApplicationsInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -983,6 +1121,11 @@ export type InternshipUncheckedUpdateWithoutApplicationsInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -1006,6 +1149,11 @@ export type InternshipCreateManyEmployerInput = {
   applyBy: string
   category: string
   description: string
+  openings?: number | null
+  startDate?: string | null
+  qualification?: string | null
+  employmentType?: string | null
+  experience?: string | null
   skills?: Prisma.InternshipCreateskillsInput | string[]
   responsibilities?: Prisma.InternshipCreateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipCreaterequirementsInput | string[]
@@ -1027,6 +1175,11 @@ export type InternshipUpdateWithoutEmployerInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -1050,6 +1203,11 @@ export type InternshipUncheckedUpdateWithoutEmployerInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -1073,6 +1231,11 @@ export type InternshipUncheckedUpdateManyWithoutEmployerInput = {
   applyBy?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  openings?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  startDate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employmentType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  experience?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   skills?: Prisma.InternshipUpdateskillsInput | string[]
   responsibilities?: Prisma.InternshipUpdateresponsibilitiesInput | string[]
   requirements?: Prisma.InternshipUpdaterequirementsInput | string[]
@@ -1126,6 +1289,11 @@ export type InternshipSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   applyBy?: boolean
   category?: boolean
   description?: boolean
+  openings?: boolean
+  startDate?: boolean
+  qualification?: boolean
+  employmentType?: boolean
+  experience?: boolean
   skills?: boolean
   responsibilities?: boolean
   requirements?: boolean
@@ -1152,6 +1320,11 @@ export type InternshipSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   applyBy?: boolean
   category?: boolean
   description?: boolean
+  openings?: boolean
+  startDate?: boolean
+  qualification?: boolean
+  employmentType?: boolean
+  experience?: boolean
   skills?: boolean
   responsibilities?: boolean
   requirements?: boolean
@@ -1176,6 +1349,11 @@ export type InternshipSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   applyBy?: boolean
   category?: boolean
   description?: boolean
+  openings?: boolean
+  startDate?: boolean
+  qualification?: boolean
+  employmentType?: boolean
+  experience?: boolean
   skills?: boolean
   responsibilities?: boolean
   requirements?: boolean
@@ -1200,6 +1378,11 @@ export type InternshipSelectScalar = {
   applyBy?: boolean
   category?: boolean
   description?: boolean
+  openings?: boolean
+  startDate?: boolean
+  qualification?: boolean
+  employmentType?: boolean
+  experience?: boolean
   skills?: boolean
   responsibilities?: boolean
   requirements?: boolean
@@ -1210,7 +1393,7 @@ export type InternshipSelectScalar = {
   updatedAt?: boolean
 }
 
-export type InternshipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "company" | "location" | "workMode" | "stipend" | "duration" | "posted" | "applyBy" | "category" | "description" | "skills" | "responsibilities" | "requirements" | "perks" | "status" | "employerId" | "createdAt" | "updatedAt", ExtArgs["result"]["internship"]>
+export type InternshipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "title" | "company" | "location" | "workMode" | "stipend" | "duration" | "posted" | "applyBy" | "category" | "description" | "openings" | "startDate" | "qualification" | "employmentType" | "experience" | "skills" | "responsibilities" | "requirements" | "perks" | "status" | "employerId" | "createdAt" | "updatedAt", ExtArgs["result"]["internship"]>
 export type InternshipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employer?: boolean | Prisma.Internship$employerArgs<ExtArgs>
   applications?: boolean | Prisma.Internship$applicationsArgs<ExtArgs>
@@ -1242,6 +1425,11 @@ export type $InternshipPayload<ExtArgs extends runtime.Types.Extensions.Internal
     applyBy: string
     category: string
     description: string
+    openings: number | null
+    startDate: string | null
+    qualification: string | null
+    employmentType: string | null
+    experience: string | null
     skills: string[]
     responsibilities: string[]
     requirements: string[]
@@ -1687,6 +1875,11 @@ export interface InternshipFieldRefs {
   readonly applyBy: Prisma.FieldRef<"Internship", 'String'>
   readonly category: Prisma.FieldRef<"Internship", 'String'>
   readonly description: Prisma.FieldRef<"Internship", 'String'>
+  readonly openings: Prisma.FieldRef<"Internship", 'Int'>
+  readonly startDate: Prisma.FieldRef<"Internship", 'String'>
+  readonly qualification: Prisma.FieldRef<"Internship", 'String'>
+  readonly employmentType: Prisma.FieldRef<"Internship", 'String'>
+  readonly experience: Prisma.FieldRef<"Internship", 'String'>
   readonly skills: Prisma.FieldRef<"Internship", 'String[]'>
   readonly responsibilities: Prisma.FieldRef<"Internship", 'String[]'>
   readonly requirements: Prisma.FieldRef<"Internship", 'String[]'>

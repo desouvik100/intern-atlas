@@ -14,6 +14,14 @@ import {
   updateInternship,
   type InternshipInput,
 } from "./internship-db";
+import {
+  createScholarship,
+  deleteScholarship,
+  findScholarshipBySlug,
+  listScholarships,
+  updateScholarship,
+  type ScholarshipInput,
+} from "./scholarship-db";
 
 function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
@@ -751,6 +759,262 @@ export async function getDatasetResponse(
       {
         status: 500,
       },
+    );
+  }
+}
+
+/* =========================================================
+   SCHOLARSHIPS
+========================================================= */
+
+export async function getScholarshipsResponse(): Promise<Response> {
+  try {
+    return Response.json(await listScholarships());
+  } catch (error) {
+    console.error("GET /api/scholarships failed:", error);
+
+    return Response.json(
+      { error: "Unable to load scholarships" },
+      { status: 500 },
+    );
+  }
+}
+
+export async function postScholarshipResponse(
+  request: Request,
+): Promise<Response> {
+  try {
+    const body = (await request.json()) as Record<string, unknown>;
+
+    const title = text(body.title);
+    const organizerName = text(body.organizerName);
+    const scholarshipType = text(body.scholarshipType);
+    const category = text(body.category);
+    const eligibility = text(body.eligibility);
+    const amount = text(body.amount);
+    const awardCount = Number(body.awardCount);
+    const applicationDeadline = text(body.applicationDeadline);
+    const announcementDate = text(body.announcementDate);
+    const applicationMode = text(body.applicationMode);
+    const applicationFee = text(body.applicationFee);
+    const isFree = Boolean(body.isFree);
+    const renewableYearly = Boolean(body.renewableYearly);
+    const applicationUrl = text(body.applicationUrl);
+    const description = text(body.description);
+
+    if (
+      !title ||
+      !organizerName ||
+      !scholarshipType ||
+      !category ||
+      !eligibility ||
+      !amount ||
+      !Number.isInteger(awardCount) ||
+      awardCount <= 0 ||
+      !applicationDeadline ||
+      !announcementDate ||
+      !["Online", "Offline", "Both"].includes(applicationMode) ||
+      !applicationFee ||
+      !applicationUrl ||
+      !description
+    ) {
+      return Response.json(
+        {
+          error: "Required scholarship fields are missing or invalid",
+        },
+        { status: 400 },
+      );
+    }
+
+    const suffix = crypto.randomUUID().slice(0, 6);
+
+    const scholarship: ScholarshipInput = {
+      slug:
+        text(body.slug) ||
+        `${slugify(title)}-${slugify(organizerName)}-${suffix}`,
+      title,
+      organizerName,
+      organizerType: text(body.organizerType) || undefined,
+      organizerLogo: text(body.organizerLogo) || undefined,
+      scholarshipType,
+      category,
+      fieldOfStudy: list(body.fieldOfStudy),
+      eligibility,
+      amount,
+      amountNumber: typeof body.amountNumber === "number" ? body.amountNumber : undefined,
+      awardCount,
+      applicationDeadline,
+      announcementDate,
+      status: text(body.status) || "Open",
+      applicationMode: applicationMode as ScholarshipInput["applicationMode"],
+      applicationFee,
+      isFree,
+      renewableYearly,
+      benefits: list(body.benefits),
+      requirements: list(body.requirements),
+      selectionProcess: list(body.selectionProcess),
+      applicationUrl,
+      websiteUrl: text(body.websiteUrl) || undefined,
+      tags: list(body.tags),
+      applicantsCount: typeof body.applicantsCount === "number" ? body.applicantsCount : 0,
+      highlights: list(body.highlights),
+      testimonials: Array.isArray(body.testimonials) ? body.testimonials : undefined,
+    };
+
+    const created = await createScholarship(scholarship);
+
+    return Response.json(created, {
+      status: 201,
+    });
+  } catch (error) {
+    console.error("POST /api/scholarships failed:", error);
+
+    return Response.json(
+      {
+        error: "Unable to create scholarship",
+      },
+      { status: 500 },
+    );
+  }
+}
+
+export async function getScholarshipResponse(
+  slug: string,
+): Promise<Response> {
+  try {
+    const scholarship = await findScholarshipBySlug(slug);
+
+    if (!scholarship) {
+      return Response.json(
+        {
+          error: "Scholarship not found",
+        },
+        { status: 404 },
+      );
+    }
+
+    return Response.json(scholarship);
+  } catch (error) {
+    console.error("GET scholarship failed:", error);
+
+    return Response.json(
+      {
+        error: "Unable to load scholarship",
+      },
+      { status: 500 },
+    );
+  }
+}
+
+const editableScholarshipFields: Array<keyof ScholarshipInput> = [
+  "title",
+  "organizerName",
+  "organizerType",
+  "organizerLogo",
+  "scholarshipType",
+  "category",
+  "fieldOfStudy",
+  "eligibility",
+  "amount",
+  "amountNumber",
+  "awardCount",
+  "applicationDeadline",
+  "announcementDate",
+  "status",
+  "applicationMode",
+  "applicationFee",
+  "isFree",
+  "renewableYearly",
+  "benefits",
+  "requirements",
+  "selectionProcess",
+  "applicationUrl",
+  "websiteUrl",
+  "tags",
+  "applicantsCount",
+  "highlights",
+  "testimonials",
+];
+
+export async function patchScholarshipResponse(
+  request: Request,
+  slug: string,
+): Promise<Response> {
+  try {
+    const body = (await request.json()) as Record<string, unknown>;
+
+    const updates: Partial<ScholarshipInput> = {};
+
+    for (const field of editableScholarshipFields) {
+      if (body[field] !== undefined) {
+        Object.assign(updates, {
+          [field]: body[field],
+        });
+      }
+    }
+
+    if (
+      updates.applicationMode &&
+      !["Online", "Offline", "Both"].includes(updates.applicationMode)
+    ) {
+      return Response.json(
+        {
+          error: "Invalid application mode",
+        },
+        { status: 400 },
+      );
+    }
+
+    const scholarship = await updateScholarship(slug, updates);
+
+    if (!scholarship) {
+      return Response.json(
+        {
+          error: "Scholarship not found",
+        },
+        { status: 404 },
+      );
+    }
+
+    return Response.json(scholarship);
+  } catch (error) {
+    console.error("PATCH scholarship failed:", error);
+
+    return Response.json(
+      {
+        error: "Unable to update scholarship",
+      },
+      { status: 500 },
+    );
+  }
+}
+
+export async function deleteScholarshipResponse(
+  slug: string,
+): Promise<Response> {
+  try {
+    const deleted = await deleteScholarship(slug);
+
+    if (!deleted) {
+      return Response.json(
+        {
+          error: "Scholarship not found",
+        },
+        { status: 404 },
+      );
+    }
+
+    return new Response(null, {
+      status: 204,
+    });
+  } catch (error) {
+    console.error("DELETE scholarship failed:", error);
+
+    return Response.json(
+      {
+        error: "Unable to delete scholarship",
+      },
+      { status: 500 },
     );
   }
 }

@@ -9,6 +9,9 @@
     "./internship-db": "./src/internship-db.ts",
     "./types": "./src/types.ts"
   },
+  "scripts": {
+    "postinstall": "prisma generate"
+  },
   "devDependencies": {
     "@types/pg": "^8.23.1",
     "prisma": "^7.10.0",

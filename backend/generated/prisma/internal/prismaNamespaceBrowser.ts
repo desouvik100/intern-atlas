@@ -53,7 +53,9 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Employer: 'Employer',
   Internship: 'Internship',
-  Application: 'Application'
+  Application: 'Application',
+  DatasetOption: 'DatasetOption',
+  Scholarship: 'Scholarship'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,13 +79,23 @@ export const EmployerScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  phone: 'phone',
   companyName: 'companyName',
   companyWebsite: 'companyWebsite',
   companyDescription: 'companyDescription',
+  companyLogoUrl: 'companyLogoUrl',
   industry: 'industry',
-  location: 'location',
-  logoUrl: 'logoUrl',
-  phone: 'phone',
+  companyType: 'companyType',
+  companySize: 'companySize',
+  foundedYear: 'foundedYear',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  linkedinUrl: 'linkedinUrl',
+  verificationStatus: 'verificationStatus',
+  gstNumber: 'gstNumber',
+  cinNumber: 'cinNumber',
   profileCompleted: 'profileCompleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -105,6 +117,11 @@ export const InternshipScalarFieldEnum = {
   applyBy: 'applyBy',
   category: 'category',
   description: 'description',
+  openings: 'openings',
+  startDate: 'startDate',
+  qualification: 'qualification',
+  employmentType: 'employmentType',
+  experience: 'experience',
   skills: 'skills',
   responsibilities: 'responsibilities',
   requirements: 'requirements',
@@ -125,10 +142,65 @@ export const ApplicationScalarFieldEnum = {
   email: 'email',
   resumeUrl: 'resumeUrl',
   coverLetter: 'coverLetter',
-  createdAt: 'createdAt'
+  status: 'status',
+  employerNote: 'employerNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const DatasetOptionScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  value: 'value',
+  slug: 'slug',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DatasetOptionScalarFieldEnum = (typeof DatasetOptionScalarFieldEnum)[keyof typeof DatasetOptionScalarFieldEnum]
+
+
+export const ScholarshipScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  organizerName: 'organizerName',
+  organizerType: 'organizerType',
+  organizerLogo: 'organizerLogo',
+  scholarshipType: 'scholarshipType',
+  category: 'category',
+  fieldOfStudy: 'fieldOfStudy',
+  eligibility: 'eligibility',
+  amount: 'amount',
+  amountNumber: 'amountNumber',
+  awardCount: 'awardCount',
+  applicationDeadline: 'applicationDeadline',
+  announcementDate: 'announcementDate',
+  status: 'status',
+  applicationMode: 'applicationMode',
+  applicationFee: 'applicationFee',
+  isFree: 'isFree',
+  renewableYearly: 'renewableYearly',
+  benefits: 'benefits',
+  requirements: 'requirements',
+  selectionProcess: 'selectionProcess',
+  applicationUrl: 'applicationUrl',
+  websiteUrl: 'websiteUrl',
+  tags: 'tags',
+  applicantsCount: 'applicantsCount',
+  highlights: 'highlights',
+  testimonials: 'testimonials',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScholarshipScalarFieldEnum = (typeof ScholarshipScalarFieldEnum)[keyof typeof ScholarshipScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -137,6 +209,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -153,4 +233,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

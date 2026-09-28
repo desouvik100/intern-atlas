@@ -43,7 +43,10 @@ export type ApplicationMinAggregateOutputType = {
   email: string | null
   resumeUrl: string | null
   coverLetter: string | null
+  status: string | null
+  employerNote: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ApplicationMaxAggregateOutputType = {
@@ -53,7 +56,10 @@ export type ApplicationMaxAggregateOutputType = {
   email: string | null
   resumeUrl: string | null
   coverLetter: string | null
+  status: string | null
+  employerNote: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ApplicationCountAggregateOutputType = {
@@ -63,7 +69,10 @@ export type ApplicationCountAggregateOutputType = {
   email: number
   resumeUrl: number
   coverLetter: number
+  status: number
+  employerNote: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -85,7 +94,10 @@ export type ApplicationMinAggregateInputType = {
   email?: true
   resumeUrl?: true
   coverLetter?: true
+  status?: true
+  employerNote?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ApplicationMaxAggregateInputType = {
@@ -95,7 +107,10 @@ export type ApplicationMaxAggregateInputType = {
   email?: true
   resumeUrl?: true
   coverLetter?: true
+  status?: true
+  employerNote?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ApplicationCountAggregateInputType = {
@@ -105,7 +120,10 @@ export type ApplicationCountAggregateInputType = {
   email?: true
   resumeUrl?: true
   coverLetter?: true
+  status?: true
+  employerNote?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -202,7 +220,10 @@ export type ApplicationGroupByOutputType = {
   email: string
   resumeUrl: string
   coverLetter: string
+  status: string
+  employerNote: string | null
   createdAt: Date
+  updatedAt: Date
   _count: ApplicationCountAggregateOutputType | null
   _avg: ApplicationAvgAggregateOutputType | null
   _sum: ApplicationSumAggregateOutputType | null
@@ -235,7 +256,10 @@ export type ApplicationWhereInput = {
   email?: Prisma.StringFilter<"Application"> | string
   resumeUrl?: Prisma.StringFilter<"Application"> | string
   coverLetter?: Prisma.StringFilter<"Application"> | string
+  status?: Prisma.StringFilter<"Application"> | string
+  employerNote?: Prisma.StringNullableFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   internship?: Prisma.XOR<Prisma.InternshipScalarRelationFilter, Prisma.InternshipWhereInput>
 }
 
@@ -246,7 +270,10 @@ export type ApplicationOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   resumeUrl?: Prisma.SortOrder
   coverLetter?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  employerNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   internship?: Prisma.InternshipOrderByWithRelationInput
 }
 
@@ -261,7 +288,10 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"Application"> | string
   resumeUrl?: Prisma.StringFilter<"Application"> | string
   coverLetter?: Prisma.StringFilter<"Application"> | string
+  status?: Prisma.StringFilter<"Application"> | string
+  employerNote?: Prisma.StringNullableFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   internship?: Prisma.XOR<Prisma.InternshipScalarRelationFilter, Prisma.InternshipWhereInput>
 }, "id" | "internshipId_email">
 
@@ -272,7 +302,10 @@ export type ApplicationOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   resumeUrl?: Prisma.SortOrder
   coverLetter?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  employerNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ApplicationCountOrderByAggregateInput
   _avg?: Prisma.ApplicationAvgOrderByAggregateInput
   _max?: Prisma.ApplicationMaxOrderByAggregateInput
@@ -290,7 +323,10 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"Application"> | string
   resumeUrl?: Prisma.StringWithAggregatesFilter<"Application"> | string
   coverLetter?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  status?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  employerNote?: Prisma.StringNullableWithAggregatesFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
 }
 
 export type ApplicationCreateInput = {
@@ -298,7 +334,10 @@ export type ApplicationCreateInput = {
   email: string
   resumeUrl: string
   coverLetter: string
+  status?: string
+  employerNote?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
   internship: Prisma.InternshipCreateNestedOneWithoutApplicationsInput
 }
 
@@ -309,7 +348,10 @@ export type ApplicationUncheckedCreateInput = {
   email: string
   resumeUrl: string
   coverLetter: string
+  status?: string
+  employerNote?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ApplicationUpdateInput = {
@@ -317,7 +359,10 @@ export type ApplicationUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   resumeUrl?: Prisma.StringFieldUpdateOperationsInput | string
   coverLetter?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  employerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   internship?: Prisma.InternshipUpdateOneRequiredWithoutApplicationsNestedInput
 }
 
@@ -328,7 +373,10 @@ export type ApplicationUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   resumeUrl?: Prisma.StringFieldUpdateOperationsInput | string
   coverLetter?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  employerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationCreateManyInput = {
@@ -338,7 +386,10 @@ export type ApplicationCreateManyInput = {
   email: string
   resumeUrl: string
   coverLetter: string
+  status?: string
+  employerNote?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ApplicationUpdateManyMutationInput = {
@@ -346,7 +397,10 @@ export type ApplicationUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   resumeUrl?: Prisma.StringFieldUpdateOperationsInput | string
   coverLetter?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  employerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationUncheckedUpdateManyInput = {
@@ -356,7 +410,10 @@ export type ApplicationUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   resumeUrl?: Prisma.StringFieldUpdateOperationsInput | string
   coverLetter?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  employerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationListRelationFilter = {
@@ -381,7 +438,10 @@ export type ApplicationCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   resumeUrl?: Prisma.SortOrder
   coverLetter?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  employerNote?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ApplicationAvgOrderByAggregateInput = {
@@ -396,7 +456,10 @@ export type ApplicationMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   resumeUrl?: Prisma.SortOrder
   coverLetter?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  employerNote?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ApplicationMinOrderByAggregateInput = {
@@ -406,7 +469,10 @@ export type ApplicationMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   resumeUrl?: Prisma.SortOrder
   coverLetter?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  employerNote?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ApplicationSumOrderByAggregateInput = {
@@ -461,7 +527,10 @@ export type ApplicationCreateWithoutInternshipInput = {
   email: string
   resumeUrl: string
   coverLetter: string
+  status?: string
+  employerNote?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ApplicationUncheckedCreateWithoutInternshipInput = {
@@ -470,7 +539,10 @@ export type ApplicationUncheckedCreateWithoutInternshipInput = {
   email: string
   resumeUrl: string
   coverLetter: string
+  status?: string
+  employerNote?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ApplicationCreateOrConnectWithoutInternshipInput = {
@@ -509,7 +581,10 @@ export type ApplicationScalarWhereInput = {
   email?: Prisma.StringFilter<"Application"> | string
   resumeUrl?: Prisma.StringFilter<"Application"> | string
   coverLetter?: Prisma.StringFilter<"Application"> | string
+  status?: Prisma.StringFilter<"Application"> | string
+  employerNote?: Prisma.StringNullableFilter<"Application"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
 }
 
 export type ApplicationCreateManyInternshipInput = {
@@ -518,7 +593,10 @@ export type ApplicationCreateManyInternshipInput = {
   email: string
   resumeUrl: string
   coverLetter: string
+  status?: string
+  employerNote?: string | null
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ApplicationUpdateWithoutInternshipInput = {
@@ -526,7 +604,10 @@ export type ApplicationUpdateWithoutInternshipInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   resumeUrl?: Prisma.StringFieldUpdateOperationsInput | string
   coverLetter?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  employerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationUncheckedUpdateWithoutInternshipInput = {
@@ -535,7 +616,10 @@ export type ApplicationUncheckedUpdateWithoutInternshipInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   resumeUrl?: Prisma.StringFieldUpdateOperationsInput | string
   coverLetter?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  employerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationUncheckedUpdateManyWithoutInternshipInput = {
@@ -544,7 +628,10 @@ export type ApplicationUncheckedUpdateManyWithoutInternshipInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   resumeUrl?: Prisma.StringFieldUpdateOperationsInput | string
   coverLetter?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  employerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -556,7 +643,10 @@ export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   email?: boolean
   resumeUrl?: boolean
   coverLetter?: boolean
+  status?: boolean
+  employerNote?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   internship?: boolean | Prisma.InternshipDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
@@ -567,7 +657,10 @@ export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   email?: boolean
   resumeUrl?: boolean
   coverLetter?: boolean
+  status?: boolean
+  employerNote?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   internship?: boolean | Prisma.InternshipDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
@@ -578,7 +671,10 @@ export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   email?: boolean
   resumeUrl?: boolean
   coverLetter?: boolean
+  status?: boolean
+  employerNote?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   internship?: boolean | Prisma.InternshipDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
@@ -589,10 +685,13 @@ export type ApplicationSelectScalar = {
   email?: boolean
   resumeUrl?: boolean
   coverLetter?: boolean
+  status?: boolean
+  employerNote?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "internshipId" | "fullName" | "email" | "resumeUrl" | "coverLetter" | "createdAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "internshipId" | "fullName" | "email" | "resumeUrl" | "coverLetter" | "status" | "employerNote" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   internship?: boolean | Prisma.InternshipDefaultArgs<ExtArgs>
 }
@@ -615,7 +714,10 @@ export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.Interna
     email: string
     resumeUrl: string
     coverLetter: string
+    status: string
+    employerNote: string | null
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["application"]>
   composites: {}
 }
@@ -1046,7 +1148,10 @@ export interface ApplicationFieldRefs {
   readonly email: Prisma.FieldRef<"Application", 'String'>
   readonly resumeUrl: Prisma.FieldRef<"Application", 'String'>
   readonly coverLetter: Prisma.FieldRef<"Application", 'String'>
+  readonly status: Prisma.FieldRef<"Application", 'String'>
+  readonly employerNote: Prisma.FieldRef<"Application", 'String'>
   readonly createdAt: Prisma.FieldRef<"Application", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Application", 'DateTime'>
 }
     
 

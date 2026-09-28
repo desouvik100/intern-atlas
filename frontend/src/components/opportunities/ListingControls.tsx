@@ -4,15 +4,16 @@ import { LayoutGrid, List, SlidersHorizontal, ArrowUpDown } from "lucide-react";
 import { CompetitionSortOption } from "@/types/competition";
 import { cn } from "@/lib/utils";
 
-interface ListingControlsProps {
+interface ListingControlsProps<T extends string = CompetitionSortOption> {
   viewMode: "grid" | "list";
   onViewModeChange: (mode: "grid" | "list") => void;
   onOpenFilterDrawer: () => void;
   activeFilterCount: number;
-  sortBy: CompetitionSortOption;
-  onSortChange: (sort: CompetitionSortOption) => void;
+  sortBy: T;
+  onSortChange: (sort: T) => void;
   totalResults: number;
   itemLabel?: string;
+  sortOptions?: { value: T; label: string }[];
   className?: string;
 }
 
@@ -24,7 +25,7 @@ const SORT_OPTIONS: { value: CompetitionSortOption; label: string }[] = [
   { value: "alphabetical", label: "Alphabetical (A - Z)" },
 ];
 
-export function ListingControls({
+export function ListingControls<T extends string = CompetitionSortOption>({
   viewMode,
   onViewModeChange,
   onOpenFilterDrawer,
@@ -33,8 +34,10 @@ export function ListingControls({
   onSortChange,
   totalResults,
   itemLabel = "Competition",
+  sortOptions,
   className,
-}: ListingControlsProps) {
+}: ListingControlsProps<T>) {
+  const options = (sortOptions ?? SORT_OPTIONS) as { value: T; label: string }[];
   const pluralLabel = itemLabel.endsWith("s") ? itemLabel : `${itemLabel}s`;
 
   return (
@@ -91,10 +94,10 @@ export function ListingControls({
             <select
               id="sort-select"
               value={sortBy}
-              onChange={(e) => onSortChange(e.target.value as CompetitionSortOption)}
+              onChange={(e) => onSortChange(e.target.value as T)}
               className="h-9 rounded-xl border border-border bg-white pl-8 pr-7 text-xs font-semibold text-primary shadow-sm transition-colors hover:border-blue focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue cursor-pointer appearance-none"
             >
-              {SORT_OPTIONS.map((opt) => (
+              {options.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>

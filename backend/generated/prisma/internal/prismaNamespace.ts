@@ -399,7 +399,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Employer: 'Employer',
   Internship: 'Internship',
-  Application: 'Application'
+  Application: 'Application',
+  DatasetOption: 'DatasetOption',
+  Scholarship: 'Scholarship'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "employer" | "internship" | "application"
+    modelProps: "employer" | "internship" | "application" | "datasetOption" | "scholarship"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -641,6 +643,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DatasetOption: {
+      payload: Prisma.$DatasetOptionPayload<ExtArgs>
+      fields: Prisma.DatasetOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DatasetOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DatasetOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.DatasetOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DatasetOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        findMany: {
+          args: Prisma.DatasetOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>[]
+        }
+        create: {
+          args: Prisma.DatasetOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        createMany: {
+          args: Prisma.DatasetOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DatasetOptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>[]
+        }
+        delete: {
+          args: Prisma.DatasetOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        update: {
+          args: Prisma.DatasetOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DatasetOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DatasetOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DatasetOptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DatasetOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.DatasetOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDatasetOption>
+        }
+        groupBy: {
+          args: Prisma.DatasetOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DatasetOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DatasetOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DatasetOptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Scholarship: {
+      payload: Prisma.$ScholarshipPayload<ExtArgs>
+      fields: Prisma.ScholarshipFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ScholarshipFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ScholarshipFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>
+        }
+        findFirst: {
+          args: Prisma.ScholarshipFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ScholarshipFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>
+        }
+        findMany: {
+          args: Prisma.ScholarshipFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>[]
+        }
+        create: {
+          args: Prisma.ScholarshipCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>
+        }
+        createMany: {
+          args: Prisma.ScholarshipCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ScholarshipCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>[]
+        }
+        delete: {
+          args: Prisma.ScholarshipDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>
+        }
+        update: {
+          args: Prisma.ScholarshipUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>
+        }
+        deleteMany: {
+          args: Prisma.ScholarshipDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ScholarshipUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ScholarshipUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>[]
+        }
+        upsert: {
+          args: Prisma.ScholarshipUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ScholarshipPayload>
+        }
+        aggregate: {
+          args: Prisma.ScholarshipAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateScholarship>
+        }
+        groupBy: {
+          args: Prisma.ScholarshipGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScholarshipGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ScholarshipCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ScholarshipCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -685,13 +835,23 @@ export const EmployerScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  phone: 'phone',
   companyName: 'companyName',
   companyWebsite: 'companyWebsite',
   companyDescription: 'companyDescription',
+  companyLogoUrl: 'companyLogoUrl',
   industry: 'industry',
-  location: 'location',
-  logoUrl: 'logoUrl',
-  phone: 'phone',
+  companyType: 'companyType',
+  companySize: 'companySize',
+  foundedYear: 'foundedYear',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  linkedinUrl: 'linkedinUrl',
+  verificationStatus: 'verificationStatus',
+  gstNumber: 'gstNumber',
+  cinNumber: 'cinNumber',
   profileCompleted: 'profileCompleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -713,6 +873,11 @@ export const InternshipScalarFieldEnum = {
   applyBy: 'applyBy',
   category: 'category',
   description: 'description',
+  openings: 'openings',
+  startDate: 'startDate',
+  qualification: 'qualification',
+  employmentType: 'employmentType',
+  experience: 'experience',
   skills: 'skills',
   responsibilities: 'responsibilities',
   requirements: 'requirements',
@@ -733,10 +898,65 @@ export const ApplicationScalarFieldEnum = {
   email: 'email',
   resumeUrl: 'resumeUrl',
   coverLetter: 'coverLetter',
-  createdAt: 'createdAt'
+  status: 'status',
+  employerNote: 'employerNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const DatasetOptionScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  value: 'value',
+  slug: 'slug',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DatasetOptionScalarFieldEnum = (typeof DatasetOptionScalarFieldEnum)[keyof typeof DatasetOptionScalarFieldEnum]
+
+
+export const ScholarshipScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  organizerName: 'organizerName',
+  organizerType: 'organizerType',
+  organizerLogo: 'organizerLogo',
+  scholarshipType: 'scholarshipType',
+  category: 'category',
+  fieldOfStudy: 'fieldOfStudy',
+  eligibility: 'eligibility',
+  amount: 'amount',
+  amountNumber: 'amountNumber',
+  awardCount: 'awardCount',
+  applicationDeadline: 'applicationDeadline',
+  announcementDate: 'announcementDate',
+  status: 'status',
+  applicationMode: 'applicationMode',
+  applicationFee: 'applicationFee',
+  isFree: 'isFree',
+  renewableYearly: 'renewableYearly',
+  benefits: 'benefits',
+  requirements: 'requirements',
+  selectionProcess: 'selectionProcess',
+  applicationUrl: 'applicationUrl',
+  websiteUrl: 'websiteUrl',
+  tags: 'tags',
+  applicantsCount: 'applicantsCount',
+  highlights: 'highlights',
+  testimonials: 'testimonials',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ScholarshipScalarFieldEnum = (typeof ScholarshipScalarFieldEnum)[keyof typeof ScholarshipScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -745,6 +965,14 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -761,6 +989,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -815,6 +1052,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -985,6 +1236,8 @@ export type GlobalOmitConfig = {
   employer?: Prisma.EmployerOmit
   internship?: Prisma.InternshipOmit
   application?: Prisma.ApplicationOmit
+  datasetOption?: Prisma.DatasetOptionOmit
+  scholarship?: Prisma.ScholarshipOmit
 }
 
 /* Types for Logging */

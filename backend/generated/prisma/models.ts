@@ -11,4 +11,6 @@
 export type * from './models/Employer.ts'
 export type * from './models/Internship.ts'
 export type * from './models/Application.ts'
+export type * from './models/DatasetOption.ts'
+export type * from './models/Scholarship.ts'
 export type * from './commonInputTypes.ts'

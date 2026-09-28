@@ -126,3 +126,52 @@ model DatasetOption {
   @@unique([type, slug])
   @@index([type, active])
 }
+
+model Scholarship {
+  id Int @id @default(autoincrement())
+
+  slug String @unique
+  title String
+  description String
+  organizerName String
+  organizerType String?
+  organizerLogo String?
+
+  scholarshipType String
+  category String
+  fieldOfStudy String[]
+  eligibility String
+
+  amount String
+  amountNumber Int?
+  awardCount Int
+
+  applicationDeadline String
+  announcementDate String
+  status String @default("Open")
+
+  applicationMode String
+  applicationFee String
+  isFree Boolean
+  renewableYearly Boolean
+
+  benefits String[]
+  requirements String[]
+  selectionProcess String[]
+
+  applicationUrl String
+  websiteUrl String?
+
+  tags String[]
+  applicantsCount Int @default(0)
+
+  highlights String[]
+  testimonials Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([scholarshipType])
+  @@index([category])
+}
