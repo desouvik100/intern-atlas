@@ -75,7 +75,13 @@ const categories: Category[] = [
 ];
 
 export default async function HomePage() {
-  const internships = await listInternships();
+  let internships: Awaited<ReturnType<typeof listInternships>> = [];
+
+  try {
+    internships = await listInternships();
+  } catch (error) {
+    console.error("Unable to load homepage internships:", error);
+  }
 
   const opportunities: Opportunity[] = internships.slice(0, 6).map(
     (internship) => ({
