@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 
 
 const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Internships", href: "/internships" },
+  { label: "Opportunities", href: "/opportunities" },
   { label: "Events", href: "/events" },
-  { label: "Competitions", href: "/competitions" },
-  { label: "Hackathons", href: "/hackathons" },
+  { label: "Scholarships", href: "/scholarships" },
+  { label: "For Colleges", href: "/colleges" },
+  { label: "Resources", href: "/resources" },
 ];
 
 
@@ -43,13 +43,13 @@ export default function Header() {
     <>
       <header
         className={cn(
-          "sticky top-0 z-50 h-14 border-b border-slate-200/80 transition-all lg:h-12",
+          "sticky top-0 z-50 h-14 border-b border-slate-200/80 transition-all",
           scrolled
             ? "bg-white/95 shadow-sm backdrop-blur-md"
             : "bg-white",
         )}
       >
-        <div className="mx-auto flex h-full max-w-[1100px] items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-full max-w-[1400px] items-center justify-between px-4 sm:px-6">
           <div className="flex items-center gap-8">
             <button
               type="button"
@@ -83,13 +83,26 @@ export default function Header() {
             </nav>
           </div>
 
-          <Link
-            href="/internships"
-            aria-label="Search internships"
-            className="hidden size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-[#071c46] transition hover:border-blue-300 hover:bg-blue-50 lg:flex"
-          >
-            <Search size={16} />
-          </Link>
+          <div className="hidden items-center gap-4 lg:flex">
+            <button
+              aria-label="Search"
+              className="flex size-9 items-center justify-center rounded-full border border-slate-200 bg-white text-text-primary transition hover:border-blue-300 hover:bg-blue-50"
+            >
+              <Search size={16} />
+            </button>
+            <Link
+              href="/login"
+              className="flex h-9 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-[13px] font-bold text-text-primary transition hover:border-blue-300 hover:bg-blue-50"
+            >
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="flex h-9 items-center justify-center rounded-full bg-deep-navy px-5 text-[13px] font-bold text-white transition hover:bg-opacity-90"
+            >
+              Sign up
+            </Link>
+          </div>
         </div>
       </header>
 

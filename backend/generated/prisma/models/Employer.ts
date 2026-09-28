@@ -28,10 +28,12 @@ export type AggregateEmployer = {
 
 export type EmployerAvgAggregateOutputType = {
   id: number | null
+  foundedYear: number | null
 }
 
 export type EmployerSumAggregateOutputType = {
   id: number | null
+  foundedYear: number | null
 }
 
 export type EmployerMinAggregateOutputType = {
@@ -39,13 +41,23 @@ export type EmployerMinAggregateOutputType = {
   email: string | null
   passwordHash: string | null
   name: string | null
+  phone: string | null
   companyName: string | null
   companyWebsite: string | null
   companyDescription: string | null
+  companyLogoUrl: string | null
   industry: string | null
-  location: string | null
-  logoUrl: string | null
-  phone: string | null
+  companyType: string | null
+  companySize: string | null
+  foundedYear: number | null
+  address: string | null
+  city: string | null
+  state: string | null
+  country: string | null
+  linkedinUrl: string | null
+  verificationStatus: string | null
+  gstNumber: string | null
+  cinNumber: string | null
   profileCompleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -56,13 +68,23 @@ export type EmployerMaxAggregateOutputType = {
   email: string | null
   passwordHash: string | null
   name: string | null
+  phone: string | null
   companyName: string | null
   companyWebsite: string | null
   companyDescription: string | null
+  companyLogoUrl: string | null
   industry: string | null
-  location: string | null
-  logoUrl: string | null
-  phone: string | null
+  companyType: string | null
+  companySize: string | null
+  foundedYear: number | null
+  address: string | null
+  city: string | null
+  state: string | null
+  country: string | null
+  linkedinUrl: string | null
+  verificationStatus: string | null
+  gstNumber: string | null
+  cinNumber: string | null
   profileCompleted: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -73,13 +95,23 @@ export type EmployerCountAggregateOutputType = {
   email: number
   passwordHash: number
   name: number
+  phone: number
   companyName: number
   companyWebsite: number
   companyDescription: number
+  companyLogoUrl: number
   industry: number
-  location: number
-  logoUrl: number
-  phone: number
+  companyType: number
+  companySize: number
+  foundedYear: number
+  address: number
+  city: number
+  state: number
+  country: number
+  linkedinUrl: number
+  verificationStatus: number
+  gstNumber: number
+  cinNumber: number
   profileCompleted: number
   createdAt: number
   updatedAt: number
@@ -89,10 +121,12 @@ export type EmployerCountAggregateOutputType = {
 
 export type EmployerAvgAggregateInputType = {
   id?: true
+  foundedYear?: true
 }
 
 export type EmployerSumAggregateInputType = {
   id?: true
+  foundedYear?: true
 }
 
 export type EmployerMinAggregateInputType = {
@@ -100,13 +134,23 @@ export type EmployerMinAggregateInputType = {
   email?: true
   passwordHash?: true
   name?: true
+  phone?: true
   companyName?: true
   companyWebsite?: true
   companyDescription?: true
+  companyLogoUrl?: true
   industry?: true
-  location?: true
-  logoUrl?: true
-  phone?: true
+  companyType?: true
+  companySize?: true
+  foundedYear?: true
+  address?: true
+  city?: true
+  state?: true
+  country?: true
+  linkedinUrl?: true
+  verificationStatus?: true
+  gstNumber?: true
+  cinNumber?: true
   profileCompleted?: true
   createdAt?: true
   updatedAt?: true
@@ -117,13 +161,23 @@ export type EmployerMaxAggregateInputType = {
   email?: true
   passwordHash?: true
   name?: true
+  phone?: true
   companyName?: true
   companyWebsite?: true
   companyDescription?: true
+  companyLogoUrl?: true
   industry?: true
-  location?: true
-  logoUrl?: true
-  phone?: true
+  companyType?: true
+  companySize?: true
+  foundedYear?: true
+  address?: true
+  city?: true
+  state?: true
+  country?: true
+  linkedinUrl?: true
+  verificationStatus?: true
+  gstNumber?: true
+  cinNumber?: true
   profileCompleted?: true
   createdAt?: true
   updatedAt?: true
@@ -134,13 +188,23 @@ export type EmployerCountAggregateInputType = {
   email?: true
   passwordHash?: true
   name?: true
+  phone?: true
   companyName?: true
   companyWebsite?: true
   companyDescription?: true
+  companyLogoUrl?: true
   industry?: true
-  location?: true
-  logoUrl?: true
-  phone?: true
+  companyType?: true
+  companySize?: true
+  foundedYear?: true
+  address?: true
+  city?: true
+  state?: true
+  country?: true
+  linkedinUrl?: true
+  verificationStatus?: true
+  gstNumber?: true
+  cinNumber?: true
   profileCompleted?: true
   createdAt?: true
   updatedAt?: true
@@ -238,13 +302,23 @@ export type EmployerGroupByOutputType = {
   email: string
   passwordHash: string
   name: string | null
+  phone: string | null
   companyName: string | null
   companyWebsite: string | null
   companyDescription: string | null
+  companyLogoUrl: string | null
   industry: string | null
-  location: string | null
-  logoUrl: string | null
-  phone: string | null
+  companyType: string | null
+  companySize: string | null
+  foundedYear: number | null
+  address: string | null
+  city: string | null
+  state: string | null
+  country: string | null
+  linkedinUrl: string | null
+  verificationStatus: string
+  gstNumber: string | null
+  cinNumber: string | null
   profileCompleted: boolean
   createdAt: Date
   updatedAt: Date
@@ -278,13 +352,23 @@ export type EmployerWhereInput = {
   email?: Prisma.StringFilter<"Employer"> | string
   passwordHash?: Prisma.StringFilter<"Employer"> | string
   name?: Prisma.StringNullableFilter<"Employer"> | string | null
+  phone?: Prisma.StringNullableFilter<"Employer"> | string | null
   companyName?: Prisma.StringNullableFilter<"Employer"> | string | null
   companyWebsite?: Prisma.StringNullableFilter<"Employer"> | string | null
   companyDescription?: Prisma.StringNullableFilter<"Employer"> | string | null
+  companyLogoUrl?: Prisma.StringNullableFilter<"Employer"> | string | null
   industry?: Prisma.StringNullableFilter<"Employer"> | string | null
-  location?: Prisma.StringNullableFilter<"Employer"> | string | null
-  logoUrl?: Prisma.StringNullableFilter<"Employer"> | string | null
-  phone?: Prisma.StringNullableFilter<"Employer"> | string | null
+  companyType?: Prisma.StringNullableFilter<"Employer"> | string | null
+  companySize?: Prisma.StringNullableFilter<"Employer"> | string | null
+  foundedYear?: Prisma.IntNullableFilter<"Employer"> | number | null
+  address?: Prisma.StringNullableFilter<"Employer"> | string | null
+  city?: Prisma.StringNullableFilter<"Employer"> | string | null
+  state?: Prisma.StringNullableFilter<"Employer"> | string | null
+  country?: Prisma.StringNullableFilter<"Employer"> | string | null
+  linkedinUrl?: Prisma.StringNullableFilter<"Employer"> | string | null
+  verificationStatus?: Prisma.StringFilter<"Employer"> | string
+  gstNumber?: Prisma.StringNullableFilter<"Employer"> | string | null
+  cinNumber?: Prisma.StringNullableFilter<"Employer"> | string | null
   profileCompleted?: Prisma.BoolFilter<"Employer"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
@@ -296,13 +380,23 @@ export type EmployerOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   companyName?: Prisma.SortOrderInput | Prisma.SortOrder
   companyWebsite?: Prisma.SortOrderInput | Prisma.SortOrder
   companyDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
-  location?: Prisma.SortOrderInput | Prisma.SortOrder
-  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyType?: Prisma.SortOrderInput | Prisma.SortOrder
+  companySize?: Prisma.SortOrderInput | Prisma.SortOrder
+  foundedYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  cinNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   profileCompleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -317,13 +411,23 @@ export type EmployerWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.EmployerWhereInput | Prisma.EmployerWhereInput[]
   passwordHash?: Prisma.StringFilter<"Employer"> | string
   name?: Prisma.StringNullableFilter<"Employer"> | string | null
+  phone?: Prisma.StringNullableFilter<"Employer"> | string | null
   companyName?: Prisma.StringNullableFilter<"Employer"> | string | null
   companyWebsite?: Prisma.StringNullableFilter<"Employer"> | string | null
   companyDescription?: Prisma.StringNullableFilter<"Employer"> | string | null
+  companyLogoUrl?: Prisma.StringNullableFilter<"Employer"> | string | null
   industry?: Prisma.StringNullableFilter<"Employer"> | string | null
-  location?: Prisma.StringNullableFilter<"Employer"> | string | null
-  logoUrl?: Prisma.StringNullableFilter<"Employer"> | string | null
-  phone?: Prisma.StringNullableFilter<"Employer"> | string | null
+  companyType?: Prisma.StringNullableFilter<"Employer"> | string | null
+  companySize?: Prisma.StringNullableFilter<"Employer"> | string | null
+  foundedYear?: Prisma.IntNullableFilter<"Employer"> | number | null
+  address?: Prisma.StringNullableFilter<"Employer"> | string | null
+  city?: Prisma.StringNullableFilter<"Employer"> | string | null
+  state?: Prisma.StringNullableFilter<"Employer"> | string | null
+  country?: Prisma.StringNullableFilter<"Employer"> | string | null
+  linkedinUrl?: Prisma.StringNullableFilter<"Employer"> | string | null
+  verificationStatus?: Prisma.StringFilter<"Employer"> | string
+  gstNumber?: Prisma.StringNullableFilter<"Employer"> | string | null
+  cinNumber?: Prisma.StringNullableFilter<"Employer"> | string | null
   profileCompleted?: Prisma.BoolFilter<"Employer"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
@@ -335,13 +439,23 @@ export type EmployerOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   companyName?: Prisma.SortOrderInput | Prisma.SortOrder
   companyWebsite?: Prisma.SortOrderInput | Prisma.SortOrder
   companyDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   industry?: Prisma.SortOrderInput | Prisma.SortOrder
-  location?: Prisma.SortOrderInput | Prisma.SortOrder
-  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  companyType?: Prisma.SortOrderInput | Prisma.SortOrder
+  companySize?: Prisma.SortOrderInput | Prisma.SortOrder
+  foundedYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrderInput | Prisma.SortOrder
+  state?: Prisma.SortOrderInput | Prisma.SortOrder
+  country?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  cinNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   profileCompleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -360,13 +474,23 @@ export type EmployerScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"Employer"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"Employer"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
   companyName?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
   companyWebsite?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
   companyDescription?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  companyLogoUrl?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
   industry?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
-  location?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
-  logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
-  phone?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  companyType?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  companySize?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  foundedYear?: Prisma.IntNullableWithAggregatesFilter<"Employer"> | number | null
+  address?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  city?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  state?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  country?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  linkedinUrl?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  verificationStatus?: Prisma.StringWithAggregatesFilter<"Employer"> | string
+  gstNumber?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
+  cinNumber?: Prisma.StringNullableWithAggregatesFilter<"Employer"> | string | null
   profileCompleted?: Prisma.BoolWithAggregatesFilter<"Employer"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Employer"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Employer"> | Date | string
@@ -376,13 +500,23 @@ export type EmployerCreateInput = {
   email: string
   passwordHash: string
   name?: string | null
+  phone?: string | null
   companyName?: string | null
   companyWebsite?: string | null
   companyDescription?: string | null
+  companyLogoUrl?: string | null
   industry?: string | null
-  location?: string | null
-  logoUrl?: string | null
-  phone?: string | null
+  companyType?: string | null
+  companySize?: string | null
+  foundedYear?: number | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  linkedinUrl?: string | null
+  verificationStatus?: string
+  gstNumber?: string | null
+  cinNumber?: string | null
   profileCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -394,13 +528,23 @@ export type EmployerUncheckedCreateInput = {
   email: string
   passwordHash: string
   name?: string | null
+  phone?: string | null
   companyName?: string | null
   companyWebsite?: string | null
   companyDescription?: string | null
+  companyLogoUrl?: string | null
   industry?: string | null
-  location?: string | null
-  logoUrl?: string | null
-  phone?: string | null
+  companyType?: string | null
+  companySize?: string | null
+  foundedYear?: number | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  linkedinUrl?: string | null
+  verificationStatus?: string
+  gstNumber?: string | null
+  cinNumber?: string | null
   profileCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -411,13 +555,23 @@ export type EmployerUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -429,13 +583,23 @@ export type EmployerUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -447,13 +611,23 @@ export type EmployerCreateManyInput = {
   email: string
   passwordHash: string
   name?: string | null
+  phone?: string | null
   companyName?: string | null
   companyWebsite?: string | null
   companyDescription?: string | null
+  companyLogoUrl?: string | null
   industry?: string | null
-  location?: string | null
-  logoUrl?: string | null
-  phone?: string | null
+  companyType?: string | null
+  companySize?: string | null
+  foundedYear?: number | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  linkedinUrl?: string | null
+  verificationStatus?: string
+  gstNumber?: string | null
+  cinNumber?: string | null
   profileCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -463,13 +637,23 @@ export type EmployerUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -480,13 +664,23 @@ export type EmployerUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -497,13 +691,23 @@ export type EmployerCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyWebsite?: Prisma.SortOrder
   companyDescription?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrder
   industry?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  companyType?: Prisma.SortOrder
+  companySize?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrder
+  cinNumber?: Prisma.SortOrder
   profileCompleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -511,6 +715,7 @@ export type EmployerCountOrderByAggregateInput = {
 
 export type EmployerAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
 }
 
 export type EmployerMaxOrderByAggregateInput = {
@@ -518,13 +723,23 @@ export type EmployerMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyWebsite?: Prisma.SortOrder
   companyDescription?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrder
   industry?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  companyType?: Prisma.SortOrder
+  companySize?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrder
+  cinNumber?: Prisma.SortOrder
   profileCompleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -535,13 +750,23 @@ export type EmployerMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   companyWebsite?: Prisma.SortOrder
   companyDescription?: Prisma.SortOrder
+  companyLogoUrl?: Prisma.SortOrder
   industry?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
+  companyType?: Prisma.SortOrder
+  companySize?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  verificationStatus?: Prisma.SortOrder
+  gstNumber?: Prisma.SortOrder
+  cinNumber?: Prisma.SortOrder
   profileCompleted?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -549,6 +774,7 @@ export type EmployerMinOrderByAggregateInput = {
 
 export type EmployerSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  foundedYear?: Prisma.SortOrder
 }
 
 export type EmployerNullableScalarRelationFilter = {
@@ -562,6 +788,14 @@ export type StringFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -600,13 +834,23 @@ export type EmployerCreateWithoutInternshipsInput = {
   email: string
   passwordHash: string
   name?: string | null
+  phone?: string | null
   companyName?: string | null
   companyWebsite?: string | null
   companyDescription?: string | null
+  companyLogoUrl?: string | null
   industry?: string | null
-  location?: string | null
-  logoUrl?: string | null
-  phone?: string | null
+  companyType?: string | null
+  companySize?: string | null
+  foundedYear?: number | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  linkedinUrl?: string | null
+  verificationStatus?: string
+  gstNumber?: string | null
+  cinNumber?: string | null
   profileCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -617,13 +861,23 @@ export type EmployerUncheckedCreateWithoutInternshipsInput = {
   email: string
   passwordHash: string
   name?: string | null
+  phone?: string | null
   companyName?: string | null
   companyWebsite?: string | null
   companyDescription?: string | null
+  companyLogoUrl?: string | null
   industry?: string | null
-  location?: string | null
-  logoUrl?: string | null
-  phone?: string | null
+  companyType?: string | null
+  companySize?: string | null
+  foundedYear?: number | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  linkedinUrl?: string | null
+  verificationStatus?: string
+  gstNumber?: string | null
+  cinNumber?: string | null
   profileCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -649,13 +903,23 @@ export type EmployerUpdateWithoutInternshipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -666,13 +930,23 @@ export type EmployerUncheckedUpdateWithoutInternshipsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,13 +988,23 @@ export type EmployerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  phone?: boolean
   companyName?: boolean
   companyWebsite?: boolean
   companyDescription?: boolean
+  companyLogoUrl?: boolean
   industry?: boolean
-  location?: boolean
-  logoUrl?: boolean
-  phone?: boolean
+  companyType?: boolean
+  companySize?: boolean
+  foundedYear?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  linkedinUrl?: boolean
+  verificationStatus?: boolean
+  gstNumber?: boolean
+  cinNumber?: boolean
   profileCompleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -733,13 +1017,23 @@ export type EmployerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  phone?: boolean
   companyName?: boolean
   companyWebsite?: boolean
   companyDescription?: boolean
+  companyLogoUrl?: boolean
   industry?: boolean
-  location?: boolean
-  logoUrl?: boolean
-  phone?: boolean
+  companyType?: boolean
+  companySize?: boolean
+  foundedYear?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  linkedinUrl?: boolean
+  verificationStatus?: boolean
+  gstNumber?: boolean
+  cinNumber?: boolean
   profileCompleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -750,13 +1044,23 @@ export type EmployerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  phone?: boolean
   companyName?: boolean
   companyWebsite?: boolean
   companyDescription?: boolean
+  companyLogoUrl?: boolean
   industry?: boolean
-  location?: boolean
-  logoUrl?: boolean
-  phone?: boolean
+  companyType?: boolean
+  companySize?: boolean
+  foundedYear?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  linkedinUrl?: boolean
+  verificationStatus?: boolean
+  gstNumber?: boolean
+  cinNumber?: boolean
   profileCompleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -767,19 +1071,29 @@ export type EmployerSelectScalar = {
   email?: boolean
   passwordHash?: boolean
   name?: boolean
+  phone?: boolean
   companyName?: boolean
   companyWebsite?: boolean
   companyDescription?: boolean
+  companyLogoUrl?: boolean
   industry?: boolean
-  location?: boolean
-  logoUrl?: boolean
-  phone?: boolean
+  companyType?: boolean
+  companySize?: boolean
+  foundedYear?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  linkedinUrl?: boolean
+  verificationStatus?: boolean
+  gstNumber?: boolean
+  cinNumber?: boolean
   profileCompleted?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EmployerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "companyName" | "companyWebsite" | "companyDescription" | "industry" | "location" | "logoUrl" | "phone" | "profileCompleted" | "createdAt" | "updatedAt", ExtArgs["result"]["employer"]>
+export type EmployerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "phone" | "companyName" | "companyWebsite" | "companyDescription" | "companyLogoUrl" | "industry" | "companyType" | "companySize" | "foundedYear" | "address" | "city" | "state" | "country" | "linkedinUrl" | "verificationStatus" | "gstNumber" | "cinNumber" | "profileCompleted" | "createdAt" | "updatedAt", ExtArgs["result"]["employer"]>
 export type EmployerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   internships?: boolean | Prisma.Employer$internshipsArgs<ExtArgs>
   _count?: boolean | Prisma.EmployerCountOutputTypeDefaultArgs<ExtArgs>
@@ -797,13 +1111,23 @@ export type $EmployerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     email: string
     passwordHash: string
     name: string | null
+    phone: string | null
     companyName: string | null
     companyWebsite: string | null
     companyDescription: string | null
+    companyLogoUrl: string | null
     industry: string | null
-    location: string | null
-    logoUrl: string | null
-    phone: string | null
+    companyType: string | null
+    companySize: string | null
+    foundedYear: number | null
+    address: string | null
+    city: string | null
+    state: string | null
+    country: string | null
+    linkedinUrl: string | null
+    verificationStatus: string
+    gstNumber: string | null
+    cinNumber: string | null
     profileCompleted: boolean
     createdAt: Date
     updatedAt: Date
@@ -1235,13 +1559,23 @@ export interface EmployerFieldRefs {
   readonly email: Prisma.FieldRef<"Employer", 'String'>
   readonly passwordHash: Prisma.FieldRef<"Employer", 'String'>
   readonly name: Prisma.FieldRef<"Employer", 'String'>
+  readonly phone: Prisma.FieldRef<"Employer", 'String'>
   readonly companyName: Prisma.FieldRef<"Employer", 'String'>
   readonly companyWebsite: Prisma.FieldRef<"Employer", 'String'>
   readonly companyDescription: Prisma.FieldRef<"Employer", 'String'>
+  readonly companyLogoUrl: Prisma.FieldRef<"Employer", 'String'>
   readonly industry: Prisma.FieldRef<"Employer", 'String'>
-  readonly location: Prisma.FieldRef<"Employer", 'String'>
-  readonly logoUrl: Prisma.FieldRef<"Employer", 'String'>
-  readonly phone: Prisma.FieldRef<"Employer", 'String'>
+  readonly companyType: Prisma.FieldRef<"Employer", 'String'>
+  readonly companySize: Prisma.FieldRef<"Employer", 'String'>
+  readonly foundedYear: Prisma.FieldRef<"Employer", 'Int'>
+  readonly address: Prisma.FieldRef<"Employer", 'String'>
+  readonly city: Prisma.FieldRef<"Employer", 'String'>
+  readonly state: Prisma.FieldRef<"Employer", 'String'>
+  readonly country: Prisma.FieldRef<"Employer", 'String'>
+  readonly linkedinUrl: Prisma.FieldRef<"Employer", 'String'>
+  readonly verificationStatus: Prisma.FieldRef<"Employer", 'String'>
+  readonly gstNumber: Prisma.FieldRef<"Employer", 'String'>
+  readonly cinNumber: Prisma.FieldRef<"Employer", 'String'>
   readonly profileCompleted: Prisma.FieldRef<"Employer", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Employer", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Employer", 'DateTime'>

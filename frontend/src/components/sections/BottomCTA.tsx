@@ -84,9 +84,9 @@ export function BottomCTA() {
         <div className="absolute bottom-0 right-[25%] h-[400px] w-[500px] translate-x-1/2 translate-y-[20%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.15)_0%,transparent_70%)] mix-blend-screen lg:right-[35%]" />
       </div>
 
-      <div className="relative mx-auto flex min-h-[200px] max-w-[1400px] flex-col items-center px-6 md:flex-row">
+      <div className="relative mx-auto flex min-h-[180px] max-w-[1400px] flex-col items-center px-6 md:flex-row">
         {/* Left content */}
-        <div className="relative z-10 flex w-full flex-col items-start justify-center py-10 text-left lg:w-[60%] xl:w-[50%]">
+        <div className="relative z-10 flex w-full flex-col items-start justify-center py-7 text-left lg:w-[60%] xl:w-[50%]">
           <span className="mb-2 text-[13px] font-bold uppercase tracking-widest text-blue-400">
             YOUR NEXT CHAPTER STARTS HERE
           </span>
@@ -97,17 +97,16 @@ export function BottomCTA() {
           </h2>
 
           <p className="mb-8 max-w-[480px] text-[15px] leading-relaxed text-blue-100/80">
-            Discover internships, competitions, hackathons and events to help
-            you build your next step.
+            Join thousands of students discovering opportunities, learning new skills, and building a brighter future.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
             <Button
               asChild
-              className="h-11 rounded-full border-none bg-[#497bbf] px-8 text-[14px] text-white shadow-md hover:bg-[#3865a3]"
+              className="h-11 rounded-full border-none bg-blue-500 px-8 text-[14px] font-bold text-white shadow-md hover:bg-blue-600"
             >
-              <Link href="/internships">
-                Browse internships
+              <Link href="/signup">
+                Create your account
                 <ArrowRight size={16} className="ml-1.5" />
               </Link>
             </Button>
@@ -115,16 +114,16 @@ export function BottomCTA() {
             <Button
               asChild
               variant="outline"
-              className="h-11 rounded-full border-white/20 bg-transparent px-8 text-[14px] text-white transition-all hover:border-white/40 hover:bg-white/10 hover:text-white"
+              className="h-11 rounded-full border-white/20 bg-transparent px-8 text-[14px] font-bold text-white transition-all hover:border-white/40 hover:bg-white/10 hover:text-white"
             >
-              <Link href="/competitions">Explore competitions</Link>
+              <Link href="/employers">For colleges & employers</Link>
             </Button>
           </div>
         </div>
 
         {/* Doorway graphic */}
-        <div className="pointer-events-none absolute bottom-0 right-[15%] hidden h-[280px] w-[200px] items-end justify-center md:flex lg:right-[25%]">
-          <div className="relative h-full w-[170px] overflow-hidden rounded-t-[85px] border-x-[14px] border-t-[14px] border-[#132240] bg-[#e0f2fe] shadow-[0_0_100px_rgba(255,255,255,0.8),inset_0_20px_40px_rgba(0,0,0,0.3)] ring-1 ring-white/10">
+        <div className="pointer-events-none absolute bottom-0 right-[15%] hidden h-[225px] w-[170px] items-end justify-center md:flex lg:right-[25%]">
+          <div className="relative h-full w-[145px] overflow-hidden rounded-t-[72px] border-x-[12px] border-t-[12px] border-[#132240] bg-[#e0f2fe] shadow-[0_0_100px_rgba(255,255,255,0.8),inset_0_20px_40px_rgba(0,0,0,0.3)] ring-1 ring-white/10">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,1)_0%,rgba(255,255,255,0.8)_40%,rgba(186,230,253,0.2)_100%)]" />
 
             <div className="absolute bottom-0 right-[-10px] flex flex-col items-end">

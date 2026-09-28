@@ -11,7 +11,7 @@ export function CompetitionsBanner() {
     >
       <div className="mx-auto max-w-[1400px] px-6">
         {/* Banner Container */}
-        <div className="relative flex flex-col justify-between overflow-hidden rounded-[20px] bg-deep-navy p-6 lg:py-5 lg:px-10 lg:flex-row xl:px-12">
+        <div className="relative flex flex-col justify-between overflow-hidden rounded-[16px] bg-deep-navy p-5 lg:flex-row lg:px-8 lg:py-4 xl:px-10">
           {/* Abstract Geometric Background */}
           <div className="absolute right-0 top-0 h-full w-[50%] pointer-events-none opacity-80 mix-blend-screen overflow-hidden">
             <div className="absolute right-[-10%] top-[-20%] h-[300px] w-[300px] rotate-12 bg-gradient-to-br from-blue/20 to-transparent blur-2xl" />
@@ -23,21 +23,21 @@ export function CompetitionsBanner() {
 
           {/* Left Column */}
           <div className="relative z-10 flex w-full max-w-[400px] flex-col justify-center">
-            <span className="mb-3 text-[18px] font-bold uppercase tracking-widest text-cyan">
-              COMPETITIONS
+            <span className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan">
+              HAPPENING NOW
             </span>
 
-            <h2 className="mb-4 text-[32px] font-bold leading-[1.2] tracking-tight text-white md:text-[36px]">
+            <h2 className="mb-3 text-[25px] font-bold leading-[1.1] tracking-tight text-white md:text-[30px]">
               Competitions to showcase <br />
               <span className="text-cyan">your skills.</span>
             </h2>
 
-            <p className="mb-8 text-[14px] leading-relaxed text-border opacity-90 max-w-[320px]">
+            <p className="mb-4 max-w-[320px] text-xs leading-relaxed text-border opacity-90">
               From case challenges to ideathons — showcase your skills, win
               exciting rewards, and get noticed by top companies.
             </p>
 
-            <Button asChild className="w-max px-6 h-10 text-[13px]">
+            <Button asChild className="h-9 w-max px-5 text-xs">
               <Link href="/competitions">
                 Explore competitions
                 <ArrowRight size={14} className="ml-1.5" />
@@ -75,7 +75,7 @@ export function CompetitionsBanner() {
               </div>
             </div>
 
-            <div className="relative z-10 mb-[-20px] lg:mb-[-20px] h-[340px] w-[200px] rounded-t-[28px] bg-gradient-to-br from-[#497BBF] via-[#2A4B8D] to-[#122146] p-[2px] shadow-2xl">
+            <div className="relative z-10 mb-[-16px] h-[270px] w-[160px] rounded-t-[24px] bg-gradient-to-br from-[#497BBF] via-[#2A4B8D] to-[#122146] p-[2px] shadow-2xl">
               <div className="relative h-full w-full overflow-hidden rounded-t-[26px] bg-[#11203E] border border-black/40">
                 <div className="absolute inset-0 bg-gradient-to-b from-[#1E3A5F] via-[#1C3A62] to-[#11203E]">
                   <div className="absolute top-[20%] left-1/2 h-[150px] w-[150px] -translate-x-1/2 rounded-full bg-blue-400/10 blur-[30px]" />

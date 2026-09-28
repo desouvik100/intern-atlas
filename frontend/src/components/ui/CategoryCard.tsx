@@ -35,7 +35,7 @@ export function CategoryCard({
     <Link
       href={href}
       className={cn(
-        "group relative flex min-w-[150px] flex-col items-center justify-center gap-4 rounded-md p-5 text-center shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-cyan-light hover:shadow-hover",
+        "group relative flex flex-col items-center justify-center gap-4 rounded-[12px] p-5 text-center shadow-card transition-all duration-200 hover:-translate-y-1 hover:border-cyan-light hover:shadow-hover w-full",
         variant === "default" && "border border-border bg-white",
         variant === "highlighted" && "border border-pink bg-pink-soft",
         variant === "cyan" && "border border-cyan-light bg-cyan-surface",

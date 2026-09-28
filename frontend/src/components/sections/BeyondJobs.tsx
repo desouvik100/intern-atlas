@@ -12,7 +12,7 @@ const CARDS = [
   {
     id: "c1",
     title: "Scholarships",
-    desc: "Explore education opportunities",
+    desc: "Fund your dreams",
     href: "/scholarships",
     icon: GraduationCap,
     img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=600&auto=format&fit=crop",
@@ -28,7 +28,7 @@ const CARDS = [
   {
     id: "c3",
     title: "College Festivals",
-    desc: "Explore campus events",
+    desc: "Be part of campus life",
     href: "/college-festivals",
     icon: Ticket,
     img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop",
@@ -36,7 +36,7 @@ const CARDS = [
   {
     id: "c4",
     title: "Cultural Events",
-    desc: "Discover cultural opportunities",
+    desc: "Express. Perform. Belong.",
     href: "/cultural-events",
     icon: Music,
     img: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600&auto=format&fit=crop",
@@ -54,31 +54,43 @@ const CARDS = [
 export function BeyondJobs() {
   return (
     <section
-      className="bg-transparent pb-0 pt-2 lg:pt-3"
+      className="bg-transparent pb-0 pt-1 lg:pt-2"
       aria-label="Explore more opportunities"
     >
       <div className="mx-auto max-w-[1400px] px-6">
-        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div className="flex flex-col text-center sm:text-left">
-            <span className="mb-2 text-[18px] font-bold uppercase tracking-widest text-blue">
+              <span className="mb-1 text-xs font-bold uppercase tracking-widest text-blue lg:text-[13px]">
               EXPLORE MORE
             </span>
 
-            <h2 className="text-[28px] font-extrabold leading-tight tracking-tight text-primary">
+            <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-primary">
               Opportunities{" "}
               <span className="font-serif font-normal italic text-editorial-red">
-                beyond internships.
+                beyond jobs.
               </span>
             </h2>
           </div>
 
-          <Link
-            href="/events"
-            className="hidden items-center gap-1.5 text-[14px] font-bold text-blue hover:text-blue-hover sm:flex"
-          >
-            Explore events
-            <ArrowRight size={16} />
-          </Link>
+          <div className="hidden items-center justify-end gap-4 sm:flex">
+            <Link
+              href="/events"
+              className="text-primary font-bold text-[13px] flex items-center gap-1 cursor-pointer hover:text-blue transition-colors"
+            >
+              View all
+              <ArrowRight size={14} className="mt-0.5 text-blue" />
+            </Link>
+
+            <div className="flex gap-2">
+              <button className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-white text-text-secondary hover:bg-background transition-colors shadow-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+
+              <button className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-white text-text-secondary hover:bg-background transition-colors shadow-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
@@ -89,7 +101,7 @@ export function BeyondJobs() {
               <Link
                 key={card.id}
                 href={card.href}
-                className="group relative flex h-[180px] w-full flex-col justify-end overflow-hidden rounded-2xl border border-border p-4 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-cyan-light hover:shadow-hover"
+                className="group relative flex h-[138px] w-full flex-col justify-end overflow-hidden rounded-xl border border-border p-3 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-cyan-light hover:shadow-hover"
               >
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"

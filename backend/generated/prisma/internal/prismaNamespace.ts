@@ -399,7 +399,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Employer: 'Employer',
   Internship: 'Internship',
-  Application: 'Application'
+  Application: 'Application',
+  DatasetOption: 'DatasetOption'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "employer" | "internship" | "application"
+    modelProps: "employer" | "internship" | "application" | "datasetOption"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -641,6 +642,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DatasetOption: {
+      payload: Prisma.$DatasetOptionPayload<ExtArgs>
+      fields: Prisma.DatasetOptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DatasetOptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DatasetOptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        findFirst: {
+          args: Prisma.DatasetOptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DatasetOptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        findMany: {
+          args: Prisma.DatasetOptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>[]
+        }
+        create: {
+          args: Prisma.DatasetOptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        createMany: {
+          args: Prisma.DatasetOptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DatasetOptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>[]
+        }
+        delete: {
+          args: Prisma.DatasetOptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        update: {
+          args: Prisma.DatasetOptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DatasetOptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DatasetOptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DatasetOptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DatasetOptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DatasetOptionPayload>
+        }
+        aggregate: {
+          args: Prisma.DatasetOptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDatasetOption>
+        }
+        groupBy: {
+          args: Prisma.DatasetOptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DatasetOptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DatasetOptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DatasetOptionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -685,13 +760,23 @@ export const EmployerScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  phone: 'phone',
   companyName: 'companyName',
   companyWebsite: 'companyWebsite',
   companyDescription: 'companyDescription',
+  companyLogoUrl: 'companyLogoUrl',
   industry: 'industry',
-  location: 'location',
-  logoUrl: 'logoUrl',
-  phone: 'phone',
+  companyType: 'companyType',
+  companySize: 'companySize',
+  foundedYear: 'foundedYear',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  linkedinUrl: 'linkedinUrl',
+  verificationStatus: 'verificationStatus',
+  gstNumber: 'gstNumber',
+  cinNumber: 'cinNumber',
   profileCompleted: 'profileCompleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -713,6 +798,11 @@ export const InternshipScalarFieldEnum = {
   applyBy: 'applyBy',
   category: 'category',
   description: 'description',
+  openings: 'openings',
+  startDate: 'startDate',
+  qualification: 'qualification',
+  employmentType: 'employmentType',
+  experience: 'experience',
   skills: 'skills',
   responsibilities: 'responsibilities',
   requirements: 'requirements',
@@ -733,10 +823,27 @@ export const ApplicationScalarFieldEnum = {
   email: 'email',
   resumeUrl: 'resumeUrl',
   coverLetter: 'coverLetter',
-  createdAt: 'createdAt'
+  status: 'status',
+  employerNote: 'employerNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const DatasetOptionScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  value: 'value',
+  slug: 'slug',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DatasetOptionScalarFieldEnum = (typeof DatasetOptionScalarFieldEnum)[keyof typeof DatasetOptionScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -985,6 +1092,7 @@ export type GlobalOmitConfig = {
   employer?: Prisma.EmployerOmit
   internship?: Prisma.InternshipOmit
   application?: Prisma.ApplicationOmit
+  datasetOption?: Prisma.DatasetOptionOmit
 }
 
 /* Types for Logging */

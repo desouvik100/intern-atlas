@@ -10,7 +10,7 @@ export function HackathonsBanner() {
       aria-label="Hackathons"
     >
       <div className="mx-auto max-w-[1400px] px-6">
-        <div className="relative flex flex-col justify-between overflow-hidden rounded-[20px] bg-[linear-gradient(to_right,var(--color-blue-surface),var(--color-white))] p-6 lg:py-5 lg:px-10 lg:flex-row xl:px-12 border border-border shadow-card">
+        <div className="relative flex flex-col justify-between overflow-hidden rounded-[16px] border border-border bg-[linear-gradient(to_right,var(--color-blue-surface),var(--color-white))] p-5 shadow-card lg:flex-row lg:px-8 lg:py-4 xl:px-10">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/30 blur-[60px]" />
 
@@ -30,11 +30,11 @@ export function HackathonsBanner() {
 
           {/* Left */}
           <div className="relative z-10 flex w-full max-w-[360px] flex-col justify-center">
-            <span className="mb-3 text-[18px] font-bold uppercase tracking-widest text-cyan">
+            <span className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan">
               HACKATHONS
             </span>
 
-            <h2 className="mb-4 text-[34px] font-extrabold leading-[1.1] tracking-tight text-primary md:text-[38px]">
+            <h2 className="mb-3 text-[26px] font-extrabold leading-[1.05] tracking-tight text-primary md:text-[30px]">
               Build today <br />
               for a brighter{" "}
               <span className="font-serif italic font-normal text-editorial-red">
@@ -42,12 +42,12 @@ export function HackathonsBanner() {
               </span>
             </h2>
 
-            <p className="mb-8 text-[14.5px] leading-relaxed text-text-secondary max-w-[340px]">
+            <p className="mb-4 max-w-[340px] text-xs leading-relaxed text-text-secondary">
               Turn your ideas into impact. Join hackathons, work with amazing
               peers, and solve real-world problems.
             </p>
 
-            <Button asChild className="w-max px-6 h-10 text-[13px]">
+            <Button asChild className="h-9 w-max px-5 text-xs">
               <Link href="/hackathons">
                 Explore hackathons
                 <ArrowRight size={14} className="ml-1.5" />

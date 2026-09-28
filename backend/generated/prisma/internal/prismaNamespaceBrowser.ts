@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Employer: 'Employer',
   Internship: 'Internship',
-  Application: 'Application'
+  Application: 'Application',
+  DatasetOption: 'DatasetOption'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,13 +78,23 @@ export const EmployerScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   name: 'name',
+  phone: 'phone',
   companyName: 'companyName',
   companyWebsite: 'companyWebsite',
   companyDescription: 'companyDescription',
+  companyLogoUrl: 'companyLogoUrl',
   industry: 'industry',
-  location: 'location',
-  logoUrl: 'logoUrl',
-  phone: 'phone',
+  companyType: 'companyType',
+  companySize: 'companySize',
+  foundedYear: 'foundedYear',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  linkedinUrl: 'linkedinUrl',
+  verificationStatus: 'verificationStatus',
+  gstNumber: 'gstNumber',
+  cinNumber: 'cinNumber',
   profileCompleted: 'profileCompleted',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -105,6 +116,11 @@ export const InternshipScalarFieldEnum = {
   applyBy: 'applyBy',
   category: 'category',
   description: 'description',
+  openings: 'openings',
+  startDate: 'startDate',
+  qualification: 'qualification',
+  employmentType: 'employmentType',
+  experience: 'experience',
   skills: 'skills',
   responsibilities: 'responsibilities',
   requirements: 'requirements',
@@ -125,10 +141,27 @@ export const ApplicationScalarFieldEnum = {
   email: 'email',
   resumeUrl: 'resumeUrl',
   coverLetter: 'coverLetter',
-  createdAt: 'createdAt'
+  status: 'status',
+  employerNote: 'employerNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+export const DatasetOptionScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  value: 'value',
+  slug: 'slug',
+  sortOrder: 'sortOrder',
+  active: 'active',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DatasetOptionScalarFieldEnum = (typeof DatasetOptionScalarFieldEnum)[keyof typeof DatasetOptionScalarFieldEnum]
 
 
 export const SortOrder = {

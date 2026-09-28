@@ -6,6 +6,7 @@ import { OpportunitySection } from "@/components/sections/OpportunitySection";
 import { CompetitionsBanner } from "@/components/sections/CompetitionsBanner";
 import { HackathonsBanner } from "@/components/sections/HackathonsBanner";
 import { BeyondJobs } from "@/components/sections/BeyondJobs";
+import { Testimonial } from "@/components/sections/Testimonial";
 import { BottomCTA } from "@/components/sections/BottomCTA";
 
 import { listInternships } from "@internatlas/backend/internship-db";
@@ -20,6 +21,13 @@ const categories: Category[] = [
     type: "internship",
     label: "Internships",
     description: "Gain real-world experience",
+    iconKey: "user",
+  },
+  {
+    id: "jobs",
+    type: "job",
+    label: "Jobs",
+    description: "Kickstart your career",
     iconKey: "briefcase",
   },
   {
@@ -33,29 +41,36 @@ const categories: Category[] = [
     id: "hackathons",
     type: "hackathon",
     label: "Hackathons",
-    description: "Build. Solve. Create.",
+    description: "Build. Solve. Win",
     iconKey: "zap",
   },
   {
-    id: "events",
-    type: "event",
-    label: "Events",
-    description: "Learn and connect",
-    iconKey: "calendar",
+    id: "scholarships",
+    type: "scholarship",
+    label: "Scholarships",
+    description: "Fund your education",
+    iconKey: "graduation",
   },
   {
-    id: "contests",
-    type: "contest",
-    label: "Contests",
-    description: "Challenge yourself",
-    iconKey: "star",
-  },
-  {
-    id: "quizzes",
-    type: "quiz",
-    label: "Quizzes",
-    description: "Test your knowledge",
+    id: "workshops",
+    type: "workshops",
+    label: "Workshops",
+    description: "Learn from experts",
     iconKey: "clipboard",
+  },
+  {
+    id: "college-festivals",
+    type: "college_fest",
+    label: "College Festivals",
+    description: "Celebrate campus life",
+    iconKey: "users",
+  },
+  {
+    id: "cultural-events",
+    type: "cultural",
+    label: "Cultural Events",
+    description: "Express. Perform. Belong.",
+    iconKey: "star",
   },
 ];
 
@@ -77,6 +92,74 @@ export default async function HomePage() {
       href: `/internships/${internship.slug}`,
     }),
   );
+
+  const jobOpportunities: Opportunity[] = [
+    {
+      id: "j1",
+      title: "Product Associate",
+      organization: "Flipkart",
+      type: "job",
+      location: "Bengaluru, India",
+      compensation: "",
+      applyBy: "",
+      badges: ["Full-time", "Fresher"],
+      timeLabel: "",
+      logoVariant: "startup",
+      href: "/jobs",
+    },
+    {
+      id: "j2",
+      title: "Business Analyst",
+      organization: "Deloitte",
+      type: "job",
+      location: "Gurugram, India",
+      compensation: "",
+      applyBy: "",
+      badges: ["Full-time", "Fresher"],
+      timeLabel: "",
+      logoVariant: "enterprise",
+      href: "/jobs",
+    },
+    {
+      id: "j3",
+      title: "Customer Success",
+      organization: "Razorpay",
+      type: "job",
+      location: "Bengaluru, India",
+      compensation: "",
+      applyBy: "",
+      badges: ["Full-time", "Fresher"],
+      timeLabel: "",
+      logoVariant: "startup",
+      href: "/jobs",
+    },
+    {
+      id: "j4",
+      title: "Associate - Tech",
+      organization: "Jio",
+      type: "job",
+      location: "Mumbai, India",
+      compensation: "",
+      applyBy: "",
+      badges: ["Full-time", "Fresher"],
+      timeLabel: "",
+      logoVariant: "startup",
+      href: "/jobs",
+    },
+    {
+      id: "j5",
+      title: "Operations Associate",
+      organization: "OYO",
+      type: "job",
+      location: "Multiple locations",
+      compensation: "",
+      applyBy: "",
+      badges: ["Full-time", "Fresher"],
+      timeLabel: "",
+      logoVariant: "startup",
+      href: "/jobs",
+    },
+  ];
 
   return (
     <>
@@ -101,7 +184,18 @@ export default async function HomePage() {
 
         <HackathonsBanner />
 
+        <OpportunitySection
+          eyebrow="LATEST"
+          title="Entry-level jobs to kickstart"
+          highlightText="your career."
+          opportunities={jobOpportunities}
+          viewAllLabel="View all jobs"
+          viewAllHref="/jobs"
+        />
+
         <BeyondJobs />
+
+        <Testimonial />
 
         <BottomCTA />
       </main>

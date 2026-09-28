@@ -38,15 +38,15 @@ export function OpportunitySection({
   }
 
   return (
-    <section className="bg-[#f8fafc] py-14 lg:py-16">
-      <div className="mx-auto max-w-[1100px] px-6">
-        <div className="mb-8 flex items-end justify-between gap-6">
+    <section className="bg-[#f8fafc] py-8 lg:py-10">
+      <div className="mx-auto max-w-[1400px] px-6">
+        <div className="mb-5 flex items-end justify-between gap-6">
           <div>
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-blue-600">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-blue-600 lg:text-[13px]">
               {eyebrow}
             </p>
 
-            <h2 className="text-3xl font-extrabold tracking-tight text-[#071c46] sm:text-4xl">
+            <h2 className="text-2xl font-extrabold tracking-tight text-[#071c46] sm:text-3xl">
               {title}{" "}
               {highlightText && (
                 <span className="font-serif font-normal italic text-[#c63845]">
@@ -102,7 +102,7 @@ export function OpportunitySection({
               >
                 <OpportunityCard
                   opportunity={opportunity}
-                  className="w-[270px]"
+                  className="w-[min(250px,calc(100vw-3rem))]"
                 />
               </Link>
             ))}

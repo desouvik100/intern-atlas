@@ -53,3 +53,8 @@ export type Internship = Prisma.InternshipModel
  * 
  */
 export type Application = Prisma.ApplicationModel
+/**
+ * Model DatasetOption
+ * 
+ */
+export type DatasetOption = Prisma.DatasetOptionModel

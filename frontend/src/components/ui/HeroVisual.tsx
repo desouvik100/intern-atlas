@@ -80,24 +80,20 @@ const CARDS = [
 
 export function HeroVisual() {
   return (
-    <div className="relative hidden lg:block h-[180px] w-full" aria-hidden="true">
+    <div className="relative hidden lg:block h-[320px] w-full" aria-hidden="true">
       
       {/* Decorative text 1 (Top Left) */}
-      <div className="absolute top-[12%] left-[-2%] -rotate-6 font-hand text-[20px] text-primary leading-[1.1] z-20">
+      <div className="absolute top-[12%] left-[-2%] z-20 -translate-y-6 -rotate-6 whitespace-nowrap font-hand text-[24px] leading-[1.1] text-primary">
         Explore <br /> opportunities <br /> in your interest.
-        <svg className="absolute -bottom-6 right-[5px] text-cyan" width="20" height="20" viewBox="0 0 100 100" fill="none">
+        <svg className="absolute -bottom-6 right-[5px] text-editorial-red" width="24" height="24" viewBox="0 0 100 100" fill="none">
           <path d="M10 10 Q 30 50, 70 80" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" />
           <path d="M50 85 L 70 80 L 60 65" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         </svg>
       </div>
 
       {/* Decorative text 2 (Bottom Right) */}
-      <div className="absolute bottom-[2%] right-[-5%] -rotate-3 font-hand text-[20px] text-primary z-20 leading-[1.1]">
+      <div className="absolute bottom-[5%] right-[-5%] z-20 -translate-y-6 -rotate-6 whitespace-nowrap font-hand text-[24px] leading-[1.1] text-primary">
         Skills <br /> today. <br /> Opportunities <br /> tomorrow.
-        <svg className="absolute -bottom-4 right-8 lg:right-12 xl:right-16 text-cyan" width="50" height="10" viewBox="0 0 100 20" fill="none">
-          <path d="M5 8 Q 45 2, 95 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-          <path d="M20 18 Q 55 12, 85 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-        </svg>
       </div>
 
       {/* Floating Cards */}
@@ -106,13 +102,12 @@ export function HeroVisual() {
           <div
             key={card.id}
             className={cn(
-              "absolute flex flex-col items-center justify-center gap-3 rounded-[24px] bg-white p-5 border border-border shadow-card transition-all duration-500 hover:-translate-y-2 hover:shadow-hover hover:border-cyan-light",
-              "w-[56px] h-[56px] p-1.5",
+              "absolute flex h-[92px] w-[92px] -translate-y-6 flex-col items-center justify-center gap-1.5 rounded-[18px] border border-border bg-white p-3 shadow-card transition-all duration-500 hover:-translate-y-2 hover:border-cyan-light hover:shadow-hover",
               card.pos
             )}
           >
-            <div className="scale-50 origin-center"><card.icon /></div>
-            <span className="text-[8px] font-bold text-primary text-center leading-[1.1] whitespace-pre-wrap -mt-2">{card.label.replace(' & ', ' &\n')}</span>
+            <div className="mb-0 scale-75"><card.icon /></div>
+            <span className="text-center text-[11px] font-bold leading-[1.1] text-primary">{card.label}</span>
           </div>
         ))}
       </div>
