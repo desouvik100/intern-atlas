@@ -9,8 +9,8 @@ import { BeyondJobs } from "@/components/sections/BeyondJobs";
 import { Testimonial } from "@/components/sections/Testimonial";
 import { BottomCTA } from "@/components/sections/BottomCTA";
 
-import { listInternships } from "@internatlas/backend/internship-db";
 import type { Category, Opportunity } from "@/lib/types";
+import type { Internship } from "@internatlas/backend/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,9 +75,12 @@ const categories: Category[] = [
 ];
 
 export default async function HomePage() {
-  let internships: Awaited<ReturnType<typeof listInternships>> = [];
+  let internships: Internship[] = [];
 
   try {
+    const { listInternships } = await import(
+      "@internatlas/backend/internship-db"
+    );
     internships = await listInternships();
   } catch (error) {
     console.error("Unable to load homepage internships:", error);
