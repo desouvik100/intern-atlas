@@ -18,19 +18,37 @@ export const metadata: Metadata = {
 };
 
 export default async function ScholarshipsPage() {
-  const [initialScholarships, metadata] = await Promise.all([
-    scholarshipService.getScholarships(),
-    scholarshipService.getFilterMetadata(),
-  ]);
+  try {
+    const [initialScholarships, metadata] = await Promise.all([
+      scholarshipService.getScholarships(),
+      scholarshipService.getFilterMetadata(),
+    ]);
 
-  return (
-    <>
-      <Header />
-      <ScholarshipsListingClient
-        initialScholarships={initialScholarships}
-        metadata={metadata}
-      />
-      <Footer />
-    </>
-  );
+    return (
+      <>
+        <Header />
+        <ScholarshipsListingClient
+          initialScholarships={initialScholarships}
+          metadata={metadata}
+        />
+        <Footer />
+      </>
+    );
+  } catch (error) {
+    console.error('Scholarships page error:', error);
+    // Return a basic page with mock data as fallback
+    const { MOCK_SCHOLARSHIPS } = await import('@/data/mock-scholarships');
+    const metadata = await scholarshipService.getFilterMetadata(MOCK_SCHOLARSHIPS);
+    
+    return (
+      <>
+        <Header />
+        <ScholarshipsListingClient
+          initialScholarships={MOCK_SCHOLARSHIPS}
+          metadata={metadata}
+        />
+        <Footer />
+      </>
+    );
+  }
 }
