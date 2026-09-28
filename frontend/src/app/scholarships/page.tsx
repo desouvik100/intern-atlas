@@ -4,6 +4,8 @@ import { Footer } from "@/components/layout/Footer";
 import { ScholarshipsListingClient } from "@/components/opportunities/ScholarshipsListingClient";
 import { scholarshipService } from "@/lib/services/scholarshipService";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Scholarships — Explore Student Grants & Financial Aid",
   description:

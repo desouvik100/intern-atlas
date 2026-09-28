@@ -5,6 +5,8 @@ import { Footer } from "@/components/layout/Footer";
 import { ScholarshipDetailView } from "@/components/opportunities/ScholarshipDetailView";
 import { scholarshipService } from "@/lib/services/scholarshipService";
 
+export const dynamic = 'force-dynamic';
+
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
