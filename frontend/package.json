@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "cd ../backend && npx prisma generate && cd ../frontend && next build",
+    "build": "npm --prefix ../backend install && npm --prefix ../backend run generate && next build",
     "start": "next start",
     "lint": "eslint",
     "dev:vinext": "vinext dev --port 3001",
@@ -40,6 +40,7 @@
     "@vitejs/plugin-rsc": "0.5.34",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
+    "prisma": "^7.10.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
