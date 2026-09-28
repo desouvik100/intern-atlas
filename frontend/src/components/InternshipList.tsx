@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -18,7 +18,10 @@ import {
 
 import type { Internship } from "@/data/internships";
 
-function safeValue(value: string | null | undefined, fallback = "Not specified") {
+function safeValue(
+  value: string | null | undefined,
+  fallback = "Not specified",
+) {
   const cleaned = value?.trim();
   return cleaned ? cleaned : fallback;
 }
@@ -34,12 +37,32 @@ export default function InternshipList({
   const [workModes, setWorkModes] = useState<string[]>([]);
   const [savedIds, setSavedIds] = useState<number[]>([]);
 
+  // Load saved internships from localStorage
+  useEffect(() => {
+  const frameId = window.requestAnimationFrame(() => {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem("savedInternships") || "[]",
+      ) as number[];
+
+      setSavedIds(Array.isArray(saved) ? saved : []);
+    } catch {
+      setSavedIds([]);
+    }
+  });
+
+  return () => window.cancelAnimationFrame(frameId);
+}, []);
+
   const availableCategories = useMemo(() => {
     return Array.from(
       new Set(
         internships
           .map((internship) => internship.category?.trim())
-          .filter((category): category is string => Boolean(category)),
+          .filter(
+            (category): category is string =>
+              Boolean(category),
+          ),
       ),
     ).sort((a, b) => a.localeCompare(b));
   }, [internships]);
@@ -49,7 +72,10 @@ export default function InternshipList({
       new Set(
         internships
           .map((internship) => internship.workMode?.trim())
-          .filter((mode): mode is string => Boolean(mode)),
+          .filter(
+            (mode): mode is string =>
+              Boolean(mode),
+          ),
       ),
     ).sort((a, b) => a.localeCompare(b));
   }, [internships]);
@@ -59,24 +85,42 @@ export default function InternshipList({
   const filteredInternships = useMemo(() => {
     const query = search.trim().toLowerCase();
     const locationQuery = location.trim().toLowerCase();
-    const categoryQuery = selectedCategory.trim().toLowerCase();
+    const categoryQuery =
+      selectedCategory.trim().toLowerCase();
 
     return internships.filter((internship) => {
-      const title = safeValue(internship.title, "").toLowerCase();
-      const company = safeValue(internship.company, "").toLowerCase();
+      const title = safeValue(
+        internship.title,
+        "",
+      ).toLowerCase();
+
+      const company = safeValue(
+        internship.company,
+        "",
+      ).toLowerCase();
+
       const internshipLocation = safeValue(
         internship.location,
         "",
       ).toLowerCase();
-      const workMode = safeValue(internship.workMode, "").toLowerCase();
-      const category = safeValue(internship.category, "").toLowerCase();
+
+      const workMode = safeValue(
+        internship.workMode,
+        "",
+      ).toLowerCase();
+
+      const category = safeValue(
+        internship.category,
+        "",
+      ).toLowerCase();
+
       const description = safeValue(
         internship.description,
         "",
       ).toLowerCase();
 
-      const skills = (internship.skills ?? []).map((skill) =>
-        skill.toLowerCase(),
+      const skills = (internship.skills ?? []).map(
+        (skill) => skill.toLowerCase(),
       );
 
       const searchableText = [
@@ -89,7 +133,8 @@ export default function InternshipList({
         ...skills,
       ].join(" ");
 
-      const matchesSearch = !query || searchableText.includes(query);
+      const matchesSearch =
+        !query || searchableText.includes(query);
 
       const matchesLocation =
         !locationQuery ||
@@ -97,12 +142,14 @@ export default function InternshipList({
         workMode.includes(locationQuery);
 
       const matchesCategory =
-        !categoryQuery || category.includes(categoryQuery);
+        !categoryQuery ||
+        category.includes(categoryQuery);
 
       const matchesWorkMode =
         workModes.length === 0 ||
         workModes.some(
-          (mode) => mode.toLowerCase() === workMode.toLowerCase(),
+          (mode) =>
+            mode.toLowerCase() === workMode.toLowerCase(),
         );
 
       return (
@@ -112,7 +159,13 @@ export default function InternshipList({
         matchesWorkMode
       );
     });
-  }, [internships, search, location, selectedCategory, workModes]);
+  }, [
+    internships,
+    search,
+    location,
+    selectedCategory,
+    workModes,
+  ]);
 
   const hasActiveFilters =
     search.trim().length > 0 ||
@@ -120,7 +173,9 @@ export default function InternshipList({
     selectedCategory.length > 0 ||
     workModes.length > 0;
 
-  function handleSearch(event: FormEvent<HTMLFormElement>) {
+  function handleSearch(
+    event: FormEvent<HTMLFormElement>,
+  ) {
     event.preventDefault();
   }
 
@@ -132,12 +187,20 @@ export default function InternshipList({
     );
   }
 
+  // Save internships and persist them after refresh
   function toggleSaved(id: number) {
-    setSavedIds((current) =>
-      current.includes(id)
+    setSavedIds((current) => {
+      const updated = current.includes(id)
         ? current.filter((item) => item !== id)
-        : [...current, id],
-    );
+        : [...current, id];
+
+      localStorage.setItem(
+        "savedInternships",
+        JSON.stringify(updated),
+      );
+
+      return updated;
+    });
   }
 
   function clearFilters() {
@@ -168,8 +231,8 @@ export default function InternshipList({
             </h1>
 
             <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">
-              Search internship opportunities by profile, company, skills,
-              location and work mode.
+              Search internship opportunities by profile,
+              company, skills, location and work mode.
             </p>
           </div>
 
@@ -178,22 +241,32 @@ export default function InternshipList({
             className="mt-7 grid overflow-hidden rounded-2xl border border-blue-100 bg-white p-1.5 shadow-lg shadow-blue-100/40 md:grid-cols-[1fr_260px_auto]"
           >
             <label className="flex min-w-0 items-center gap-3 px-4">
-              <Search size={19} className="shrink-0 text-blue-600" />
+              <Search
+                size={19}
+                className="shrink-0 text-blue-600"
+              />
 
               <input
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) =>
+                  setSearch(event.target.value)
+                }
                 placeholder="Search profile, company or skills"
                 className="min-w-0 flex-1 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400"
               />
             </label>
 
             <label className="flex min-w-0 items-center gap-3 border-t border-slate-100 px-4 md:border-l md:border-t-0">
-              <MapPin size={18} className="shrink-0 text-blue-600" />
+              <MapPin
+                size={18}
+                className="shrink-0 text-blue-600"
+              />
 
               <input
                 value={location}
-                onChange={(event) => setLocation(event.target.value)}
+                onChange={(event) =>
+                  setLocation(event.target.value)
+                }
                 placeholder="Location or Remote"
                 className="min-w-0 flex-1 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400"
               />
@@ -214,7 +287,8 @@ export default function InternshipList({
               </span>
 
               {quickCategories.map((category) => {
-                const selected = selectedCategory === category;
+                const selected =
+                  selectedCategory === category;
 
                 return (
                   <button
@@ -222,7 +296,9 @@ export default function InternshipList({
                     type="button"
                     onClick={() =>
                       setSelectedCategory((current) =>
-                        current === category ? "" : category,
+                        current === category
+                          ? ""
+                          : category,
                       )
                     }
                     className={`flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-4 text-xs font-semibold transition ${
@@ -232,6 +308,7 @@ export default function InternshipList({
                     }`}
                   >
                     <Sparkles size={13} />
+
                     {category}
                   </button>
                 );
@@ -244,12 +321,19 @@ export default function InternshipList({
       {/* Results */}
       <main className="min-h-[600px] bg-[#f8fafc] text-[#071c46]">
         <div className="mx-auto grid max-w-[1100px] gap-6 px-4 py-7 sm:px-6 lg:grid-cols-[230px_minmax(0,1fr)_245px] lg:px-8">
+
           {/* Filters */}
           <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:sticky lg:top-20">
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div className="flex items-center gap-2">
-                <Filter size={17} className="text-blue-600" />
-                <h2 className="text-sm font-extrabold">Filters</h2>
+                <Filter
+                  size={17}
+                  className="text-blue-600"
+                />
+
+                <h2 className="text-sm font-extrabold">
+                  Filters
+                </h2>
               </div>
 
               {hasActiveFilters && (
@@ -282,9 +366,15 @@ export default function InternshipList({
                 {availableWorkModes.map((mode) => (
                   <FilterCheckbox
                     key={mode}
-                    label={mode === "Remote" ? "Work from home" : mode}
+                    label={
+                      mode === "Remote"
+                        ? "Work from home"
+                        : mode
+                    }
                     checked={workModes.includes(mode)}
-                    onChange={() => toggleWorkMode(mode)}
+                    onChange={() =>
+                      toggleWorkMode(mode)
+                    }
                   />
                 ))}
               </FilterSection>
@@ -292,18 +382,25 @@ export default function InternshipList({
 
             {availableCategories.length > 0 && (
               <FilterSection title="Category">
-                {availableCategories.map((category) => (
-                  <FilterCheckbox
-                    key={category}
-                    label={category}
-                    checked={selectedCategory === category}
-                    onChange={() =>
-                      setSelectedCategory((current) =>
-                        current === category ? "" : category,
-                      )
-                    }
-                  />
-                ))}
+                {availableCategories.map(
+                  (category) => (
+                    <FilterCheckbox
+                      key={category}
+                      label={category}
+                      checked={
+                        selectedCategory === category
+                      }
+                      onChange={() =>
+                        setSelectedCategory(
+                          (current) =>
+                            current === category
+                              ? ""
+                              : category,
+                        )
+                      }
+                    />
+                  ),
+                )}
               </FilterSection>
             )}
           </aside>
@@ -332,168 +429,237 @@ export default function InternshipList({
             </div>
 
             <div className="space-y-4">
-              {filteredInternships.map((internship) => {
-                const saved = savedIds.includes(internship.id);
+              {filteredInternships.map(
+                (internship) => {
+                  const saved = savedIds.includes(
+                    internship.id,
+                  );
 
-                const title = safeValue(
-                  internship.title,
-                  "Internship opportunity",
-                );
+                  const title = safeValue(
+                    internship.title,
+                    "Internship opportunity",
+                  );
 
-                const company = safeValue(
-                  internship.company,
-                  "Company not specified",
-                );
+                  const company = safeValue(
+                    internship.company,
+                    "Company not specified",
+                  );
 
-                const locationValue = safeValue(internship.location);
-                const workModeValue = safeValue(internship.workMode);
-                const durationValue = safeValue(internship.duration);
-                const stipendValue = safeValue(internship.stipend);
-                const applyByValue = safeValue(internship.applyBy);
-                const categoryValue = safeValue(internship.category, "");
-                const postedValue = safeValue(internship.posted, "");
-                const description = safeValue(internship.description, "");
+                  const locationValue = safeValue(
+                    internship.location,
+                  );
 
-                const skills = internship.skills ?? [];
+                  const workModeValue = safeValue(
+                    internship.workMode,
+                  );
 
-                return (
-                  <article
-                    key={internship.id}
-                    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
-                  >
-                    {/* Makes the entire card clickable */}
-                    <Link
-                      href={`/internships/${internship.slug}`}
-                      aria-label={`View ${title} at ${company}`}
-                      className="absolute inset-0 z-10"
-                    />
+                  const durationValue = safeValue(
+                    internship.duration,
+                  );
 
-                    <div className="relative z-20 pointer-events-none">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex min-w-0 gap-3">
-                          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-lg font-black uppercase text-blue-700">
-                            {company.charAt(0)}
+                  const stipendValue = safeValue(
+                    internship.stipend,
+                  );
+
+                  const applyByValue = safeValue(
+                    internship.applyBy,
+                  );
+
+                  const categoryValue = safeValue(
+                    internship.category,
+                    "",
+                  );
+
+                  const postedValue = safeValue(
+                    internship.posted,
+                    "",
+                  );
+
+                  const description = safeValue(
+                    internship.description,
+                    "",
+                  );
+
+                  const skills =
+                    internship.skills ?? [];
+
+                  return (
+                    <article
+                      key={internship.id}
+                      className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-300 hover:shadow-md"
+                    >
+                      {/* Entire card link */}
+                      <Link
+                        href={`/internships/${internship.slug}`}
+                        aria-label={`View ${title} at ${company}`}
+                        className="absolute inset-0 z-10"
+                      />
+
+                      <div className="pointer-events-none relative z-20">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex min-w-0 gap-3">
+                            <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-blue-100 bg-blue-50 text-lg font-black uppercase text-blue-700">
+                              {company
+                                .charAt(0)
+                                .toUpperCase()}
+                            </div>
+
+                            <div className="min-w-0">
+                              <h3 className="text-base font-extrabold leading-6 text-[#071c46] transition group-hover:text-blue-600">
+                                {title}
+                              </h3>
+
+                              <p className="mt-0.5 text-sm font-medium text-slate-600">
+                                {company}
+                              </p>
+
+                              {categoryValue && (
+                                <span className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-700">
+                                  {categoryValue}
+                                </span>
+                              )}
+                            </div>
                           </div>
 
-                          <div className="min-w-0">
-                            <h3 className="text-base font-extrabold leading-6 text-[#071c46] transition group-hover:text-blue-600">
-                              {title}
-                            </h3>
+                          <button
+                            type="button"
+                            aria-label={
+                              saved
+                                ? "Remove saved internship"
+                                : "Save internship"
+                            }
+                            onClick={() =>
+                              toggleSaved(
+                                internship.id,
+                              )
+                            }
+                            className={`pointer-events-auto relative z-30 flex size-9 shrink-0 items-center justify-center rounded-full border transition ${
+                              saved
+                                ? "border-blue-600 bg-blue-50 text-blue-700"
+                                : "border-slate-200 bg-white text-slate-500 hover:border-blue-400 hover:text-blue-600"
+                            }`}
+                          >
+                            <Bookmark
+                              size={17}
+                              className={
+                                saved
+                                  ? "fill-current"
+                                  : ""
+                              }
+                            />
+                          </button>
+                        </div>
 
-                            <p className="mt-0.5 text-sm font-medium text-slate-600">
-                              {company}
-                            </p>
+                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                          <MetaItem
+                            icon={
+                              <MapPin size={15} />
+                            }
+                            label="Location"
+                            value={locationValue}
+                          />
 
-                            {categoryValue && (
-                              <span className="mt-2 inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-bold text-blue-700">
-                                {categoryValue}
+                          <MetaItem
+                            icon={
+                              <BriefcaseBusiness
+                                size={15}
+                              />
+                            }
+                            label="Work mode"
+                            value={workModeValue}
+                          />
+
+                          <MetaItem
+                            icon={
+                              <Clock3 size={15} />
+                            }
+                            label="Duration"
+                            value={durationValue}
+                          />
+
+                          <MetaItem
+                            icon={
+                              <WalletCards
+                                size={15}
+                              />
+                            }
+                            label="Stipend"
+                            value={stipendValue}
+                          />
+                        </div>
+
+                        {description && (
+                          <p className="mt-4 line-clamp-2 text-sm leading-6 text-slate-600">
+                            {description}
+                          </p>
+                        )}
+
+                        {skills.length > 0 && (
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            {skills
+                              .slice(0, 4)
+                              .map((skill) => (
+                                <span
+                                  key={skill}
+                                  className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-600"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+
+                            {skills.length > 4 && (
+                              <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-500">
+                                +
+                                {skills.length - 4}{" "}
+                                more
                               </span>
                             )}
                           </div>
-                        </div>
+                        )}
 
-                        <button
-                          type="button"
-                          aria-label={
-                            saved ? "Remove saved internship" : "Save internship"
-                          }
-                          onClick={() => toggleSaved(internship.id)}
-                          className={`pointer-events-auto relative z-30 flex size-9 shrink-0 items-center justify-center rounded-full border transition ${
-                            saved
-                              ? "border-blue-600 bg-blue-50 text-blue-700"
-                              : "border-slate-200 bg-white text-slate-500 hover:border-blue-400 hover:text-blue-600"
-                          }`}
-                        >
-                          <Bookmark
-                            size={17}
-                            className={saved ? "fill-current" : ""}
-                          />
-                        </button>
-                      </div>
+                        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+                          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
+                            {postedValue && (
+                              <span className="inline-flex items-center gap-1.5">
+                                <Clock3
+                                  size={13}
+                                />
+                                Posted{" "}
+                                {postedValue}
+                              </span>
+                            )}
 
-                      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                        <MetaItem
-                          icon={<MapPin size={15} />}
-                          label="Location"
-                          value={locationValue}
-                        />
-
-                        <MetaItem
-                          icon={<BriefcaseBusiness size={15} />}
-                          label="Work mode"
-                          value={workModeValue}
-                        />
-
-                        <MetaItem
-                          icon={<Clock3 size={15} />}
-                          label="Duration"
-                          value={durationValue}
-                        />
-
-                        <MetaItem
-                          icon={<WalletCards size={15} />}
-                          label="Stipend"
-                          value={stipendValue}
-                        />
-                      </div>
-
-                      {description && (
-                        <p className="mt-4 line-clamp-2 text-sm leading-6 text-slate-600">
-                          {description}
-                        </p>
-                      )}
-
-                      {skills.length > 0 && (
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          {skills.slice(0, 4).map((skill) => (
-                            <span
-                              key={skill}
-                              className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-600"
-                            >
-                              {skill}
-                            </span>
-                          ))}
-
-                          {skills.length > 4 && (
-                            <span className="rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-500">
-                              +{skills.length - 4} more
-                            </span>
-                          )}
-                        </div>
-                      )}
-
-                      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
-                          {postedValue && (
                             <span className="inline-flex items-center gap-1.5">
-                              <Clock3 size={13} />
-                              Posted {postedValue}
+                              <CalendarDays
+                                size={13}
+                              />
+                              Apply by{" "}
+                              {applyByValue}
                             </span>
-                          )}
+                          </div>
 
-                          <span className="inline-flex items-center gap-1.5">
-                            <CalendarDays size={13} />
-                            Apply by {applyByValue}
+                          <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600">
+                            View details
+
+                            <ArrowRight
+                              size={14}
+                              className="transition group-hover:translate-x-0.5"
+                            />
                           </span>
                         </div>
-
-                        <span className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600">
-                          View details
-                          <ArrowRight
-                            size={14}
-                            className="transition group-hover:translate-x-0.5"
-                          />
-                        </span>
                       </div>
-                    </div>
-                  </article>
-                );
-              })}
+                    </article>
+                  );
+                },
+              )}
 
               {filteredInternships.length === 0 && (
                 <div className="rounded-2xl border border-dashed border-blue-200 bg-white px-6 py-14 text-center shadow-sm">
                   <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-blue-50">
-                    <Search size={24} className="text-blue-500" />
+                    <Search
+                      size={24}
+                      className="text-blue-500"
+                    />
                   </div>
 
                   <h3 className="mt-4 text-lg font-extrabold text-[#071c46]">
@@ -501,8 +667,9 @@ export default function InternshipList({
                   </h3>
 
                   <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-slate-500">
-                    We couldn&apos;t find an internship matching your current
-                    search and filters.
+                    We couldn&apos;t find an internship
+                    matching your current search and
+                    filters.
                   </p>
 
                   <button
@@ -517,7 +684,7 @@ export default function InternshipList({
             </div>
           </section>
 
-          {/* Useful sidebar */}
+          {/* Right sidebar */}
           <aside className="space-y-4">
             <div className="rounded-2xl border border-blue-100 bg-white p-5 shadow-sm">
               <p className="text-xs font-bold uppercase tracking-wide text-blue-600">
@@ -549,6 +716,7 @@ export default function InternshipList({
               </div>
             </div>
 
+            {/* Employer information */}
             <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-5 shadow-sm">
               <span className="inline-flex rounded-full bg-blue-100 px-3 py-1 text-[10px] font-bold uppercase text-blue-700">
                 For employers
@@ -559,22 +727,17 @@ export default function InternshipList({
               </h2>
 
               <p className="mt-2 text-xs leading-5 text-slate-600">
-                Create an internship opportunity and start receiving
-                applications from students.
+                Employer internship posting will be
+                available soon.
               </p>
-
-              <Link
-                href="/employer/internships/new"
-                className="mt-4 flex items-center justify-center gap-2 rounded-xl bg-[#06275b] px-4 py-2.5 text-xs font-bold text-white transition hover:bg-blue-700"
-              >
-                Post an internship
-                <ArrowRight size={14} />
-              </Link>
             </div>
 
             <div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-5">
               <div className="flex gap-2">
-                <Check size={17} className="mt-0.5 shrink-0 text-emerald-600" />
+                <Check
+                  size={17}
+                  className="mt-0.5 shrink-0 text-emerald-600"
+                />
 
                 <div>
                   <p className="text-sm font-extrabold text-slate-800">
@@ -582,8 +745,9 @@ export default function InternshipList({
                   </p>
 
                   <p className="mt-1 text-xs leading-5 text-slate-600">
-                    Students can review internship details before submitting
-                    their application.
+                    Students can review internship
+                    details before submitting their
+                    application.
                   </p>
                 </div>
               </div>
@@ -606,7 +770,9 @@ function MetaItem({
 }) {
   return (
     <div className="flex items-start gap-2.5">
-      <span className="mt-0.5 text-slate-400">{icon}</span>
+      <span className="mt-0.5 text-slate-400">
+        {icon}
+      </span>
 
       <div className="min-w-0">
         <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">
@@ -634,11 +800,15 @@ function FilterInput({
 }) {
   return (
     <label className="mt-5 block">
-      <span className="text-xs font-extrabold text-[#071c46]">{label}</span>
+      <span className="text-xs font-extrabold text-[#071c46]">
+        {label}
+      </span>
 
       <input
         value={value}
-        onChange={(event) => onChange(event.target.value)}
+        onChange={(event) =>
+          onChange(event.target.value)
+        }
         placeholder={placeholder}
         className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2.5 text-xs text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
       />
@@ -655,9 +825,13 @@ function FilterSection({
 }) {
   return (
     <section className="mt-6 border-t border-slate-100 pt-5">
-      <h3 className="text-xs font-extrabold text-[#071c46]">{title}</h3>
+      <h3 className="text-xs font-extrabold text-[#071c46]">
+        {title}
+      </h3>
 
-      <div className="mt-3 space-y-2.5">{children}</div>
+      <div className="mt-3 space-y-2.5">
+        {children}
+      </div>
     </section>
   );
 }
@@ -701,7 +875,9 @@ function StepItem({
       </span>
 
       <div>
-        <p className="text-xs font-extrabold text-[#071c46]">{title}</p>
+        <p className="text-xs font-extrabold text-[#071c46]">
+          {title}
+        </p>
 
         <p className="mt-1 text-[11px] leading-5 text-slate-500">
           {description}
