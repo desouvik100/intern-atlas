@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma-node/client";
+import { PrismaClient } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import type { Internship } from "./types";
 

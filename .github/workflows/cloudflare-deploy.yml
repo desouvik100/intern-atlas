@@ -53,6 +53,12 @@ jobs:
         working-directory: frontend
         run: npm run build:vinext
 
+      - name: Configure production database secret
+        working-directory: frontend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: printf '%s' "$DATABASE_URL" | npx wrangler secret put DATABASE_URL --config wrangler.jsonc
+
       - name: Deploy Vinext Worker
         working-directory: frontend
         env:
