@@ -833,6 +833,7 @@ export async function postScholarshipResponse(
         text(body.slug) ||
         `${slugify(title)}-${slugify(organizerName)}-${suffix}`,
       title,
+      description,
       organizerName,
       organizerType: text(body.organizerType) || undefined,
       organizerLogo: text(body.organizerLogo) || undefined,
@@ -908,6 +909,7 @@ export async function getScholarshipResponse(
 
 const editableScholarshipFields: Array<keyof ScholarshipInput> = [
   "title",
+  "description",
   "organizerName",
   "organizerType",
   "organizerLogo",

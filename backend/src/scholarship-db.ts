@@ -1,4 +1,4 @@
-import { PrismaClient } from "../generated/prisma/client";
+import { PrismaClient, Prisma } from "../generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import type { Scholarship, ScholarshipTestimonial } from "./types";
 
@@ -169,7 +169,9 @@ export async function createScholarship(
       tags: scholarship.tags,
       applicantsCount: scholarship.applicantsCount,
       highlights: scholarship.highlights || [],
-      testimonials: scholarship.testimonials || null,
+      testimonials: scholarship.testimonials
+        ? (scholarship.testimonials as unknown as Prisma.InputJsonValue)
+        : Prisma.DbNull,
     },
   });
 
@@ -227,7 +229,12 @@ export async function updateScholarship(
       tags: updates.tags,
       applicantsCount: updates.applicantsCount,
       highlights: updates.highlights,
-      testimonials: updates.testimonials !== undefined ? updates.testimonials || null : undefined,
+      testimonials:
+        updates.testimonials !== undefined
+          ? updates.testimonials
+            ? (updates.testimonials as unknown as Prisma.InputJsonValue)
+            : Prisma.DbNull
+          : undefined,
     },
   });
 
