@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScholarshipsListingClient } from "@/components/opportunities/ScholarshipsListingClient";
+import { MOCK_SCHOLARSHIPS } from "@/data/mock-scholarships";
 import { scholarshipService } from "@/lib/services/scholarshipService";
 
 export const dynamic = 'force-dynamic';
@@ -18,37 +19,18 @@ export const metadata: Metadata = {
 };
 
 export default async function ScholarshipsPage() {
-  try {
-    const [initialScholarships, metadata] = await Promise.all([
-      scholarshipService.getScholarships(),
-      scholarshipService.getFilterMetadata(),
-    ]);
-
-    return (
-      <>
-        <Header />
-        <ScholarshipsListingClient
-          initialScholarships={initialScholarships}
-          metadata={metadata}
-        />
-        <Footer />
-      </>
-    );
-  } catch (error) {
-    console.error('Scholarships page error:', error);
-    // Return a basic page with mock data as fallback
-    const { MOCK_SCHOLARSHIPS } = await import('@/data/mock-scholarships');
-    const metadata = await scholarshipService.getFilterMetadata(MOCK_SCHOLARSHIPS);
-    
-    return (
-      <>
-        <Header />
-        <ScholarshipsListingClient
-          initialScholarships={MOCK_SCHOLARSHIPS}
-          metadata={metadata}
-        />
-        <Footer />
-      </>
-    );
-  }
+  // Use mock data directly to ensure page always renders
+  const scholarships = MOCK_SCHOLARSHIPS;
+  const metadata = await scholarshipService.getFilterMetadata(scholarships);
+  
+  return (
+    <>
+      <Header />
+      <ScholarshipsListingClient
+        initialScholarships={scholarships}
+        metadata={metadata}
+      />
+      <Footer />
+    </>
+  );
 }
