@@ -1,19 +1,10 @@
 #!/bin/bash
 set -e
 
-echo "Installing backend dependencies..."
-cd backend
-npm install
+cd frontend
+export HOSTNAME="0.0.0.0"
+export PORT="${PORT:-3000}"
 
-echo "Generating Prisma client..."
-npm run generate
+echo "Starting Next.js server on $HOSTNAME:$PORT..."
+exec npx next start -H 0.0.0.0 -p "$PORT"
 
-echo "Installing frontend dependencies..."
-cd ../frontend
-npm install
-
-echo "Building Next.js application..."
-npm run build
-
-echo "Starting Next.js server..."
-npm start

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm --prefix ../backend install && npm --prefix ../backend run generate && next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0",
     "lint": "eslint",
     "dev:vinext": "vinext dev --port 3001",
     "build:vinext": "vinext build",
