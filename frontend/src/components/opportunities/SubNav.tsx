@@ -6,7 +6,14 @@ import { ArrowLeft, Trophy, Code, Award, HelpCircle, Calendar } from "lucide-rea
 import { cn } from "@/lib/utils";
 
 interface SubNavProps {
-  activeModule?: "competitions" | "hackathons" | "contests" | "quizzes" | "events";
+  activeModule?:
+    | "competitions"
+    | "hackathons"
+    | "contests"
+    | "quizzes"
+    | "events"
+    | "festivals"
+    | "cultural";
   className?: string;
 }
 
@@ -51,6 +58,18 @@ export function SubNav({ activeModule = "competitions", className }: SubNavProps
       label: "Events",
       href: "/events",
       icon: Calendar,
+    },
+    {
+      id: "festivals",
+      label: "College Festivals",
+      href: "/college-festivals",
+      icon: Calendar,
+    },
+    {
+      id: "cultural",
+      label: "Cultural Events",
+      href: "/cultural-events",
+      icon: Award,
     },
   ];
 

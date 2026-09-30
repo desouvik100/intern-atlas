@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg-fest-sports-cultural" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b" />
+      <stop offset="50%" stop-color="#0f766e" />
+      <stop offset="100%" stop-color="#070c18" />
+    </linearGradient>
+    <linearGradient id="accent-fest-sports-cultural" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2dd4bf" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+    <radialGradient id="glow-fest-sports-cultural" cx="80%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid-fest-sports-cultural" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+    </pattern>
+    <filter id="shadow-fest-sports-cultural" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="800" height="500" fill="url(#bg-fest-sports-cultural)" />
+  <rect width="800" height="500" fill="url(#glow-fest-sports-cultural)" />
+  <rect width="800" height="500" fill="url(#grid-fest-sports-cultural)" />
+
+  <!-- Geometric Abstract Artwork -->
+  <g opacity="0.6">
+    <circle cx="680" cy="180" r="160" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.4" />
+    <circle cx="680" cy="180" r="110" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+    <circle cx="680" cy="180" r="60" fill="#2dd4bf" fill-opacity="0.08" />
+    <path d="M 520,380 L 680,220 L 760,300 L 600,460 Z" fill="none" stroke="#2dd4bf" stroke-width="1" opacity="0.25" />
+    <path d="M 640,80 L 720,160" stroke="#2dd4bf" stroke-width="2" opacity="0.5" />
+    <circle cx="720" cy="160" r="4" fill="#2dd4bf" />
+    <circle cx="580" cy="320" r="5" fill="#ffffff" opacity="0.7" />
+    <circle cx="620" cy="100" r="3" fill="#ffffff" opacity="0.5" />
+  </g>
+
+  <!-- Graphic Icon Illustration Area -->
+  <g transform="translate(600, 100)" filter="url(#shadow-fest-sports-cultural)">
+    <rect x="0" y="0" width="130" height="130" rx="28" fill="rgba(255, 255, 255, 0.08)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5" backdrop-filter="blur(10px)" />
+    <g transform="translate(25, 25) scale(3.3)" stroke="#2dd4bf" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1 .45-1 1v1h12v-1c0-.55-.45-1-1-1h-2c-.55 0-1-.45-1-1v-2.34"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+    </g>
+  </g>
+
+  <!-- Top Badges -->
+  <g transform="translate(50, 48)">
+    <rect x="0" y="0" width="130" height="28" rx="14" fill="#2dd4bf" fill-opacity="0.18" stroke="#2dd4bf" stroke-opacity="0.5" stroke-width="1" />
+    <text x="65" y="18" fill="#2dd4bf" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1.2">SPORTS & CULTURAL CARNIVAL</text>
+
+    <rect x="140" y="0" width="110" height="28" rx="14" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+    <text x="195" y="18" fill="#e2e8f0" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" text-anchor="middle">International Conclave</text>
+  </g>
+
+  <!-- Main Headline Block -->
+  <g transform="translate(50, 200)">
+    <!-- Subtitle / Organizer -->
+    <text x="0" y="0" fill="#2dd4bf" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" letter-spacing="2">
+      VIT VELLORE
+    </text>
+
+    <!-- Main Title (Multi-line compatible) -->
+    <text x="0" y="46" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="34" font-weight="800" letter-spacing="-0.5" filter="url(#shadow-fest-sports-cultural)">
+      Riviera 2025
+    </text>
+
+    <text x="0" y="86" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="500">
+      Official Opportunity Program • Verified on InternAtlas
+    </text>
+  </g>
+
+  <!-- Bottom Accent Stripe & Decorative Elements -->
+  <g transform="translate(50, 420)">
+    <rect x="0" y="0" width="280" height="3" rx="1.5" fill="url(#accent-fest-sports-cultural)" />
+    <text x="0" y="24" fill="#64748b" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5">
+      INTERNATLAS • OPPORTUNITIES ECOSYSTEM
+    </text>
+  </g>
+
+  <g transform="translate(680, 430)">
+    <rect x="-80" y="-14" width="120" height="28" rx="14" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+    <text x="-20" y="4" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" text-anchor="middle">
+      2025 EDITION
+    </text>
+  </g>
+</svg>
