@@ -1,0 +1,36 @@
+# Ignore unnecessary files in Railway deployments
+
+node_modules/
+.git/
+.env
+.env.local
+.env*.local
+*.md
+!README.md
+*.log
+.next/
+.cache/
+coverage/
+dist/
+build/
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# Ignore backend node_modules (will be reinstalled)
+backend/node_modules/
+
+# Ignore generated Prisma files (will be regenerated)
+backend/generated/
+
+# Ignore setup scripts
+setup-auth.bat
+setup-auth.ps1
+generate-prisma.bat
+
+# Ignore local test files
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx

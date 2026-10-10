@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cd ../backend && npm run prisma:generate && cd ../frontend && next build",
+    "postinstall": "node postinstall.js",
     "start": "next start",
     "lint": "eslint",
     "dev:vinext": "vinext dev --port 3001",
