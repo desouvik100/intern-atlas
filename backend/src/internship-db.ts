@@ -115,6 +115,7 @@ export async function createInternship(
       requirements: internship.requirements,
       perks: internship.perks,
       status: "active",
+      employerId: internship.employerId,
     },
   });
 

@@ -61,3 +61,13 @@ export type Application = Prisma.ApplicationModel
  * 
  */
 export type DatasetOption = Prisma.DatasetOptionModel
+/**
+ * Model Student
+ * 
+ */
+export type Student = Prisma.StudentModel
+/**
+ * Model AuthSession
+ * 
+ */
+export type AuthSession = Prisma.AuthSessionModel

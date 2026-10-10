@@ -15,4 +15,5 @@ export type Internship = {
   responsibilities: string[];
   requirements: string[];
   perks: string[];
+  employerId?: number;
 };

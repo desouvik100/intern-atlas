@@ -54,7 +54,9 @@ export const ModelName = {
   Employer: 'Employer',
   Internship: 'Internship',
   Application: 'Application',
-  DatasetOption: 'DatasetOption'
+  DatasetOption: 'DatasetOption',
+  Student: 'Student',
+  AuthSession: 'AuthSession'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -162,6 +164,32 @@ export const DatasetOptionScalarFieldEnum = {
 } as const
 
 export type DatasetOptionScalarFieldEnum = (typeof DatasetOptionScalarFieldEnum)[keyof typeof DatasetOptionScalarFieldEnum]
+
+
+export const StudentScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum]
+
+
+export const AuthSessionScalarFieldEnum = {
+  id: 'id',
+  sessionToken: 'sessionToken',
+  role: 'role',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  revokedAt: 'revokedAt',
+  studentId: 'studentId',
+  employerId: 'employerId'
+} as const
+
+export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
 export const SortOrder = {

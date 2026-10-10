@@ -373,6 +373,7 @@ export type EmployerWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
   internships?: Prisma.InternshipListRelationFilter
+  sessions?: Prisma.AuthSessionListRelationFilter
 }
 
 export type EmployerOrderByWithRelationInput = {
@@ -401,6 +402,7 @@ export type EmployerOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   internships?: Prisma.InternshipOrderByRelationAggregateInput
+  sessions?: Prisma.AuthSessionOrderByRelationAggregateInput
 }
 
 export type EmployerWhereUniqueInput = Prisma.AtLeast<{
@@ -432,6 +434,7 @@ export type EmployerWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Employer"> | Date | string
   internships?: Prisma.InternshipListRelationFilter
+  sessions?: Prisma.AuthSessionListRelationFilter
 }, "id" | "email">
 
 export type EmployerOrderByWithAggregationInput = {
@@ -521,6 +524,7 @@ export type EmployerCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   internships?: Prisma.InternshipCreateNestedManyWithoutEmployerInput
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutEmployerInput
 }
 
 export type EmployerUncheckedCreateInput = {
@@ -549,6 +553,7 @@ export type EmployerUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   internships?: Prisma.InternshipUncheckedCreateNestedManyWithoutEmployerInput
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutEmployerInput
 }
 
 export type EmployerUpdateInput = {
@@ -576,6 +581,7 @@ export type EmployerUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   internships?: Prisma.InternshipUpdateManyWithoutEmployerNestedInput
+  sessions?: Prisma.AuthSessionUpdateManyWithoutEmployerNestedInput
 }
 
 export type EmployerUncheckedUpdateInput = {
@@ -604,6 +610,7 @@ export type EmployerUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   internships?: Prisma.InternshipUncheckedUpdateManyWithoutEmployerNestedInput
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutEmployerNestedInput
 }
 
 export type EmployerCreateManyInput = {
@@ -830,6 +837,22 @@ export type EmployerUpdateOneWithoutInternshipsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmployerUpdateToOneWithWhereWithoutInternshipsInput, Prisma.EmployerUpdateWithoutInternshipsInput>, Prisma.EmployerUncheckedUpdateWithoutInternshipsInput>
 }
 
+export type EmployerCreateNestedOneWithoutSessionsInput = {
+  create?: Prisma.XOR<Prisma.EmployerCreateWithoutSessionsInput, Prisma.EmployerUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.EmployerCreateOrConnectWithoutSessionsInput
+  connect?: Prisma.EmployerWhereUniqueInput
+}
+
+export type EmployerUpdateOneWithoutSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.EmployerCreateWithoutSessionsInput, Prisma.EmployerUncheckedCreateWithoutSessionsInput>
+  connectOrCreate?: Prisma.EmployerCreateOrConnectWithoutSessionsInput
+  upsert?: Prisma.EmployerUpsertWithoutSessionsInput
+  disconnect?: Prisma.EmployerWhereInput | boolean
+  delete?: Prisma.EmployerWhereInput | boolean
+  connect?: Prisma.EmployerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployerUpdateToOneWithWhereWithoutSessionsInput, Prisma.EmployerUpdateWithoutSessionsInput>, Prisma.EmployerUncheckedUpdateWithoutSessionsInput>
+}
+
 export type EmployerCreateWithoutInternshipsInput = {
   email: string
   passwordHash: string
@@ -854,6 +877,7 @@ export type EmployerCreateWithoutInternshipsInput = {
   profileCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  sessions?: Prisma.AuthSessionCreateNestedManyWithoutEmployerInput
 }
 
 export type EmployerUncheckedCreateWithoutInternshipsInput = {
@@ -881,6 +905,7 @@ export type EmployerUncheckedCreateWithoutInternshipsInput = {
   profileCompleted?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  sessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutEmployerInput
 }
 
 export type EmployerCreateOrConnectWithoutInternshipsInput = {
@@ -923,6 +948,7 @@ export type EmployerUpdateWithoutInternshipsInput = {
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AuthSessionUpdateManyWithoutEmployerNestedInput
 }
 
 export type EmployerUncheckedUpdateWithoutInternshipsInput = {
@@ -950,6 +976,133 @@ export type EmployerUncheckedUpdateWithoutInternshipsInput = {
   profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutEmployerNestedInput
+}
+
+export type EmployerCreateWithoutSessionsInput = {
+  email: string
+  passwordHash: string
+  name?: string | null
+  phone?: string | null
+  companyName?: string | null
+  companyWebsite?: string | null
+  companyDescription?: string | null
+  companyLogoUrl?: string | null
+  industry?: string | null
+  companyType?: string | null
+  companySize?: string | null
+  foundedYear?: number | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  linkedinUrl?: string | null
+  verificationStatus?: string
+  gstNumber?: string | null
+  cinNumber?: string | null
+  profileCompleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  internships?: Prisma.InternshipCreateNestedManyWithoutEmployerInput
+}
+
+export type EmployerUncheckedCreateWithoutSessionsInput = {
+  id?: number
+  email: string
+  passwordHash: string
+  name?: string | null
+  phone?: string | null
+  companyName?: string | null
+  companyWebsite?: string | null
+  companyDescription?: string | null
+  companyLogoUrl?: string | null
+  industry?: string | null
+  companyType?: string | null
+  companySize?: string | null
+  foundedYear?: number | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string | null
+  linkedinUrl?: string | null
+  verificationStatus?: string
+  gstNumber?: string | null
+  cinNumber?: string | null
+  profileCompleted?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  internships?: Prisma.InternshipUncheckedCreateNestedManyWithoutEmployerInput
+}
+
+export type EmployerCreateOrConnectWithoutSessionsInput = {
+  where: Prisma.EmployerWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmployerCreateWithoutSessionsInput, Prisma.EmployerUncheckedCreateWithoutSessionsInput>
+}
+
+export type EmployerUpsertWithoutSessionsInput = {
+  update: Prisma.XOR<Prisma.EmployerUpdateWithoutSessionsInput, Prisma.EmployerUncheckedUpdateWithoutSessionsInput>
+  create: Prisma.XOR<Prisma.EmployerCreateWithoutSessionsInput, Prisma.EmployerUncheckedCreateWithoutSessionsInput>
+  where?: Prisma.EmployerWhereInput
+}
+
+export type EmployerUpdateToOneWithWhereWithoutSessionsInput = {
+  where?: Prisma.EmployerWhereInput
+  data: Prisma.XOR<Prisma.EmployerUpdateWithoutSessionsInput, Prisma.EmployerUncheckedUpdateWithoutSessionsInput>
+}
+
+export type EmployerUpdateWithoutSessionsInput = {
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  internships?: Prisma.InternshipUpdateManyWithoutEmployerNestedInput
+}
+
+export type EmployerUncheckedUpdateWithoutSessionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyWebsite?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyLogoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companySize?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  foundedYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  verificationStatus?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cinNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  internships?: Prisma.InternshipUncheckedUpdateManyWithoutEmployerNestedInput
 }
 
 
@@ -959,10 +1112,12 @@ export type EmployerUncheckedUpdateWithoutInternshipsInput = {
 
 export type EmployerCountOutputType = {
   internships: number
+  sessions: number
 }
 
 export type EmployerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   internships?: boolean | EmployerCountOutputTypeCountInternshipsArgs
+  sessions?: boolean | EmployerCountOutputTypeCountSessionsArgs
 }
 
 /**
@@ -980,6 +1135,13 @@ export type EmployerCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
  */
 export type EmployerCountOutputTypeCountInternshipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.InternshipWhereInput
+}
+
+/**
+ * EmployerCountOutputType without action
+ */
+export type EmployerCountOutputTypeCountSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthSessionWhereInput
 }
 
 
@@ -1009,6 +1171,7 @@ export type EmployerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   internships?: boolean | Prisma.Employer$internshipsArgs<ExtArgs>
+  sessions?: boolean | Prisma.Employer$sessionsArgs<ExtArgs>
   _count?: boolean | Prisma.EmployerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["employer"]>
 
@@ -1096,6 +1259,7 @@ export type EmployerSelectScalar = {
 export type EmployerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "phone" | "companyName" | "companyWebsite" | "companyDescription" | "companyLogoUrl" | "industry" | "companyType" | "companySize" | "foundedYear" | "address" | "city" | "state" | "country" | "linkedinUrl" | "verificationStatus" | "gstNumber" | "cinNumber" | "profileCompleted" | "createdAt" | "updatedAt", ExtArgs["result"]["employer"]>
 export type EmployerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   internships?: boolean | Prisma.Employer$internshipsArgs<ExtArgs>
+  sessions?: boolean | Prisma.Employer$sessionsArgs<ExtArgs>
   _count?: boolean | Prisma.EmployerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EmployerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1105,6 +1269,7 @@ export type $EmployerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Employer"
   objects: {
     internships: Prisma.$InternshipPayload<ExtArgs>[]
+    sessions: Prisma.$AuthSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1526,6 +1691,7 @@ readonly fields: EmployerFieldRefs;
 export interface Prisma__EmployerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   internships<T extends Prisma.Employer$internshipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employer$internshipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InternshipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessions<T extends Prisma.Employer$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employer$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1993,6 +2159,30 @@ export type Employer$internshipsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.InternshipScalarFieldEnum | Prisma.InternshipScalarFieldEnum[]
+}
+
+/**
+ * Employer.sessions
+ */
+export type Employer$sessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthSession
+   */
+  select?: Prisma.AuthSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthSession
+   */
+  omit?: Prisma.AuthSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthSessionInclude<ExtArgs> | null
+  where?: Prisma.AuthSessionWhereInput
+  orderBy?: Prisma.AuthSessionOrderByWithRelationInput | Prisma.AuthSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AuthSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
 }
 
 /**

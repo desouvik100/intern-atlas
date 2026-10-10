@@ -78,6 +78,7 @@ export async function postInternshipResponse(
     const applyBy = text(body.applyBy);
     const category = text(body.category);
     const description = text(body.description);
+    const employerId = typeof body.employerId === "number" ? body.employerId : undefined;
 
     if (
       !title ||
@@ -127,6 +128,8 @@ export async function postInternshipResponse(
       requirements: list(body.requirements),
 
       perks: list(body.perks),
+      
+      employerId,
     };
 
     const created = await createInternship(internship);
