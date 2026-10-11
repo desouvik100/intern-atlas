@@ -10,6 +10,7 @@ type Role = "student" | "employer";
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const [role, setRole] = useState<Role>("student");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,125 +53,142 @@ export function LoginForm() {
       } else {
         router.push("/employer/dashboard");
       }
-    } catch (err) {
+    } catch {
       setError("Network error. Please try again.");
       setLoading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-md">
-      <div className="bg-white rounded-2xl shadow-card p-8">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <Link
-            href="/"
-            className="text-2xl font-black tracking-[-0.04em] text-[#071c46] inline-block mb-2"
-          >
+    <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-xs">
+      {/* Header */}
+      <div className="mb-6">
+        <Link href="/" className="inline-block mb-3" aria-label="InternAtlas home">
+          <span className="text-xl font-black tracking-[-0.04em] text-[#071c46]">
             Intern<span className="text-blue-600">Atlas.</span>
-          </Link>
-          <h1 className="text-2xl font-bold text-text-primary">Welcome back</h1>
-          <p className="text-sm text-text-secondary mt-2">
-            Log in to access your account
-          </p>
-        </div>
-
-        {/* Role Selector */}
-        <div className="flex gap-3 mb-6">
-          <button
-            type="button"
-            onClick={() => setRole("student")}
-            className={`flex-1 py-3 px-4 rounded-lg border-2 font-semibold text-sm transition ${
-              role === "student"
-                ? "border-blue-600 bg-blue-50 text-blue-600"
-                : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-            }`}
-          >
-            Student
-          </button>
-          <button
-            type="button"
-            onClick={() => setRole("employer")}
-            className={`flex-1 py-3 px-4 rounded-lg border-2 font-semibold text-sm transition ${
-              role === "employer"
-                ? "border-blue-600 bg-blue-50 text-blue-600"
-                : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-            }`}
-          >
-            Employer
-          </button>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit}>
-          {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
-              {error}
-            </div>
-          )}
-
-          <div className="space-y-4">
-            {/* Email */}
-            <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-text-primary mb-1.5">
-                Email Address
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="w-full px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                placeholder="you@example.com"
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-text-primary mb-1.5">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="w-full px-4 py-2.5 pr-10 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full mt-6 py-3 px-4 bg-deep-navy text-white rounded-lg font-bold text-sm transition hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {loading ? "Logging in..." : "Log in"}
-          </button>
-        </form>
-
-        {/* Signup Link */}
-        <p className="text-center text-sm text-text-secondary mt-6">
-          Don't have an account?{" "}
-          <Link href="/signup" className="text-blue-600 font-semibold hover:underline">
-            Sign up
-          </Link>
+          </span>
+        </Link>
+        <h1 className="text-lg font-bold text-slate-900 tracking-tight">
+          Sign in to InternAtlas
+        </h1>
+        <p className="text-xs text-slate-500 mt-1">
+          Enter your credentials to access your account.
         </p>
       </div>
+
+      {/* Account Type Selector */}
+      <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-lg mb-5 text-xs">
+        <button
+          type="button"
+          onClick={() => setRole("student")}
+          className={`py-1.5 rounded-md font-medium text-center transition-all cursor-pointer ${
+            role === "student"
+              ? "bg-white text-slate-900 font-semibold shadow-xs"
+              : "text-slate-600 hover:text-slate-900"
+          }`}
+        >
+          Student
+        </button>
+        <button
+          type="button"
+          onClick={() => setRole("employer")}
+          className={`py-1.5 rounded-md font-medium text-center transition-all cursor-pointer ${
+            role === "employer"
+              ? "bg-white text-slate-900 font-semibold shadow-xs"
+              : "text-slate-600 hover:text-slate-900"
+          }`}
+        >
+          Employer
+        </button>
+      </div>
+
+      {/* Error Alert */}
+      {error && (
+        <div
+          role="alert"
+          className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md text-xs text-red-700 font-medium"
+        >
+          {error}
+        </div>
+      )}
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Email */}
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-xs font-semibold text-slate-700 mb-1.5"
+          >
+            Email address
+          </label>
+          <input
+            id="email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full h-10 px-3 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+            placeholder="you@example.com"
+          />
+        </div>
+
+        {/* Password */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <label
+              htmlFor="password"
+              className="text-xs font-semibold text-slate-700"
+            >
+              Password
+            </label>
+            <a
+              href="mailto:support@internatlas.in?subject=Password%20Reset%20Request"
+              className="text-xs text-blue-600 hover:underline"
+            >
+              Forgot password?
+            </a>
+          </div>
+          <div className="relative">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="w-full h-10 px-3 pr-10 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+              placeholder="Enter your password"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Submit */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full h-10 mt-5 bg-[#0B1E4A] hover:bg-[#122A63] text-white rounded-md text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1"
+        >
+          {loading ? "Signing in..." : "Sign in"}
+        </button>
+      </form>
+
+      {/* Signup link */}
+      <p className="text-center text-xs text-slate-500 mt-5">
+        Don&apos;t have an account?{" "}
+        <Link href="/signup" className="text-blue-600 font-semibold hover:underline">
+          Sign up
+        </Link>
+      </p>
     </div>
   );
 }
