@@ -10,16 +10,16 @@ export const metadata: Metadata = {
 
 function SignupSkeleton() {
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-xs animate-pulse">
-      <div className="h-6 bg-slate-200 rounded w-1/3 mb-3" />
-      <div className="h-4 bg-slate-200 rounded w-1/2 mb-6" />
-      <div className="h-8 bg-slate-100 rounded-lg mb-5" />
+    <div className="w-full animate-pulse space-y-4">
+      <div className="h-7 bg-slate-200 rounded w-2/3 mb-2" />
+      <div className="h-4 bg-slate-100 rounded w-1/2 mb-7" />
+      <div className="h-8 border-b border-slate-200 mb-6" />
       <div className="space-y-4">
         <div className="h-10 bg-slate-100 rounded-md" />
         <div className="h-10 bg-slate-100 rounded-md" />
         <div className="h-10 bg-slate-100 rounded-md" />
         <div className="h-10 bg-slate-100 rounded-md" />
-        <div className="h-10 bg-slate-200 rounded-md mt-5" />
+        <div className="h-10 bg-slate-200 rounded-md mt-6" />
       </div>
     </div>
   );
@@ -27,7 +27,13 @@ function SignupSkeleton() {
 
 export default function SignupPage() {
   return (
-    <AuthShell>
+    <AuthShell
+      headerAction={{
+        prompt: "Already have an account?",
+        linkText: "Sign in",
+        href: "/login",
+      }}
+    >
       <Suspense fallback={<SignupSkeleton />}>
         <SignupForm />
       </Suspense>

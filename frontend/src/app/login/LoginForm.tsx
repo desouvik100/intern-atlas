@@ -60,31 +60,26 @@ export function LoginForm() {
   };
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 shadow-xs">
-      {/* Header */}
-      <div className="mb-6">
-        <Link href="/" className="inline-block mb-3" aria-label="InternAtlas home">
-          <span className="text-xl font-black tracking-[-0.04em] text-[#071c46]">
-            Intern<span className="text-blue-600">Atlas.</span>
-          </span>
-        </Link>
-        <h1 className="text-lg font-bold text-slate-900 tracking-tight">
-          Sign in to InternAtlas
+    <div className="w-full">
+      {/* Title & subtitle */}
+      <div className="mb-7">
+        <h1 className="text-2xl font-bold tracking-tight text-[#071c46]">
+          Sign in to your account
         </h1>
-        <p className="text-xs text-slate-500 mt-1">
-          Enter your credentials to access your account.
+        <p className="text-sm text-slate-500 mt-1.5">
+          Welcome back. Enter your credentials to continue.
         </p>
       </div>
 
-      {/* Account Type Selector */}
-      <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-lg mb-5 text-xs">
+      {/* Role Selection Tabs */}
+      <div className="flex border-b border-slate-200 mb-6">
         <button
           type="button"
           onClick={() => setRole("student")}
-          className={`py-1.5 rounded-md font-medium text-center transition-all cursor-pointer ${
+          className={`pb-3 text-sm font-medium border-b-2 -mb-px transition-colors cursor-pointer mr-6 ${
             role === "student"
-              ? "bg-white text-slate-900 font-semibold shadow-xs"
-              : "text-slate-600 hover:text-slate-900"
+              ? "border-[#071c46] text-[#071c46] font-semibold"
+              : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
           Student
@@ -92,10 +87,10 @@ export function LoginForm() {
         <button
           type="button"
           onClick={() => setRole("employer")}
-          className={`py-1.5 rounded-md font-medium text-center transition-all cursor-pointer ${
+          className={`pb-3 text-sm font-medium border-b-2 -mb-px transition-colors cursor-pointer ${
             role === "employer"
-              ? "bg-white text-slate-900 font-semibold shadow-xs"
-              : "text-slate-600 hover:text-slate-900"
+              ? "border-[#071c46] text-[#071c46] font-semibold"
+              : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
           Employer
@@ -106,7 +101,7 @@ export function LoginForm() {
       {error && (
         <div
           role="alert"
-          className="mb-4 p-3 bg-red-50 border border-red-200 rounded-md text-xs text-red-700 font-medium"
+          className="mb-5 p-3 bg-red-50 border border-red-200 rounded-md text-xs text-red-700 font-medium"
         >
           {error}
         </div>
@@ -117,20 +112,20 @@ export function LoginForm() {
         {/* Email */}
         <div>
           <label
-            htmlFor="email"
+            htmlFor="login-email"
             className="block text-xs font-semibold text-slate-700 mb-1.5"
           >
             Email address
           </label>
           <input
-            id="email"
+            id="login-email"
             type="email"
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full h-10 px-3 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
-            placeholder="you@example.com"
+            className="w-full h-10 px-3 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#071c46] focus:ring-1 focus:ring-[#071c46] transition-colors"
+            placeholder={role === "student" ? "student@college.edu" : "recruiter@company.com"}
           />
         </div>
 
@@ -138,7 +133,7 @@ export function LoginForm() {
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <label
-              htmlFor="password"
+              htmlFor="login-password"
               className="text-xs font-semibold text-slate-700"
             >
               Password
@@ -152,13 +147,13 @@ export function LoginForm() {
           </div>
           <div className="relative">
             <input
-              id="password"
+              id="login-password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full h-10 px-3 pr-10 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+              className="w-full h-10 px-3 pr-10 bg-white border border-slate-300 rounded-md text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#071c46] focus:ring-1 focus:ring-[#071c46] transition-colors"
               placeholder="Enter your password"
             />
             <button
@@ -176,19 +171,19 @@ export function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full h-10 mt-5 bg-[#0B1E4A] hover:bg-[#122A63] text-white rounded-md text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1"
+          className="w-full h-10 mt-6 bg-[#071c46] hover:bg-[#0B1E4A] active:bg-[#040f26] text-white rounded-md text-sm font-semibold transition-colors disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#071c46] focus-visible:ring-offset-1"
         >
           {loading ? "Signing in..." : "Sign in"}
         </button>
       </form>
 
-      {/* Signup link */}
-      <p className="text-center text-xs text-slate-500 mt-5">
+      {/* Alternative action */}
+      <div className="mt-8 pt-6 border-t border-slate-100 text-center text-xs text-slate-500">
         Don&apos;t have an account?{" "}
         <Link href="/signup" className="text-blue-600 font-semibold hover:underline">
           Sign up
         </Link>
-      </p>
+      </div>
     </div>
   );
 }
