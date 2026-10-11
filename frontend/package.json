@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "cd ../backend && npm run prisma:generate && cd ../frontend && next build",
+    "build:railway": "next build",
     "postinstall": "node postinstall.js",
     "start": "next start",
     "lint": "eslint",
@@ -29,8 +30,7 @@
     "react-server-dom-webpack": "19.2.8",
     "tailwind-merge": "^3.7.0",
     "vinext": "1.0.0-beta.10",
-    "wrangler": "4.131.2",
-    "@internatlas/backend": "file:../backend"
+    "wrangler": "4.131.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
